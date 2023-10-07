@@ -3,9 +3,11 @@ export const AppRoute = {
 } as const;
 
 export const NameSpace = {
-  Cameras: 'CAMERAS',
+  Product: 'PRODUCT',
 } as const;
 
 export const APIRoute = {
-  Cameras: '/cameras',
+  ProductList: '/cameras',
 };
+
+export const RATINGS = [1, 2, 3, 4, 5] as const;

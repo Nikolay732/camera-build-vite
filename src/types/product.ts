@@ -1,5 +1,5 @@
 
-export type CameraItem = {
+export type ProductItem = {
   id: number;
   name: string;
   vendorCode: string;
