@@ -7,18 +7,19 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getProductList } from '../../store/product-data/product-data-selectors';
+import { getProductList, getPromoList } from '../../store/product-data/product-data-selectors';
 import {useEffect} from 'react';
-import { fetchProductListAction } from '../../store/product-data/product-data-thunk';
+import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
   const productList = useAppSelector(getProductList);
-
+  const promoList = useAppSelector(getPromoList);
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
       dispatch(fetchProductListAction());
+      dispatch(fetchPromoListAction());
     }
     return () => {
       isMounted = false;
@@ -29,7 +30,7 @@ export function CatalogPage () {
     <div className="wrapper">
       <Header/>
       <main>
-        <Banner/>
+        <Banner promoList={promoList}/>
         <div className="page-content">
           <Breadcrumbs/>
           <section className="catalog">

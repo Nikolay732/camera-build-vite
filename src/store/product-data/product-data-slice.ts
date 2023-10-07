@@ -1,14 +1,16 @@
 import { NameSpace } from '../../const';
-import { ProductItem } from '../../types/product';
+import { ProductItem, PromoItem } from '../../types/product';
 import {createSlice} from '@reduxjs/toolkit';
-import { fetchProductListAction } from './product-data-thunk';
+import { fetchProductListAction, fetchPromoListAction } from './product-data-thunk';
 
 type InitialState = {
   ProductList: ProductItem[];
+  PromoList: PromoItem[];
 };
 
 const initialState: InitialState = {
   ProductList: [],
+  PromoList: [],
 };
 
 export const ProductData = createSlice ({
@@ -19,6 +21,9 @@ export const ProductData = createSlice ({
     builder
       .addCase(fetchProductListAction.fulfilled, (state, action) => {
         state.ProductList = action.payload;
+      })
+      .addCase(fetchPromoListAction.fulfilled, (state, action) => {
+        state.PromoList = action.payload;
       });
   }
 });

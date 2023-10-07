@@ -1,16 +1,23 @@
-export function Banner () {
+import { PromoItem } from '../../types/product';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { BannerItem } from '../banner-item/banner-item';
+import 'swiper/css';
+
+type BannerProps = {
+  promoList: PromoItem[];
+}
+
+export function Banner ({promoList}: BannerProps) {
+
   return (
     <div className="banner">
-      <picture>
-        <source type="image/webp" srcSet="img/content/banner-bg.webp, img/content/banner-bg@2x.webp 2x"/>
-        <img src="img/content/banner-bg.jpg" srcSet="img/content/banner-bg@2x.jpg 2x" width="1280" height="280" alt="баннер"/>
-      </picture>
-      <p className="banner__info">
-        <span className="banner__message">Новинка!</span>
-        <span className="title title--h1">Cannonball&nbsp;Pro&nbsp;MX&nbsp;8i</span>
-        <span className="banner__text">Профессиональная камера от&nbsp;известного производителя</span>
-        <a className="btn" href="#">Подробнее</a>
-      </p>
+      <Swiper loop autoplay={{delay: 2000, stopOnLastSlide: false, disableOnInteraction:false}}>
+        {promoList.map((promoProduct) => (
+          <SwiperSlide key={promoProduct.id}>
+            <BannerItem promoProduct={promoProduct}/>
+          </SwiperSlide>)
+        )}
+      </Swiper>
     </div>
   );
 }
