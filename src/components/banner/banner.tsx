@@ -1,23 +1,26 @@
 import { PromoItem } from '../../types/product';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { BannerItem } from '../banner-item/banner-item';
-import 'swiper/css';
+import { APIRoute } from '../../const';
+import { Link } from 'react-router-dom';
 
 type BannerProps = {
-  promoList: PromoItem[];
+  promoProduct: PromoItem;
 }
 
-export function Banner ({promoList}: BannerProps) {
+export function Banner ({promoProduct}: BannerProps) {
+  const {id, name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x} = promoProduct;
 
   return (
     <div className="banner">
-      <Swiper loop autoplay={{delay: 2000, stopOnLastSlide: false, disableOnInteraction:false}}>
-        {promoList.map((promoProduct) => (
-          <SwiperSlide key={promoProduct.id}>
-            <BannerItem promoProduct={promoProduct}/>
-          </SwiperSlide>)
-        )}
-      </Swiper>
+      <picture>
+        <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x}`}/>
+        <img src={previewImg} srcSet={previewImg2x} width="1280" height="280" alt="баннер"/>
+      </picture>
+      <p className="banner__info">
+        <span className="banner__message">Новинка!</span>
+        <span className="title title--h1">{name}</span>
+        <span className="banner__text">Профессиональная камера от&nbsp;известного производителя</span>
+        <Link className="btn" to={`${APIRoute.ProductList}/${id}`}>Подробнее</Link>
+      </p>
     </div>
   );
 }
