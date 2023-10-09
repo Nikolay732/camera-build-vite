@@ -1,3 +1,5 @@
+export const PER_PAGE = 9;
+
 export const AppRoute = {
   Catalog: '/',
 } as const;
