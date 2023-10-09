@@ -9,11 +9,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentPage, getProductList, getPromoList} from '../../store/product-data/product-data-selectors';
 import {useEffect} from 'react';
 import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Banner } from '../../components/banner/banner';
-import 'swiper/css';
-import 'swiper/css/autoplay';
 import { PER_PAGE } from '../../const';
+import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
 
 
 export function CatalogPage () {
@@ -42,13 +39,7 @@ export function CatalogPage () {
     <div className="wrapper">
       <Header/>
       <main>
-        <Swiper autoplay>
-          {promoList.map((promoProduct) => (
-            <SwiperSlide key={promoProduct.id}>
-              <Banner promoProduct={promoProduct}/>
-            </SwiperSlide>)
-          )}
-        </Swiper>
+        <BannerSwiper promoList={promoList}/>
         <div className="page-content">
           <Breadcrumbs/>
           <section className="catalog">

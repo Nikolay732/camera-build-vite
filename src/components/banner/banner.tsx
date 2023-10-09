@@ -13,7 +13,7 @@ export function Banner ({promoProduct}: BannerProps) {
     <div className="banner">
       <picture>
         <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x}`}/>
-        <img src={previewImg} srcSet={previewImg2x} width="1280" height="280" alt="баннер"/>
+        <img src={previewImg} srcSet={previewImg2x} width={1280} height={280} alt="баннер"/>
       </picture>
       <p className="banner__info">
         <span className="banner__message">Новинка!</span>
