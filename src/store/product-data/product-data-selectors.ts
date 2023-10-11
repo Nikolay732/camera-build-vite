@@ -7,4 +7,6 @@ export const getPromoList = (state: State) => state[NameSpace.Product].promoList
 
 export const getCurrentPage = (state: State) => state[NameSpace.Product].currentPage;
 
+export const getCurrentProduct = (state: State) => state[NameSpace.Product].currentProduct;
 
+export const getStatusActiveModalAddItem = (state: State) => state[NameSpace.Product].isActiveModalAddItem;

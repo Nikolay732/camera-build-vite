@@ -7,12 +7,16 @@ type InitialState = {
   productList: ProductItem[];
   promoList: PromoItem[];
   currentPage: number;
+  currentProduct: ProductItem | null;
+  isActiveModalAddItem: boolean;
 };
 
 const initialState: InitialState = {
   productList: [],
   promoList: [],
   currentPage: 1,
+  currentProduct: null,
+  isActiveModalAddItem: false,
 };
 
 export const ProductData = createSlice ({
@@ -21,6 +25,12 @@ export const ProductData = createSlice ({
   reducers: {
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
+    },
+    setCurrentProduct: (state, action: PayloadAction<ProductItem>) => {
+      state.currentProduct = action.payload;
+    },
+    setIsActiveModalAddItem: (state, action: PayloadAction<boolean>) => {
+      state.isActiveModalAddItem = action.payload;
     },
   },
   extraReducers (builder) {
@@ -34,4 +44,4 @@ export const ProductData = createSlice ({
   }
 });
 
-export const {setCurrentPage} = ProductData.actions;
+export const {setCurrentPage, setCurrentProduct, setIsActiveModalAddItem} = ProductData.actions;

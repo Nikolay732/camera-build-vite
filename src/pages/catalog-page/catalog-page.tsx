@@ -6,11 +6,12 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCurrentPage, getProductList, getPromoList} from '../../store/product-data/product-data-selectors';
+import { getCurrentPage, getCurrentProduct, getProductList, getPromoList, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
 import {useEffect} from 'react';
 import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
 import { PER_PAGE } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
+import { CatalogAddItem } from '../../components/catalog-add-item/catalog-add-item';
 
 
 export function CatalogPage () {
@@ -23,6 +24,8 @@ export function CatalogPage () {
   const lastProductIndex = currentPage * PER_PAGE;
   const firstProductIndex = lastProductIndex - PER_PAGE;
   const currentProductList = productList.slice(firstProductIndex, lastProductIndex);
+  const currentProduct = useAppSelector(getCurrentProduct);
+  const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
 
   useEffect(() => {
     let isMounted = true;
@@ -52,6 +55,7 @@ export function CatalogPage () {
                   <ProductCardList productList={currentProductList}/>
                   {totalCountPage > 1 && <Pagination totalCountPage={totalCountPage}/>}
                 </div>
+                {currentProduct && <CatalogAddItem product={currentProduct} isActive={isActiveModalAddItem}/>}
               </div>
             </div>
           </section>

@@ -1,13 +1,20 @@
-import { RATINGS } from '../../const';
+import { APIRoute, RATINGS } from '../../const';
 import { ProductItem } from '../../types/product';
 import { Link } from 'react-router-dom';
 import { RatingItem } from '../rating-item/rating-item';
+import { useAppDispatch } from '../../hooks';
+import { setCurrentProduct, setIsActiveModalAddItem } from '../../store/product-data/product-data-slice';
 
 type ProductCardItemProps = {
   product: ProductItem;
 }
 export function ProductCardItem ({product}: ProductCardItemProps) {
+  const dispatch = useAppDispatch();
   const {id, name, price, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x } = product;
+  const handleButtonClick = () => {
+    dispatch(setCurrentProduct(product));
+    dispatch(setIsActiveModalAddItem(true));
+  };
 
   return (
     <div className="product-card">
@@ -28,9 +35,11 @@ export function ProductCardItem ({product}: ProductCardItemProps) {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
+        <button className="btn btn--purple product-card__btn" type="button" onClick={handleButtonClick}>
+          Купить
         </button>
-        <Link className="btn btn--transparent" to={`${id}`}>Подробнее
+        <Link className="btn btn--transparent" to={`${APIRoute.ProductList}/${id}`}>
+          Подробнее
         </Link>
       </div>
     </div>
