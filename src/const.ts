@@ -2,6 +2,7 @@ export const PER_PAGE = 9;
 
 export const AppRoute = {
   Catalog: '/',
+  Product: '/cameras/:cameraId',
 } as const;
 
 export const NameSpace = {

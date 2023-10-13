@@ -6,7 +6,7 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCurrentPage, getCurrentProduct, getProductList, getPromoList, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
+import { getSelectedPage, getSelectedProduct, getProductList, getPromoList, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
 import {useEffect} from 'react';
 import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
 import { PER_PAGE } from '../../const';
@@ -18,13 +18,13 @@ export function CatalogPage () {
   const dispatch = useAppDispatch();
   const productList = useAppSelector(getProductList);
   const promoList = useAppSelector(getPromoList);
-  const currentPage = useAppSelector(getCurrentPage);
+  const currentPage = useAppSelector(getSelectedPage);
   const totalCountProduct = productList.length;
   const totalCountPage = Math.ceil(totalCountProduct / PER_PAGE);
   const lastProductIndex = currentPage * PER_PAGE;
   const firstProductIndex = lastProductIndex - PER_PAGE;
   const currentProductList = productList.slice(firstProductIndex, lastProductIndex);
-  const currentProduct = useAppSelector(getCurrentProduct);
+  const selectedProduct = useAppSelector(getSelectedProduct);
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export function CatalogPage () {
                   <ProductCardList productList={currentProductList}/>
                   {totalCountPage > 1 && <Pagination totalCountPage={totalCountPage}/>}
                 </div>
-                {currentProduct && <CatalogAddItem product={currentProduct} isActive={isActiveModalAddItem}/>}
+                {selectedProduct && <CatalogAddItem product={selectedProduct} isActive={isActiveModalAddItem}/>}
               </div>
             </div>
           </section>

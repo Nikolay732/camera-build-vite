@@ -36,7 +36,7 @@ export function CatalogAddItem ({product, isActive}: CatalogAddItemProps) {
               <ul className="basket-item__list">
                 <li className="basket-item__list-item">
                   <span className="basket-item__article">Артикул:</span>
-                  <span className="basket-item__number">{vendorCode}</span>
+                  <span className="basket-item__number">{` ${vendorCode}`}</span>
                 </li>
                 <li className="basket-item__list-item">{`${type} ${category}`}</li>
                 <li className="basket-item__list-item">{`${level} уровень`}</li>

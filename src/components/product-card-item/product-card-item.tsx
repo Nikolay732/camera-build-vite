@@ -1,9 +1,9 @@
-import { APIRoute, RATINGS } from '../../const';
+import { APIRoute} from '../../const';
 import { ProductItem } from '../../types/product';
 import { Link } from 'react-router-dom';
-import { RatingItem } from '../rating-item/rating-item';
 import { useAppDispatch } from '../../hooks';
 import { setCurrentProduct, setIsActiveModalAddItem } from '../../store/product-data/product-data-slice';
+import { Rating } from '../rating/rating';
 
 type ProductCardItemProps = {
   product: ProductItem;
@@ -11,6 +11,9 @@ type ProductCardItemProps = {
 export function ProductCardItem ({product}: ProductCardItemProps) {
   const dispatch = useAppDispatch();
   const {id, name, price, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x } = product;
+  const sourceSrcSet = `${previewImgWebp}, ${previewImgWebp2x} 2x`;
+  const imgSrcSet = `${previewImg2x} 2x`;
+
   const handleButtonClick = () => {
     dispatch(setCurrentProduct(product));
     dispatch(setIsActiveModalAddItem(true));
@@ -20,13 +23,13 @@ export function ProductCardItem ({product}: ProductCardItemProps) {
     <div className="product-card">
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x}`}/>
-          <img src={previewImg} srcSet={previewImg2x} width={280} height={240} alt={name}/>
+          <source type="image/webp" srcSet={sourceSrcSet}/>
+          <img src={previewImg} srcSet={imgSrcSet} width={280} height={240} alt={name}/>
         </picture>
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          {RATINGS.map((item) => <RatingItem key={item} item={item} rating={rating}/>)}
+          <Rating rating={rating}/>
           <p className="visually-hidden">{`Рейтинг: ${rating}`}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
         </div>
