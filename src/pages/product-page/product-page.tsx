@@ -2,22 +2,28 @@ import { useParams } from 'react-router-dom';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getSelectedProduct } from '../../store/product-data/product-data-selectors';
+import { getDetailedProduct, getSelectedProduct, getSimilarProductList, getStatusActiveModalAddItem } from '../../store/product-data/product-data-selectors';
 import { useEffect } from 'react';
-import { fetchSelectedProductAction } from '../../store/product-data/product-data-thunk';
+import { fetchDetailedProductAction, fetchSimilarProductListAction } from '../../store/product-data/product-data-thunk';
 import { Product } from '../../components/product/product';
 import { Helmet } from 'react-helmet-async';
+import { ProductSimilar } from '../../components/product-similar/product-similar';
+import { CatalogAddItem } from '../../components/catalog-add-item/catalog-add-item';
 
 export function ProductPage () {
   const dispatch = useAppDispatch();
   const {cameraId} = useParams();
+  const detailedProduct = useAppSelector(getDetailedProduct);
+  const similarProductList = useAppSelector(getSimilarProductList);
   const selectedProduct = useAppSelector(getSelectedProduct);
+  const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
 
   useEffect (() => {
     let isMounted = true;
     if (isMounted) {
       if (cameraId) {
-        dispatch(fetchSelectedProductAction(cameraId));
+        dispatch(fetchDetailedProductAction(cameraId));
+        dispatch(fetchSimilarProductListAction(cameraId));
       }
     }
     return () => {
@@ -25,25 +31,29 @@ export function ProductPage () {
     };
   }, [dispatch, cameraId]);
 
-  if (!selectedProduct) {
+  if (!detailedProduct) {
     return <p>Not found</p>;
   }
 
   return (
     <div className="wrapper">
       <Helmet>
-        <title>{selectedProduct.name}</title>
+        <title>{detailedProduct.name}</title>
       </Helmet>
       <Header/>
       <main>
         <div className="page-content">
           <Breadcrumbs/>
           <div className="page-content__section">
-            <Product product={selectedProduct}/>
+            <Product product={detailedProduct}/>
           </div>
-          <div className="page-content__section">
-
-          </div>
+          {
+            similarProductList.length > 0 &&
+            <div className="page-content__section">
+              <ProductSimilar similarProductList={similarProductList}/>
+            </div>
+          }
+          {selectedProduct && <CatalogAddItem product={selectedProduct} isActive={isActiveModalAddItem}/>}
         </div>
       </main>
     </div>

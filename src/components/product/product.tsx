@@ -34,7 +34,7 @@ export function Product ({product}:ProductProps) {
               <use xlinkHref="#icon-add-basket"></use>
             </svg>Добавить в корзину
           </button>
-          <ProductTabs/>
+          <ProductTabs product={product}/>
         </div>
       </div>
     </section>

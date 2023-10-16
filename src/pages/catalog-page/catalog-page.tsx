@@ -6,7 +6,7 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getSelectedPage, getSelectedProduct, getProductList, getPromoList, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
+import { getCurrentPage, getProductList, getPromoList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
 import {useEffect} from 'react';
 import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
 import { PER_PAGE } from '../../const';
@@ -18,7 +18,7 @@ export function CatalogPage () {
   const dispatch = useAppDispatch();
   const productList = useAppSelector(getProductList);
   const promoList = useAppSelector(getPromoList);
-  const currentPage = useAppSelector(getSelectedPage);
+  const currentPage = useAppSelector(getCurrentPage);
   const totalCountProduct = productList.length;
   const totalCountPage = Math.ceil(totalCountProduct / PER_PAGE);
   const lastProductIndex = currentPage * PER_PAGE;

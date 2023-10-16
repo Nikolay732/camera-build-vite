@@ -4,9 +4,9 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import { Banner } from '../../components/banner/banner';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import './banner-swiper.css';
+import { AUTOPLAY_DELAY } from '../../const';
 
 type BannerSwiperProps = {
   promoList: PromoItem[];
@@ -17,7 +17,7 @@ export function BannerSwiper ({promoList}: BannerSwiperProps) {
     <Swiper
       className='mySwiper'
       autoplay={{
-        delay: 3000,
+        delay: AUTOPLAY_DELAY,
         disableOnInteraction: false,
       }}
       pagination={{

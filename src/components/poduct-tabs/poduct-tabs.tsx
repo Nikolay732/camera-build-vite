@@ -1,12 +1,13 @@
-import { useAppSelector } from '../../hooks';
-import { getSelectedProduct } from '../../store/product-data/product-data-selectors';
 import { ProductItem } from '../../types/product';
 import classNames from 'classnames';
 import { useState } from 'react';
 
-export function ProductTabs () {
-  const product = useAppSelector(getSelectedProduct);
-  const {vendorCode, category, type, level, description} = product as ProductItem;
+type ProductTabsProps = {
+  product: ProductItem;
+}
+
+export function ProductTabs ({product}:ProductTabsProps) {
+  const {vendorCode, category, type, level, description} = product;
   const [activeDescription, setActiveDescription] = useState<boolean>(true);
 
   const handleDescriptionButton = () => {

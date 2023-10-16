@@ -19,10 +19,18 @@ export const fetchPromoListAction = createAsyncThunk<PromoItem[], undefined, Thu
   },
 );
 
-export const fetchSelectedProductAction = createAsyncThunk<ProductItem, string, ThunkAPI> (
+export const fetchDetailedProductAction = createAsyncThunk<ProductItem, string, ThunkAPI> (
   `${NameSpace.Product}/fetchSelectedProduct`,
   async (cameraId, {extra: api}) => {
     const {data} = await api.get<ProductItem>(`${APIRoute.ProductList}/${cameraId}`);
+    return data;
+  }
+);
+
+export const fetchSimilarProductListAction = createAsyncThunk<ProductItem[], string, ThunkAPI> (
+  `${NameSpace.Product}/fetchSimilarProductList`,
+  async (cameraId, {extra: api}) => {
+    const {data} = await api.get<ProductItem[]>(`${APIRoute.ProductList}/${cameraId}/similar`);
     return data;
   }
 );

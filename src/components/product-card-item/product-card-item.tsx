@@ -2,29 +2,34 @@ import { APIRoute} from '../../const';
 import { ProductItem } from '../../types/product';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { setCurrentProduct, setIsActiveModalAddItem } from '../../store/product-data/product-data-slice';
+import { setSelectedProduct, setActiveModalAddItemStatus } from '../../store/product-data/product-data-slice';
 import { Rating } from '../rating/rating';
+import classNames from 'classnames';
+import { CSSProperties } from 'react';
 
 type ProductCardItemProps = {
   product: ProductItem;
+  isSimilarProduct?: boolean;
+  style?: CSSProperties;
 }
-export function ProductCardItem ({product}: ProductCardItemProps) {
+export function ProductCardItem ({product, isSimilarProduct, style}: ProductCardItemProps) {
   const dispatch = useAppDispatch();
   const {id, name, price, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x } = product;
-  const sourceSrcSet = `${previewImgWebp}, ${previewImgWebp2x} 2x`;
-  const imgSrcSet = `${previewImg2x} 2x`;
+  const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;
+  const imgSrcSet = `../../${previewImg2x} 2x`;
+  const imgPreview = `../../${previewImg}`;
 
   const handleButtonClick = () => {
-    dispatch(setCurrentProduct(product));
-    dispatch(setIsActiveModalAddItem(true));
+    dispatch(setSelectedProduct(product));
+    dispatch(setActiveModalAddItemStatus(true));
   };
 
   return (
-    <div className="product-card">
+    <div className={classNames('product-card', {'is-active': isSimilarProduct})} style={style}>
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={sourceSrcSet}/>
-          <img src={previewImg} srcSet={imgSrcSet} width={280} height={240} alt={name}/>
+          <img src={imgPreview} srcSet={imgSrcSet} width={280} height={240} alt={name}/>
         </picture>
       </div>
       <div className="product-card__info">

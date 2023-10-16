@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getSelectedPage } from '../../store/product-data/product-data-selectors';
+import { getCurrentPage } from '../../store/product-data/product-data-selectors';
 import { setCurrentPage } from '../../store/product-data/product-data-slice';
 import { PaginationItem } from '../pagination-item/pagination-item';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ type PaginationProps = {
 
 export function Pagination ({totalCountPage}: PaginationProps) {
   const dispatch = useAppDispatch();
-  const currentPage = useAppSelector(getSelectedPage);
+  const currentPage = useAppSelector(getCurrentPage);
   const pageAllNumbers = [...Array(totalCountPage).keys()];
   const prevPage = currentPage - 1;
   const nextPage = currentPage + 2;

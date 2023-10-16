@@ -1,22 +1,26 @@
 import { NameSpace } from '../../const';
 import { ProductItem, PromoItem } from '../../types/product';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { fetchProductListAction, fetchPromoListAction, fetchSelectedProductAction } from './product-data-thunk';
+import { fetchProductListAction, fetchPromoListAction, fetchDetailedProductAction, fetchSimilarProductListAction } from './product-data-thunk';
 
 type InitialState = {
   productList: ProductItem[];
   promoList: PromoItem[];
-  selectedPage: number;
+  currentPage: number;
+  detailedProduct: ProductItem | null;
   selectedProduct: ProductItem | null;
   isActiveModalAddItem: boolean;
+  similarProductList: ProductItem[];
 };
 
 const initialState: InitialState = {
   productList: [],
   promoList: [],
-  selectedPage: 1,
+  currentPage: 1,
+  detailedProduct: null,
   selectedProduct: null,
   isActiveModalAddItem: false,
+  similarProductList: [],
 };
 
 export const ProductData = createSlice ({
@@ -24,12 +28,12 @@ export const ProductData = createSlice ({
   initialState,
   reducers: {
     setCurrentPage: (state, action: PayloadAction<number>) => {
-      state.selectedPage = action.payload;
+      state.currentPage = action.payload;
     },
-    setCurrentProduct: (state, action: PayloadAction<ProductItem>) => {
+    setSelectedProduct: (state, action: PayloadAction<ProductItem>) => {
       state.selectedProduct = action.payload;
     },
-    setIsActiveModalAddItem: (state, action: PayloadAction<boolean>) => {
+    setActiveModalAddItemStatus: (state, action: PayloadAction<boolean>) => {
       state.isActiveModalAddItem = action.payload;
     },
   },
@@ -41,10 +45,13 @@ export const ProductData = createSlice ({
       .addCase(fetchPromoListAction.fulfilled, (state, action) => {
         state.promoList = action.payload;
       })
-      .addCase(fetchSelectedProductAction.fulfilled, (state, action) => {
-        state.selectedProduct = action.payload;
+      .addCase(fetchDetailedProductAction.fulfilled, (state, action) => {
+        state.detailedProduct = action.payload;
+      })
+      .addCase(fetchSimilarProductListAction.fulfilled, (state, action) => {
+        state.similarProductList = action.payload;
       });
   }
 });
 
-export const {setCurrentPage, setCurrentProduct, setIsActiveModalAddItem} = ProductData.actions;
+export const {setCurrentPage, setSelectedProduct, setActiveModalAddItemStatus} = ProductData.actions;

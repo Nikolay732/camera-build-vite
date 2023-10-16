@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks';
-import { setIsActiveModalAddItem } from '../../store/product-data/product-data-slice';
+import { setActiveModalAddItemStatus } from '../../store/product-data/product-data-slice';
 import { ProductItem } from '../../types/product';
 import classNames from 'classnames';
 
@@ -11,11 +11,15 @@ type CatalogAddItemProps = {
 export function CatalogAddItem ({product, isActive}: CatalogAddItemProps) {
   const dispatch = useAppDispatch();
   const {name, vendorCode, type, category, level, price, previewImgWebp, previewImgWebp2x, previewImg, previewImg2x} = product;
+  const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;
+  const imgSrcSet = `../../${previewImg2x} 2x`;
+  const imgPreview = `../../${previewImg}`;
+
   const handleButtonAddBasketClick = () => {
     //dispatch(addBusket(product))
   };
   const hanldeButtonCloseClick = () => {
-    dispatch(setIsActiveModalAddItem(false));
+    dispatch(setActiveModalAddItemStatus(false));
   };
 
   return (
@@ -27,8 +31,8 @@ export function CatalogAddItem ({product, isActive}: CatalogAddItemProps) {
           <div className="basket-item basket-item--short">
             <div className="basket-item__img">
               <picture>
-                <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x}`}/>
-                <img src={previewImg} srcSet={previewImg2x} width={140} height={120} alt={name}/>
+                <source type="image/webp" srcSet={sourceSrcSet}/>
+                <img src={imgPreview} srcSet={imgSrcSet} width={140} height={120} alt={name}/>
               </picture>
             </div>
             <div className="basket-item__description">
