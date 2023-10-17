@@ -9,6 +9,10 @@ import { Product } from '../../components/product/product';
 import { Helmet } from 'react-helmet-async';
 import { ProductSimilar } from '../../components/product-similar/product-similar';
 import { CatalogAddItem } from '../../components/catalog-add-item/catalog-add-item';
+import { Reviews } from '../../components/reviews/reviews';
+import { fetchReviewsListAction } from '../../store/reviews-data/reviews-data-thunk';
+import { UpButton } from '../../components/up-button/up-button';
+import { Footer } from '../../components/footer/footer';
 
 export function ProductPage () {
   const dispatch = useAppDispatch();
@@ -24,6 +28,7 @@ export function ProductPage () {
       if (cameraId) {
         dispatch(fetchDetailedProductAction(cameraId));
         dispatch(fetchSimilarProductListAction(cameraId));
+        dispatch(fetchReviewsListAction(cameraId));
       }
     }
     return () => {
@@ -54,8 +59,13 @@ export function ProductPage () {
             </div>
           }
           {selectedProduct && <CatalogAddItem product={selectedProduct} isActive={isActiveModalAddItem}/>}
+          <div className="page-content__section">
+            <Reviews/>
+          </div>
         </div>
       </main>
+      <UpButton/>
+      <Footer/>
     </div>
   );
 }

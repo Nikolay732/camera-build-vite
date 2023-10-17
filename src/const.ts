@@ -2,6 +2,11 @@ export const PER_PAGE = 9;
 
 export const AUTOPLAY_DELAY = 3000;
 
+export const FormatDate = {
+  Date: 'DD MMMM',
+  DateTime: 'YYYY-MM-DD',
+} as const;
+
 export const SimilarSwiperSetting = {
   SlidesPerView: 3,
   SlidesPerGroup: 3,
@@ -15,6 +20,7 @@ export const AppRoute = {
 
 export const NameSpace = {
   Product: 'PRODUCT',
+  Reviews: 'REVIEWS',
 } as const;
 
 export const APIRoute = {
