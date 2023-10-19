@@ -5,10 +5,10 @@ import classNames from 'classnames';
 
 type CatalogAddItemProps = {
   product: ProductItem;
-  isActive: boolean;
+  isActiveModalAddItem: boolean;
 }
 
-export function CatalogAddItem ({product, isActive}: CatalogAddItemProps) {
+export function CatalogAddItem ({product, isActiveModalAddItem: isActive}: CatalogAddItemProps) {
   const dispatch = useAppDispatch();
   const {name, vendorCode, type, category, level, price, previewImgWebp, previewImgWebp2x, previewImg, previewImg2x} = product;
   const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;

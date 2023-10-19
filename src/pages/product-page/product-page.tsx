@@ -13,6 +13,8 @@ import { Reviews } from '../../components/reviews/reviews';
 import { fetchReviewsListAction } from '../../store/reviews-data/reviews-data-thunk';
 import { UpButton } from '../../components/up-button/up-button';
 import { Footer } from '../../components/footer/footer';
+import { ReviewModal } from '../../components/review-modal/review-modal';
+import { getStatusActiveModalReview } from '../../store/reviews-data/reviews-data-selectors';
 
 export function ProductPage () {
   const dispatch = useAppDispatch();
@@ -21,6 +23,7 @@ export function ProductPage () {
   const similarProductList = useAppSelector(getSimilarProductList);
   const selectedProduct = useAppSelector(getSelectedProduct);
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
+  const isActiveModalReview = useAppSelector(getStatusActiveModalReview);
 
   useEffect (() => {
     let isMounted = true;
@@ -58,11 +61,12 @@ export function ProductPage () {
               <ProductSimilar similarProductList={similarProductList}/>
             </div>
           }
-          {selectedProduct && <CatalogAddItem product={selectedProduct} isActive={isActiveModalAddItem}/>}
+          {selectedProduct && <CatalogAddItem product={selectedProduct} isActiveModalAddItem={isActiveModalAddItem}/>}
           <div className="page-content__section">
             <Reviews/>
           </div>
         </div>
+        <ReviewModal isActiveModalReview={isActiveModalReview}/>
       </main>
       <UpButton/>
       <Footer/>

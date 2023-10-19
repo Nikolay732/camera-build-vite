@@ -55,7 +55,7 @@ export function CatalogPage () {
                   <ProductCardList productList={currentProductList}/>
                   {totalCountPage > 1 && <Pagination totalCountPage={totalCountPage}/>}
                 </div>
-                {selectedProduct && <CatalogAddItem product={selectedProduct} isActive={isActiveModalAddItem}/>}
+                {selectedProduct && <CatalogAddItem product={selectedProduct} isActiveModalAddItem={isActiveModalAddItem}/>}
               </div>
             </div>
           </section>

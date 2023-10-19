@@ -1,24 +1,35 @@
 import { getReviewsList } from '../../store/reviews-data/reviews-data-selectors';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ReviewCard } from '../review-card/review-card';
 import {useState} from 'react';
+import { setActiveModalReviewStatus } from '../../store/reviews-data/reviews-data-slice';
 
 export function Reviews () {
+  const dispatch = useAppDispatch();
   const reviewList = useAppSelector(getReviewsList);
   const [lastReviewItemIndex, setLastReviewItemIndex] = useState<number>(3);
   const currentReviewList = reviewList.slice(0, lastReviewItemIndex);
 
-  const handleButtonClick = () => {
+  const handleButtonShowRevievsClick = () => {
     setLastReviewItemIndex((prev) => prev + 3);
   };
 
+  const handleButtonOpenModalClick = () => {
+    dispatch(setActiveModalReviewStatus(true));
+  };
 
   return (
     <section className="review-block">
       <div className="container">
         <div className="page-content__headed">
           <h2 className="title title--h3">Отзывы</h2>
-          <button className="btn" type="button">Оставить свой отзыв</button>
+          <button
+            className="btn"
+            type="button"
+            onClick={handleButtonOpenModalClick}
+          >
+            Оставить свой отзыв
+          </button>
         </div>
         <ul className="review-block__list">
           {currentReviewList.map((review) => <ReviewCard key={review.id} reviewItem={review}/>)}
@@ -29,7 +40,7 @@ export function Reviews () {
             <button
               className="btn btn--purple"
               type="button"
-              onClick={handleButtonClick}
+              onClick={handleButtonShowRevievsClick}
             >
               Показать больше отзывов
             </button>
