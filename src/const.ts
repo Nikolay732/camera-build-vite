@@ -31,3 +31,10 @@ export const APIRoute = {
 
 export const RATINGS = [1, 2, 3, 4, 5] as const;
 
+export const ReviewRatingValue = {
+  '1': 'Отлично',
+  '2': 'Хорошо',
+  '3': 'Нормально',
+  '4': 'Плохо',
+  '5': 'Ужасно',
+};

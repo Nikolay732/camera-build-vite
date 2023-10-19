@@ -6,11 +6,13 @@ import { fetchReviewsListAction } from './reviews-data-thunk';
 type InitialState = {
   reviews: Review[];
   isActiveModalReview: boolean;
+  currentRating: string;
 }
 
 const initialState: InitialState = {
   reviews: [],
   isActiveModalReview: false,
+  currentRating: '',
 };
 
 export const ReviewsData = createSlice ({
@@ -19,6 +21,9 @@ export const ReviewsData = createSlice ({
   reducers: {
     setActiveModalReviewStatus: (state, action: PayloadAction<boolean>) => {
       state.isActiveModalReview = action.payload;
+    },
+    setCurrentRating: (state, action: PayloadAction<string>) => {
+      state.currentRating = action.payload;
     },
   },
   extraReducers (builder) {
@@ -29,4 +34,4 @@ export const ReviewsData = createSlice ({
   }
 });
 
-export const {setActiveModalReviewStatus} = ReviewsData.actions;
+export const {setActiveModalReviewStatus, setCurrentRating} = ReviewsData.actions;

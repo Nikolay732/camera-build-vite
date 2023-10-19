@@ -1,6 +1,9 @@
 import classNames from 'classnames';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setActiveModalReviewStatus } from '../../store/reviews-data/reviews-data-slice';
+import { ReviewRatingValue } from '../../const';
+import { ReviewRatingStar } from '../review-rating-star/review-rating-star';
+import { getCurrentRating } from '../../store/reviews-data/reviews-data-selectors';
 
 type ReviewModalProps = {
   isActiveModalReview: boolean;
@@ -8,7 +11,7 @@ type ReviewModalProps = {
 
 export function ReviewModal ({isActiveModalReview}: ReviewModalProps) {
   const dispatch = useAppDispatch();
-
+  const currentRating = useAppSelector(getCurrentRating);
   const handleButtonCloseModalClick = () => {
     dispatch(setActiveModalReviewStatus(false));
   };
@@ -30,19 +33,16 @@ export function ReviewModal ({isActiveModalReview}: ReviewModalProps) {
                   </legend>
                   <div className="rate__bar">
                     <div className="rate__group">
-                      <input className="visually-hidden" id="star-5" name="rate" type="radio" value="5"/>
-                      <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
-                      <input className="visually-hidden" id="star-4" name="rate" type="radio" value="4"/>
-                      <label className="rate__label" htmlFor="star-4" title="Хорошо"></label>
-                      <input className="visually-hidden" id="star-3" name="rate" type="radio" value="3"/>
-                      <label className="rate__label" htmlFor="star-3" title="Нормально"></label>
-                      <input className="visually-hidden" id="star-2" name="rate" type="radio" value="2"/>
-                      <label className="rate__label" htmlFor="star-2" title="Плохо"></label>
-                      <input className="visually-hidden" id="star-1" name="rate" type="radio" value="1"/>
-                      <label className="rate__label" htmlFor="star-1" title="Ужасно"></label>
+                      {
+                        Object.entries(ReviewRatingValue)
+                          .reverse()
+                          .map(([score, title]) => (
+                            <ReviewRatingStar score={score} key={score} title={title}/>
+                          ))
+                      }
                     </div>
                     <div className="rate__progress">
-                      <span className="rate__stars">0</span> <span>/</span> <span className="rate__all-stars">5</span>
+                      <span className="rate__stars">{currentRating}</span> <span>/</span> <span className="rate__all-stars">5</span>
                     </div>
                   </div>
                   <p className="rate__message">Нужно оценить товар</p>
