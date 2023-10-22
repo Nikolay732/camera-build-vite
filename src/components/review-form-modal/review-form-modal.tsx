@@ -9,7 +9,9 @@ import {DevTool} from '@hookform/devtools';
 import { postReviewAction } from '../../store/reviews-data/reviews-data-thunk';
 import { useParams } from 'react-router-dom';
 import { PostReview } from '../../types/review';
-import { useEffect } from 'react';
+import {useCallback} from 'react';
+import { useEscKeyDown } from '../../hooks/use-esc-key-down';
+import { useSubmitSuccessful } from '../../hooks/use-submit-successful';
 
 type ReviewFormModalProps = {
   isActiveModalReview: boolean;
@@ -54,25 +56,20 @@ export function ReviewFormModal ({isActiveModalReview}: ReviewFormModalProps) {
     }
   };
 
-  const handleButtonCloseModalClick = () => {
+  const handleButtonCloseModalClick = useCallback(() => {
     dispatch(setActiveModalReviewStatus(false));
     dispatch(setCurrentRating(0));
     reset();
-  };
+  }, [dispatch, reset]);
 
-  useEffect (() => {
-    if (isSubmitSuccessful) {
-      reset();
-      dispatch(setActiveModalReviewStatus(false));
-      dispatch(setCurrentRating(0));
-    }
-  }, [isSubmitSuccessful, reset, dispatch]);
+  useSubmitSuccessful(isSubmitSuccessful, handleButtonCloseModalClick);
 
+  useEscKeyDown(handleButtonCloseModalClick);
 
   return (
     <div className={classNames('modal', {'is-active': isActiveModalReview})}>
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
+        <div className="modal__overlay" onClick={handleButtonCloseModalClick}></div>
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">

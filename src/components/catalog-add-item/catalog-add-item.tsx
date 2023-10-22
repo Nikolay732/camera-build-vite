@@ -1,4 +1,5 @@
 import { useAppDispatch } from '../../hooks';
+import { useEscKeyDown } from '../../hooks/use-esc-key-down';
 import { setActiveModalAddItemStatus } from '../../store/product-data/product-data-slice';
 import { ProductItem } from '../../types/product';
 import classNames from 'classnames';
@@ -22,10 +23,12 @@ export function CatalogAddItem ({product, isActiveModalAddItem: isActive}: Catal
     dispatch(setActiveModalAddItemStatus(false));
   };
 
+  useEscKeyDown(hanldeButtonCloseClick);
+
   return (
     <div className={classNames('modal', {'is-active': isActive})}>
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
+        <div className="modal__overlay" onClick={hanldeButtonCloseClick}></div>
         <div className="modal__content">
           <p className="title title--h4">Добавить товар в корзину</p>
           <div className="basket-item basket-item--short">
