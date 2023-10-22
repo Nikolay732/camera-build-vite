@@ -1,18 +1,18 @@
 import { Review } from '../../types/review';
 import { NameSpace } from '../../const';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { fetchReviewsListAction } from './reviews-data-thunk';
+import { fetchReviewsListAction, postReviewAction } from './reviews-data-thunk';
 
 type InitialState = {
   reviews: Review[];
   isActiveModalReview: boolean;
-  currentRating: string;
+  currentRating: number;
 }
 
 const initialState: InitialState = {
   reviews: [],
   isActiveModalReview: false,
-  currentRating: '',
+  currentRating: 0,
 };
 
 export const ReviewsData = createSlice ({
@@ -22,7 +22,7 @@ export const ReviewsData = createSlice ({
     setActiveModalReviewStatus: (state, action: PayloadAction<boolean>) => {
       state.isActiveModalReview = action.payload;
     },
-    setCurrentRating: (state, action: PayloadAction<string>) => {
+    setCurrentRating: (state, action: PayloadAction<number>) => {
       state.currentRating = action.payload;
     },
   },
@@ -30,6 +30,9 @@ export const ReviewsData = createSlice ({
     builder
       .addCase(fetchReviewsListAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
+      })
+      .addCase(postReviewAction.fulfilled, (state, action) => {
+        state.reviews.push(action.payload);
       });
   }
 });

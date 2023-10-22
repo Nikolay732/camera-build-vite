@@ -13,7 +13,7 @@ import { Reviews } from '../../components/reviews/reviews';
 import { fetchReviewsListAction } from '../../store/reviews-data/reviews-data-thunk';
 import { UpButton } from '../../components/up-button/up-button';
 import { Footer } from '../../components/footer/footer';
-import { ReviewModal } from '../../components/review-modal/review-modal';
+import { ReviewFormModal } from '../../components/review-form-modal/review-form-modal';
 import { getStatusActiveModalReview } from '../../store/reviews-data/reviews-data-selectors';
 
 export function ProductPage () {
@@ -29,9 +29,9 @@ export function ProductPage () {
     let isMounted = true;
     if (isMounted) {
       if (cameraId) {
-        dispatch(fetchDetailedProductAction(cameraId));
-        dispatch(fetchSimilarProductListAction(cameraId));
-        dispatch(fetchReviewsListAction(cameraId));
+        dispatch(fetchDetailedProductAction(Number(cameraId)));
+        dispatch(fetchSimilarProductListAction(Number(cameraId)));
+        dispatch(fetchReviewsListAction(Number(cameraId)));
       }
     }
     return () => {
@@ -66,7 +66,7 @@ export function ProductPage () {
             <Reviews/>
           </div>
         </div>
-        <ReviewModal isActiveModalReview={isActiveModalReview}/>
+        <ReviewFormModal isActiveModalReview={isActiveModalReview}/>
       </main>
       <UpButton/>
       <Footer/>

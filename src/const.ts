@@ -27,6 +27,7 @@ export const APIRoute = {
   ProductList: '/cameras',
   PromoList: '/promo',
   SimilarProductList: '/similar',
+  ReviewPost: '/reviews',
 } as const;
 
 export const RATINGS = [1, 2, 3, 4, 5] as const;
@@ -37,4 +38,4 @@ export const ReviewRatingValue = {
   '3': 'Нормально',
   '4': 'Плохо',
   '5': 'Ужасно',
-};
+} as const;
