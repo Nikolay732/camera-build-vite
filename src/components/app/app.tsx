@@ -3,6 +3,7 @@ import { CatalogPage } from '../../pages/catalog-page/catalog-page';
 import { AppRoute } from '../../const';
 import { HelmetProvider } from 'react-helmet-async';
 import { ProductPage } from '../../pages/product-page/product-page';
+import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
   {
     path: AppRoute.Product,
     element: <ProductPage/>
+  },
+  {
+    path: '*',
+    element: <NotFoundPage/>
   },
 ]);
 

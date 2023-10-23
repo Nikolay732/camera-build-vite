@@ -22,7 +22,7 @@ export function Product ({product}:ProductProps) {
           </picture>
         </div>
         <div className="product__content">
-          <h1 className="title title--h3">Ретрокамера Das Auge IV</h1>
+          <h1 className="title title--h3">{name}</h1>
           <div className="rate product__rate">
             <Rating rating={rating}/>
             <p className="visually-hidden">{`Рейтинг: ${rating}`}</p>

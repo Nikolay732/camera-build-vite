@@ -9,12 +9,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCatalogPageDataLoadStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getProductList, getPromoList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
 import {useEffect} from 'react';
 import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
-import { PER_PAGE } from '../../const';
+import { AppRoute, PER_PAGE } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
 import { CatalogAddItem } from '../../components/catalog-add-item/catalog-add-item';
 import { Spinner } from '../../components/spinner/spinner';
 import { NotFoundPage } from '../not-found-page/not-found-page';
-
+import { Helmet } from 'react-helmet-async';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
@@ -52,11 +52,14 @@ export function CatalogPage () {
 
   return (
     <div className="wrapper">
+      <Helmet>
+        <title>Catalog</title>
+      </Helmet>
       <Header/>
       <main>
         <BannerSwiper promoList={promoList}/>
         <div className="page-content">
-          <Breadcrumbs/>
+          <Breadcrumbs page={AppRoute.Catalog}/>
           <section className="catalog">
             <div className="container">
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
