@@ -16,9 +16,6 @@ export function CatalogAddItem ({product, isActiveModalAddItem: isActive}: Catal
   const imgSrcSet = `../../${previewImg2x} 2x`;
   const imgPreview = `../../${previewImg}`;
 
-  const handleButtonAddBasketClick = () => {
-    //dispatch(addBusket(product))
-  };
   const hanldeButtonCloseClick = () => {
     dispatch(setActiveModalAddItemStatus(false));
   };
@@ -52,7 +49,7 @@ export function CatalogAddItem ({product, isActiveModalAddItem: isActive}: Catal
             </div>
           </div>
           <div className="modal__buttons">
-            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={handleButtonAddBasketClick}>
+            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button">
               <svg width={24} height={16} aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
               </svg>Добавить в корзину
