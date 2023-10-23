@@ -6,12 +6,14 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCurrentPage, getProductList, getPromoList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
+import { getCatalogPageDataLoadStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getProductList, getPromoList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
 import {useEffect} from 'react';
 import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
 import { PER_PAGE } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
 import { CatalogAddItem } from '../../components/catalog-add-item/catalog-add-item';
+import { Spinner } from '../../components/spinner/spinner';
+import { NotFoundPage } from '../not-found-page/not-found-page';
 
 
 export function CatalogPage () {
@@ -26,6 +28,8 @@ export function CatalogPage () {
   const currentProductList = productList.slice(firstProductIndex, lastProductIndex);
   const selectedProduct = useAppSelector(getSelectedProduct);
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
+  const isLoadData = useAppSelector(getCatalogPageDataLoadStatus);
+  const hasError = useAppSelector(getCatalogPageErrorLoadStatus);
 
   useEffect(() => {
     let isMounted = true;
@@ -37,6 +41,14 @@ export function CatalogPage () {
       isMounted = false;
     };
   }, [dispatch]);
+
+  if (isLoadData) {
+    return <Spinner/>;
+  }
+
+  if (hasError) {
+    return <NotFoundPage/>;
+  }
 
   return (
     <div className="wrapper">
