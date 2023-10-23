@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getDetailedProduct, getSelectedProduct, getSimilarProductList, getStatusActiveModalAddItem } from '../../store/product-data/product-data-selectors';
+import { getDetailedProduct, getProductPageDataLoadStatus, getProductPageErrorLoadStatus, getSelectedProduct, getSimilarProductList, getStatusActiveModalAddItem } from '../../store/product-data/product-data-selectors';
 import { useEffect } from 'react';
 import { fetchDetailedProductAction, fetchSimilarProductListAction } from '../../store/product-data/product-data-thunk';
 import { Product } from '../../components/product/product';
@@ -15,6 +15,8 @@ import { UpButton } from '../../components/up-button/up-button';
 import { Footer } from '../../components/footer/footer';
 import { ReviewFormModal } from '../../components/review-form-modal/review-form-modal';
 import { getStatusActiveModalReview } from '../../store/reviews-data/reviews-data-selectors';
+import { NotFoundPage } from '../not-found-page/not-found-page';
+import { Spinner } from '../../components/spinner/spinner';
 
 export function ProductPage () {
   const dispatch = useAppDispatch();
@@ -24,6 +26,8 @@ export function ProductPage () {
   const selectedProduct = useAppSelector(getSelectedProduct);
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
   const isActiveModalReview = useAppSelector(getStatusActiveModalReview);
+  const isLoadingData = useAppSelector(getProductPageDataLoadStatus);
+  const hasError = useAppSelector(getProductPageErrorLoadStatus);
 
   useEffect (() => {
     let isMounted = true;
@@ -39,8 +43,12 @@ export function ProductPage () {
     };
   }, [dispatch, cameraId]);
 
-  if (!detailedProduct) {
-    return <p>Not found</p>;
+  if (isLoadingData) {
+    return <Spinner/>;
+  }
+
+  if (hasError || detailedProduct === null) {
+    return <NotFoundPage/>;
   }
 
   return (

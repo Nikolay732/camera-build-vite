@@ -28,7 +28,7 @@ export function CatalogPage () {
   const currentProductList = productList.slice(firstProductIndex, lastProductIndex);
   const selectedProduct = useAppSelector(getSelectedProduct);
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
-  const isLoadData = useAppSelector(getCatalogPageDataLoadStatus);
+  const isLoadingData = useAppSelector(getCatalogPageDataLoadStatus);
   const hasError = useAppSelector(getCatalogPageErrorLoadStatus);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export function CatalogPage () {
     };
   }, [dispatch]);
 
-  if (isLoadData) {
+  if (isLoadingData) {
     return <Spinner/>;
   }
 
