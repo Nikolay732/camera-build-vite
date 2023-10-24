@@ -17,7 +17,6 @@ import { ReviewFormModal } from '../../components/review-form-modal/review-form-
 import { getStatusActiveModalReview } from '../../store/reviews-data/reviews-data-selectors';
 import { NotFoundPage } from '../not-found-page/not-found-page';
 import { Spinner } from '../../components/spinner/spinner';
-import { AppRoute } from '../../const';
 
 export function ProductPage () {
   const dispatch = useAppDispatch();
@@ -60,7 +59,7 @@ export function ProductPage () {
       <Header/>
       <main>
         <div className="page-content">
-          <Breadcrumbs page={AppRoute.Product} breadCrumb={detailedProduct.name}/>
+          <Breadcrumbs/>
           <div className="page-content__section">
             <Product product={detailedProduct}/>
           </div>

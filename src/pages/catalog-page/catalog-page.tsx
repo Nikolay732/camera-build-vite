@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCatalogPageDataLoadStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getProductList, getPromoList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
 import {useEffect} from 'react';
 import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
-import { AppRoute, PER_PAGE } from '../../const';
+import { PER_PAGE } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
 import { CatalogAddItem } from '../../components/catalog-add-item/catalog-add-item';
 import { Spinner } from '../../components/spinner/spinner';
@@ -59,7 +59,7 @@ export function CatalogPage () {
       <main>
         <BannerSwiper promoList={promoList}/>
         <div className="page-content">
-          <Breadcrumbs page={AppRoute.Catalog}/>
+          <Breadcrumbs isCatalogPage/>
           <section className="catalog">
             <div className="container">
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
