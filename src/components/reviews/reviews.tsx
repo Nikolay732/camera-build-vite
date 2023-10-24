@@ -3,12 +3,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ReviewCard } from '../review-card/review-card';
 import {useState} from 'react';
 import { setActiveModalReviewStatus } from '../../store/reviews-data/reviews-data-slice';
+import { getSortByDate } from '../../utils';
 
 export function Reviews () {
   const dispatch = useAppDispatch();
   const reviewList = useAppSelector(getReviewsList);
   const [lastReviewItemIndex, setLastReviewItemIndex] = useState<number>(3);
-  const currentReviewList = reviewList.slice(0, lastReviewItemIndex);
+  const currentReviewList = reviewList.slice().sort(getSortByDate).slice(0, lastReviewItemIndex);
 
   const handleButtonShowRevievsClick = () => {
     setLastReviewItemIndex((prev) => prev + 3);
