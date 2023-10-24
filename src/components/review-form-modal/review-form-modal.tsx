@@ -10,7 +10,7 @@ import { postReviewAction } from '../../store/reviews-data/reviews-data-thunk';
 import { useParams } from 'react-router-dom';
 import { PostReview } from '../../types/review';
 import {useCallback} from 'react';
-import { useEscKeyDown } from '../../hooks/use-esc-key-down';
+import { useModal } from '../../hooks/use-esc-key-down';
 import { useSubmitSuccessful } from '../../hooks/use-submit-successful';
 
 type ReviewFormModalProps = {
@@ -64,7 +64,7 @@ export function ReviewFormModal ({isActiveModalReview}: ReviewFormModalProps) {
 
   useSubmitSuccessful(isSubmitSuccessful, handleButtonCloseModalClick);
 
-  useEscKeyDown(handleButtonCloseModalClick);
+  useModal(handleButtonCloseModalClick, isActiveModalReview);
 
   return (
     <div className={classNames('modal', {'is-active': isActiveModalReview})}>

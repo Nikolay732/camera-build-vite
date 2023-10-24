@@ -1,6 +1,7 @@
 import {useEffect} from 'react';
 
-export function useEscKeyDown (onClickCloseModal: () => void) {
+export function useModal (onClickCloseModal: () => void, isActiveModal: boolean) {
+
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
@@ -10,12 +11,16 @@ export function useEscKeyDown (onClickCloseModal: () => void) {
         }
       };
       window.addEventListener('keydown', handleEscKeydown);
+      if (isActiveModal) {
+        document.body.style.overflow = 'hidden';
+      }
       return () => {
         window.removeEventListener('keydown', handleEscKeydown);
+        document.body.style.overflow = '';
       };
     }
     return () => {
       isMounted = false;
     };
-  }, [onClickCloseModal]);
+  }, [onClickCloseModal, isActiveModal]);
 }
