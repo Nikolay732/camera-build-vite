@@ -6,7 +6,7 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCatalogPageDataLoadStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getProductList, getPromoList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
+import { getCatalogPageDataLoadStatus, getCatalogPageErrorLoadStatus, getProductList, getPromoList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
 import {useEffect} from 'react';
 import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
 import { PER_PAGE } from '../../const';
@@ -15,12 +15,17 @@ import { CatalogAddItem } from '../../components/catalog-add-item/catalog-add-it
 import { Spinner } from '../../components/spinner/spinner';
 import { NotFoundPage } from '../not-found-page/not-found-page';
 import { Helmet } from 'react-helmet-async';
+import { useSearchParams } from 'react-router-dom';
+import { setCurrentPage } from '../../store/product-data/product-data-slice';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
   const productList = useAppSelector(getProductList);
   const promoList = useAppSelector(getPromoList);
-  const currentPage = useAppSelector(getCurrentPage);
+  const [searchParams] = useSearchParams();
+  const pageNumberURL = searchParams.get('page');
+  const currentPage = pageNumberURL ? Number(pageNumberURL) : 1;
+  dispatch(setCurrentPage(currentPage));
   const totalCountProduct = productList.length;
   const totalCountPage = Math.ceil(totalCountProduct / PER_PAGE);
   const lastProductIndex = currentPage * PER_PAGE;
