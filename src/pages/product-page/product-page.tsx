@@ -14,7 +14,7 @@ import { fetchReviewsListAction } from '../../store/reviews-data/reviews-data-th
 import { UpButton } from '../../components/up-button/up-button';
 import { Footer } from '../../components/footer/footer';
 import { ReviewFormModal } from '../../components/review-form-modal/review-form-modal';
-import { getStatusActiveModalReview, getStatusActiveModalReviewSucces } from '../../store/reviews-data/reviews-data-selectors';
+import { getStatusActiveModalReview, getStatusActiveModalReviewSucces} from '../../store/reviews-data/reviews-data-selectors';
 import { NotFoundPage } from '../not-found-page/not-found-page';
 import { Spinner } from '../../components/spinner/spinner';
 import { ReviewSuccessModal } from '../../components/review-success-modal/review-success-modal';
@@ -71,12 +71,12 @@ export function ProductPage () {
               <ProductSimilar similarProductList={similarProductList}/>
             </div>
           }
-          {selectedProduct && <CatalogAddItemModal product={selectedProduct} isActiveModalAddItem={isActiveModalAddItem}/>}
+          {selectedProduct && <CatalogAddItemModal product={selectedProduct} isActive={isActiveModalAddItem}/>}
           <div className="page-content__section">
             <Reviews/>
           </div>
         </div>
-        {isActiveModalReview && <ReviewFormModal isActiveModalReview={isActiveModalReview}/>}
+        {isActiveModalReview && <ReviewFormModal isActive={isActiveModalReview}/>}
         {isActiveModalReviewSuccess && <ReviewSuccessModal isActive={isActiveModalReviewSuccess}/>}
       </main>
       <UpButton/>

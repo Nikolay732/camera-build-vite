@@ -25,7 +25,6 @@ export function CatalogPage () {
   const [searchParams] = useSearchParams();
   const pageNumberURL = searchParams.get('page');
   const currentPage = pageNumberURL ? Number(pageNumberURL) : 1;
-  dispatch(setCurrentPage(currentPage));
   const totalCountProduct = productList.length;
   const totalCountPage = Math.ceil(totalCountProduct / PER_PAGE);
   const lastProductIndex = currentPage * PER_PAGE;
@@ -41,11 +40,12 @@ export function CatalogPage () {
     if (isMounted) {
       dispatch(fetchProductListAction());
       dispatch(fetchPromoListAction());
+      dispatch(setCurrentPage(currentPage));
     }
     return () => {
       isMounted = false;
     };
-  }, [dispatch]);
+  }, [dispatch, currentPage]);
 
   if (isLoadingData) {
     return <Spinner/>;
@@ -75,7 +75,7 @@ export function CatalogPage () {
                   <ProductCardList productList={currentProductList}/>
                   {totalCountPage > 1 && <Pagination totalCountPage={totalCountPage}/>}
                 </div>
-                {selectedProduct && <CatalogAddItemModal product={selectedProduct} isActiveModalAddItem={isActiveModalAddItem}/>}
+                {selectedProduct && <CatalogAddItemModal product={selectedProduct} isActive={isActiveModalAddItem}/>}
               </div>
             </div>
           </section>
