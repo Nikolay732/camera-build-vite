@@ -1,12 +1,13 @@
+import { ProductCategoryValue, ProductLevelValue, ProductTypeValue } from '../const';
 
 export type ProductItem = {
   id: number;
   name: string;
   vendorCode: string;
-  type: 'Коллекционная'| 'Моментальная' | 'Цифровая' | 'Плёночная';
-  category: 'Видеокамера' | 'Фотоаппарат';
+  type: ProductType;
+  category: ProductCategory;
   description: string;
-  level: 'Нулевой'| 'Любительский'| 'Профессиональный';
+  level: ProductLevel;
   price: number;
   rating: number;
   reviewCount: number;
@@ -24,3 +25,9 @@ export type PromoItem = {
   previewImgWebp: string;
   previewImgWebp2x: string;
 }
+
+type ProductType = typeof ProductTypeValue[keyof typeof ProductTypeValue];
+
+type ProductCategory = typeof ProductCategoryValue[keyof typeof ProductCategoryValue];
+
+type ProductLevel = typeof ProductLevelValue[keyof typeof ProductLevelValue];

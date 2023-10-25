@@ -39,3 +39,22 @@ export const ReviewRatingValue = {
   '4': 'Плохо',
   '5': 'Ужасно',
 } as const;
+
+export const ProductTypeValue = {
+  Collection: 'Коллекционная',
+  Instant: 'Моментальная',
+  Digital: 'Цифровая',
+  Film: 'Плёночная',
+} as const;
+
+export const ProductCategoryValue = {
+  VideoCamera: 'Видеокамера',
+  PhotoCamera: 'Фотоаппарат',
+} as const;
+
+export const ProductLevelValue = {
+  Zero: 'Нулевой',
+  Amateur: 'Любительский',
+  Professional: 'Профессиональный',
+} as const;
+
