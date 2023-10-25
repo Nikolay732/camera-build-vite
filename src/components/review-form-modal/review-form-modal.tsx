@@ -14,7 +14,7 @@ import { useModal } from '../../hooks/use-esc-key-down';
 import { useSubmitSuccessful } from '../../hooks/use-submit-successful';
 
 type ReviewFormModalProps = {
-  isActive: boolean;
+  isActiveModalReview: boolean;
 }
 
 export type FormValues = {
@@ -25,7 +25,7 @@ export type FormValues = {
   userComment: string;
 }
 
-export function ReviewFormModal ({isActive}: ReviewFormModalProps) {
+export function ReviewFormModal ({isActiveModalReview}: ReviewFormModalProps) {
   const dispatch = useAppDispatch();
   const currentRating = useAppSelector(getCurrentRating);
   const {cameraId} = useParams();
@@ -39,7 +39,7 @@ export function ReviewFormModal ({isActive}: ReviewFormModalProps) {
     }
   });
   const {register, control, handleSubmit, formState, reset} = form;
-  const {errors, isSubmitting, isSubmitSuccessful} = formState;
+  const {errors, isDirty, isValid, isSubmitting, isSubmitSuccessful} = formState;
 
   const onSubmit = (data: FormValues) => {
 
@@ -64,10 +64,10 @@ export function ReviewFormModal ({isActive}: ReviewFormModalProps) {
 
   useSubmitSuccessful(isSubmitSuccessful, handleButtonCloseModalClick);
 
-  useModal(handleButtonCloseModalClick, isActive);
+  useModal(handleButtonCloseModalClick, isActiveModalReview);
 
   return (
-    <div className={classNames('modal', {'is-active': isActive})}>
+    <div className={classNames('modal', {'is-active': isActiveModalReview})}>
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={handleButtonCloseModalClick}></div>
         <div className="modal__content">
@@ -213,7 +213,7 @@ export function ReviewFormModal ({isActive}: ReviewFormModalProps) {
               <button
                 className="btn btn--purple form-review__btn"
                 type="submit"
-                disabled={isSubmitting}
+                disabled={!isDirty || !isValid || isSubmitting}
               >
                 Отправить отзыв
               </button>

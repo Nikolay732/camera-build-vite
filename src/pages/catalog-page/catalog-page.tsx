@@ -11,7 +11,7 @@ import {useEffect} from 'react';
 import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
 import { PER_PAGE } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
-import { CatalogAddItemModal } from '../../components/catalog-add-item-modal/catalog-add-item-modal';
+import { CatalogAddItem } from '../../components/catalog-add-item/catalog-add-item';
 import { Spinner } from '../../components/spinner/spinner';
 import { NotFoundPage } from '../not-found-page/not-found-page';
 import { Helmet } from 'react-helmet-async';
@@ -75,7 +75,7 @@ export function CatalogPage () {
                   <ProductCardList productList={currentProductList}/>
                   {totalCountPage > 1 && <Pagination totalCountPage={totalCountPage}/>}
                 </div>
-                {selectedProduct && <CatalogAddItemModal product={selectedProduct} isActiveModalAddItem={isActiveModalAddItem}/>}
+                {selectedProduct && <CatalogAddItem product={selectedProduct} isActiveModalAddItem={isActiveModalAddItem}/>}
               </div>
             </div>
           </section>

@@ -8,16 +8,15 @@ import { fetchDetailedProductAction, fetchSimilarProductListAction } from '../..
 import { Product } from '../../components/product/product';
 import { Helmet } from 'react-helmet-async';
 import { ProductSimilar } from '../../components/product-similar/product-similar';
-import { CatalogAddItemModal } from '../../components/catalog-add-item-modal/catalog-add-item-modal';
+import { CatalogAddItem } from '../../components/catalog-add-item/catalog-add-item';
 import { Reviews } from '../../components/reviews/reviews';
 import { fetchReviewsListAction } from '../../store/reviews-data/reviews-data-thunk';
 import { UpButton } from '../../components/up-button/up-button';
 import { Footer } from '../../components/footer/footer';
 import { ReviewFormModal } from '../../components/review-form-modal/review-form-modal';
-import { getStatusActiveModalReview, getStatusActiveModalReviewSucces } from '../../store/reviews-data/reviews-data-selectors';
+import { getStatusActiveModalReview } from '../../store/reviews-data/reviews-data-selectors';
 import { NotFoundPage } from '../not-found-page/not-found-page';
 import { Spinner } from '../../components/spinner/spinner';
-import { ReviewSuccessModal } from '../../components/review-success-modal/review-success-modal';
 
 export function ProductPage () {
   const dispatch = useAppDispatch();
@@ -27,7 +26,6 @@ export function ProductPage () {
   const selectedProduct = useAppSelector(getSelectedProduct);
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
   const isActiveModalReview = useAppSelector(getStatusActiveModalReview);
-  const isActiveModalReviewSuccess = useAppSelector(getStatusActiveModalReviewSucces);
   const isLoadingData = useAppSelector(getProductPageDataLoadStatus);
   const hasError = useAppSelector(getProductPageErrorLoadStatus);
 
@@ -71,13 +69,12 @@ export function ProductPage () {
               <ProductSimilar similarProductList={similarProductList}/>
             </div>
           }
-          {selectedProduct && <CatalogAddItemModal product={selectedProduct} isActiveModalAddItem={isActiveModalAddItem}/>}
+          {selectedProduct && <CatalogAddItem product={selectedProduct} isActiveModalAddItem={isActiveModalAddItem}/>}
           <div className="page-content__section">
             <Reviews/>
           </div>
         </div>
-        {isActiveModalReview && <ReviewFormModal isActiveModalReview={isActiveModalReview}/>}
-        {isActiveModalReviewSuccess && <ReviewSuccessModal isActive={isActiveModalReviewSuccess}/>}
+        <ReviewFormModal isActiveModalReview={isActiveModalReview}/>
       </main>
       <UpButton/>
       <Footer/>
