@@ -4,12 +4,12 @@ import { setActiveModalAddItemStatus } from '../../store/product-data/product-da
 import { ProductItem } from '../../types/product';
 import classNames from 'classnames';
 
-type CatalogAddItemProps = {
+type CatalogAddItemModalProps = {
   product: ProductItem;
-  isActiveModalAddItem: boolean;
+  isActive: boolean;
 }
 
-export function CatalogAddItem ({product, isActiveModalAddItem}: CatalogAddItemProps) {
+export function CatalogAddItemModal ({product, isActive}: CatalogAddItemModalProps) {
   const dispatch = useAppDispatch();
   const {name, vendorCode, type, category, level, price, previewImgWebp, previewImgWebp2x, previewImg, previewImg2x} = product;
   const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;
@@ -20,10 +20,10 @@ export function CatalogAddItem ({product, isActiveModalAddItem}: CatalogAddItemP
     dispatch(setActiveModalAddItemStatus(false));
   };
 
-  useModal(hanldeButtonCloseClick, isActiveModalAddItem);
+  useModal(hanldeButtonCloseClick, isActive);
 
   return (
-    <div className={classNames('modal', {'is-active': isActiveModalAddItem})}>
+    <div className={classNames('modal', {'is-active': isActive})}>
       <div className="modal__wrapper">
         <div className="modal__overlay" onClick={hanldeButtonCloseClick}></div>
         <div className="modal__content">

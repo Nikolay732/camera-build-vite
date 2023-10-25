@@ -6,12 +6,14 @@ import { fetchReviewsListAction, postReviewAction } from './reviews-data-thunk';
 type InitialState = {
   reviews: Review[];
   isActiveModalReview: boolean;
+  isActiveModalReviewSuccess: boolean;
   currentRating: number;
 }
 
 const initialState: InitialState = {
   reviews: [],
   isActiveModalReview: false,
+  isActiveModalReviewSuccess: false,
   currentRating: 0,
 };
 
@@ -21,6 +23,9 @@ export const ReviewsData = createSlice ({
   reducers: {
     setActiveModalReviewStatus: (state, action: PayloadAction<boolean>) => {
       state.isActiveModalReview = action.payload;
+    },
+    setActiveModalReviewSuccessStatus: (state, action: PayloadAction<boolean>) => {
+      state.isActiveModalReviewSuccess = action.payload;
     },
     setCurrentRating: (state, action: PayloadAction<number>) => {
       state.currentRating = action.payload;
@@ -37,4 +42,4 @@ export const ReviewsData = createSlice ({
   }
 });
 
-export const {setActiveModalReviewStatus, setCurrentRating} = ReviewsData.actions;
+export const {setActiveModalReviewStatus, setActiveModalReviewSuccessStatus, setCurrentRating} = ReviewsData.actions;
