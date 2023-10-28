@@ -12,7 +12,7 @@ type InitialState = {
 
 const initialState: InitialState = {
   similarProductList: [],
-  isSimilarProductListLoading: true,
+  isSimilarProductListLoading: false,
   hasErrorSimilarProductList: false,
 };
 
