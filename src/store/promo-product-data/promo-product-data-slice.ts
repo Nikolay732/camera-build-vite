@@ -11,7 +11,7 @@ type InitialState = {
 
 const initialState: InitialState = {
   promoProductList: [],
-  isPromoProductListLoading: true,
+  isPromoProductListLoading: false,
   hasErrorPromoProductList: false,
 };
 

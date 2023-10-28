@@ -12,7 +12,7 @@ type InitialState = {
 
 const initialState: InitialState = {
   detailedProduct: null,
-  isDetailedProductLoading: true,
+  isDetailedProductLoading: false,
   hasErrorDetailedProduct: false,
 };
 

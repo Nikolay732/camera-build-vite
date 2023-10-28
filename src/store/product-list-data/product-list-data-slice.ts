@@ -14,7 +14,7 @@ type InitialState = {
 
 const initialState: InitialState = {
   productList: [],
-  isProductListLoading: true,
+  isProductListLoading: false,
   hasErrorProductList: false,
   currentPage: 1,
   selectedProduct: null,
