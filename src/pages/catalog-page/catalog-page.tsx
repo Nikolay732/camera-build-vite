@@ -6,9 +6,9 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCatalogPageDataLoadStatus, getCatalogPageErrorLoadStatus, getProductList, getPromoList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-data/product-data-selectors';
+import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus, getProductList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-list-data/product-list-data-selectors';
 import {useEffect} from 'react';
-import { fetchProductListAction, fetchPromoListAction } from '../../store/product-data/product-data-thunk';
+import { fetchProductListAction } from '../../store/product-list-data/product-list-data-thunk';
 import { PER_PAGE } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
 import { CatalogAddItemModal } from '../../components/catalog-add-item-modal/catalog-add-item-modal';
@@ -16,12 +16,14 @@ import { Spinner } from '../../components/spinner/spinner';
 import { NotFoundPage } from '../not-found-page/not-found-page';
 import { Helmet } from 'react-helmet-async';
 import { useSearchParams } from 'react-router-dom';
-import { setCurrentPage } from '../../store/product-data/product-data-slice';
+import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
+import { getPromoProductList } from '../../store/promo-product-data/promo-product-data-selectors';
+import { fetchPromoProductListAction } from '../../store/promo-product-data/promo-product-data-thunk';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
   const productList = useAppSelector(getProductList);
-  const promoList = useAppSelector(getPromoList);
+  const promoList = useAppSelector(getPromoProductList);
   const [searchParams] = useSearchParams();
   const pageNumberURL = searchParams.get('page');
   const currentPage = pageNumberURL ? Number(pageNumberURL) : 1;
@@ -32,14 +34,14 @@ export function CatalogPage () {
   const currentProductList = productList.slice(firstProductIndex, lastProductIndex);
   const selectedProduct = useAppSelector(getSelectedProduct);
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
-  const isLoadingData = useAppSelector(getCatalogPageDataLoadStatus);
+  const isLoadingData = useAppSelector(getCatalogPageDataLoadingStatus);
   const hasError = useAppSelector(getCatalogPageErrorLoadStatus);
 
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
       dispatch(fetchProductListAction());
-      dispatch(fetchPromoListAction());
+      dispatch(fetchPromoProductListAction());
       dispatch(setCurrentPage(currentPage));
     }
     return () => {

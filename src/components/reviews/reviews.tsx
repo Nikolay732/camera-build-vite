@@ -1,13 +1,13 @@
-import { getReviewsList } from '../../store/reviews-data/reviews-data-selectors';
+import { getReviewList } from '../../store/reviews-data/reviews-data-selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ReviewCard } from '../review-card/review-card';
 import {useState} from 'react';
-import { setActiveModalReviewStatus } from '../../store/reviews-data/reviews-data-slice';
+import { setStatusActiveModalReview } from '../../store/reviews-data/reviews-data-slice';
 import { getSortByDate } from '../../utils';
 
 export function Reviews () {
   const dispatch = useAppDispatch();
-  const reviewList = useAppSelector(getReviewsList);
+  const reviewList = useAppSelector(getReviewList);
   const [lastReviewItemIndex, setLastReviewItemIndex] = useState<number>(3);
   const currentReviewList = reviewList.slice().sort(getSortByDate).slice(0, lastReviewItemIndex);
 
@@ -16,7 +16,7 @@ export function Reviews () {
   };
 
   const handleButtonOpenModalClick = () => {
-    dispatch(setActiveModalReviewStatus(true));
+    dispatch(setStatusActiveModalReview(true));
   };
 
   return (

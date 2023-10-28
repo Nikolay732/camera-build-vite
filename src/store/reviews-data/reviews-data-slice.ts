@@ -1,31 +1,35 @@
 import { Review } from '../../types/review';
 import { NameSpace } from '../../const';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { fetchReviewsListAction, postReviewAction } from './reviews-data-thunk';
+import { fetchReviewListAction, postReviewAction } from './reviews-data-thunk';
 
 type InitialState = {
-  reviews: Review[];
+  reviewList: Review[];
+  isReviewListLoading: boolean;
+  hasErrorReviewList: boolean;
   isActiveModalReview: boolean;
-  isActiveModalReviewSuccess: boolean;
+  isPostReviewSuccess: boolean;
   currentRating: number;
 }
 
 const initialState: InitialState = {
-  reviews: [],
+  reviewList: [],
+  isReviewListLoading: false,
+  hasErrorReviewList: false,
   isActiveModalReview: false,
-  isActiveModalReviewSuccess: false,
+  isPostReviewSuccess: false,
   currentRating: 0,
 };
 
-export const ReviewsData = createSlice ({
-  name: NameSpace.Reviews,
+export const reviewsData = createSlice ({
+  name: NameSpace.ReviewList,
   initialState,
   reducers: {
-    setActiveModalReviewStatus: (state, action: PayloadAction<boolean>) => {
+    setStatusActiveModalReview: (state, action: PayloadAction<boolean>) => {
       state.isActiveModalReview = action.payload;
     },
-    setActiveModalReviewSuccessStatus: (state, action: PayloadAction<boolean>) => {
-      state.isActiveModalReviewSuccess = action.payload;
+    setStatusPostReviewSuccess: (state, action: PayloadAction<boolean>) => {
+      state.isPostReviewSuccess = action.payload;
     },
     setCurrentRating: (state, action: PayloadAction<number>) => {
       state.currentRating = action.payload;
@@ -33,13 +37,26 @@ export const ReviewsData = createSlice ({
   },
   extraReducers (builder) {
     builder
-      .addCase(fetchReviewsListAction.fulfilled, (state, action) => {
-        state.reviews = action.payload;
+      .addCase(fetchReviewListAction.fulfilled, (state, action) => {
+        state.reviewList = action.payload;
+        state.isReviewListLoading = false;
+      })
+      .addCase(fetchReviewListAction.pending, (state) => {
+        state.isReviewListLoading = true;
+        state.hasErrorReviewList = false;
+      })
+      .addCase(fetchReviewListAction.rejected, (state) => {
+        state.isReviewListLoading = false;
+        state.hasErrorReviewList = true;
       })
       .addCase(postReviewAction.fulfilled, (state, action) => {
-        state.reviews.push(action.payload);
+        state.reviewList.push(action.payload);
+        state.isPostReviewSuccess = true;
+      })
+      .addCase(postReviewAction.rejected, (state) => {
+        state.isPostReviewSuccess = false;
       });
   }
 });
 
-export const {setActiveModalReviewStatus, setActiveModalReviewSuccessStatus, setCurrentRating} = ReviewsData.actions;
+export const {setStatusActiveModalReview, setStatusPostReviewSuccess, setCurrentRating} = reviewsData.actions;

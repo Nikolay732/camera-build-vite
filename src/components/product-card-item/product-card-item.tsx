@@ -2,7 +2,7 @@ import { APIRoute} from '../../const';
 import { ProductItem } from '../../types/product';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { setSelectedProduct, setActiveModalAddItemStatus } from '../../store/product-data/product-data-slice';
+import { setSelectedProduct, setActiveModalAddItemStatus } from '../../store/product-list-data/product-list-data-slice';
 import { Rating } from '../rating/rating';
 import classNames from 'classnames';
 import { CSSProperties } from 'react';

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getDetailedProduct } from '../../store/product-data/product-data-selectors';
+import { getDetailedProduct } from '../../store/detailed-product-data/detailed-product-data-selectors';
 
 type BreadcrumbsProps = {
   isCatalogPage?: boolean;

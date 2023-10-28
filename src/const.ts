@@ -19,8 +19,11 @@ export const AppRoute = {
 } as const;
 
 export const NameSpace = {
-  Product: 'PRODUCT',
-  Reviews: 'REVIEWS',
+  ProductList: 'PRODUCT_LIST',
+  PromoProductList: 'PROMO_PRODUCT_LIST',
+  DetailedProduct: 'DETAILED_PRODUCT',
+  SimilarProductList: 'SIMILAR_PRODUCT_LIST',
+  ReviewList: 'REVIEW_LIST',
 } as const;
 
 export const APIRoute = {

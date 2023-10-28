@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveModalReviewStatus, setCurrentRating } from '../../store/reviews-data/reviews-data-slice';
+import { setStatusActiveModalReview, setCurrentRating } from '../../store/reviews-data/reviews-data-slice';
 import { ReviewRatingValue } from '../../const';
 import { ReviewRatingStar } from '../review-rating-star/review-rating-star';
 import { getCurrentRating } from '../../store/reviews-data/reviews-data-selectors';
@@ -57,7 +57,7 @@ export function ReviewFormModal ({isActive}: ReviewFormModalProps) {
   };
 
   const handleButtonCloseModalClick = useCallback(() => {
-    dispatch(setActiveModalReviewStatus(false));
+    dispatch(setStatusActiveModalReview(false));
     dispatch(setCurrentRating(0));
     reset();
   }, [dispatch, reset]);

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useModal } from '../../hooks/use-esc-key-down';
 import { useAppDispatch } from '../../hooks';
-import { setActiveModalReviewSuccessStatus } from '../../store/reviews-data/reviews-data-slice';
+import { setStatusPostReviewSuccess } from '../../store/reviews-data/reviews-data-slice';
 
 type ReviewSuccessModalProps = {
   isActive: boolean;
@@ -11,7 +11,7 @@ export function ReviewSuccessModal ({isActive}:ReviewSuccessModalProps) {
   const dispatch = useAppDispatch();
 
   const handleButtonCloseModalClick = () => {
-    dispatch(setActiveModalReviewSuccessStatus(false));
+    dispatch(setStatusPostReviewSuccess(false));
   };
 
   useModal(handleButtonCloseModalClick, isActive);

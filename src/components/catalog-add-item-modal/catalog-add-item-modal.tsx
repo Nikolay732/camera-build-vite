@@ -1,6 +1,6 @@
 import { useAppDispatch } from '../../hooks';
 import { useModal } from '../../hooks/use-esc-key-down';
-import { setActiveModalAddItemStatus } from '../../store/product-data/product-data-slice';
+import { setActiveModalAddItemStatus } from '../../store/product-list-data/product-list-data-slice';
 import { ProductItem } from '../../types/product';
 import classNames from 'classnames';
 

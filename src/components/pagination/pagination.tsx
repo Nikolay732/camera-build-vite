@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCurrentPage } from '../../store/product-data/product-data-selectors';
-import { setCurrentPage } from '../../store/product-data/product-data-slice';
+import { getCurrentPage } from '../../store/product-list-data/product-list-data-selectors';
+import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
 import { PaginationItem } from '../pagination-item/pagination-item';
 import { Link } from 'react-router-dom';
 
