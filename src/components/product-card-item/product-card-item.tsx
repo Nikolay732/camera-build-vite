@@ -1,11 +1,11 @@
-import { APIRoute} from '../../const';
+import { APIRoute, RATINGS } from '../../const';
 import { ProductItem } from '../../types/product';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { setSelectedProduct, setActiveModalAddItemStatus } from '../../store/product-list-data/product-list-data-slice';
-import { Rating } from '../rating/rating';
 import classNames from 'classnames';
 import { CSSProperties } from 'react';
+import { RatingItem } from '../rating-item/rating-item';
 
 type ProductCardItemProps = {
   product: ProductItem;
@@ -34,7 +34,7 @@ export function ProductCardItem ({product, isSimilarProduct, style}: ProductCard
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <Rating rating={rating}/>
+          {RATINGS.map((item) => <RatingItem key={item} item={item} rating={rating}/>)}
           <p className="visually-hidden">{`Рейтинг: ${rating}`}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
         </div>

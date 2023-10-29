@@ -1,6 +1,7 @@
 import { ProductItem } from '../../types/product';
-import { Rating } from '../rating/rating';
 import { ProductTabs } from '../poduct-tabs/poduct-tabs';
+import { RATINGS } from '../../const';
+import { RatingItem } from '../rating-item/rating-item';
 
 type ProductProps = {
   product: ProductItem;
@@ -24,7 +25,7 @@ export function Product ({product}:ProductProps) {
         <div className="product__content">
           <h1 className="title title--h3">{name}</h1>
           <div className="rate product__rate">
-            <Rating rating={rating}/>
+            {RATINGS.map((item) => <RatingItem key={item} item={item} rating={rating}/>)}
             <p className="visually-hidden">{`Рейтинг: ${rating}`}</p>
             <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
           </div>

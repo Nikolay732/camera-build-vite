@@ -1,7 +1,7 @@
-import { FormatDate } from '../../const';
+import { FormatDate, RATINGS } from '../../const';
 import { Review } from '../../types/review';
 import { getFormatDate } from '../../utils';
-import { Rating } from '../rating/rating';
+import { RatingItem } from '../rating-item/rating-item';
 
 type ReviewCardProps = {
   reviewItem: Review;
@@ -19,7 +19,7 @@ export function ReviewCard ({reviewItem}: ReviewCardProps) {
         <time className="review-card__data" dateTime={dateTime}>{date}</time>
       </div>
       <div className="rate review-card__rate">
-        <Rating rating={rating}/>
+        {RATINGS.map((item) => <RatingItem key={item} item={item} rating={rating}/>)}
         <p className="visually-hidden">{`Оценка: ${rating}`}</p>
       </div>
       <ul className="review-card__list">
