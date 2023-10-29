@@ -13,10 +13,10 @@ export const SimilarSwiperSetting = {
   SpaceBetween: 30,
 };
 
-export const AppRoute = {
-  Catalog: '/',
-  Product: '/cameras/:cameraId',
-} as const;
+export enum AppRoute {
+  Catalog = '/',
+  Product = '/cameras/:cameraId',
+}
 
 export const NameSpace = {
   ProductList: 'PRODUCT_LIST',
@@ -28,8 +28,9 @@ export const NameSpace = {
 
 export const APIRoute = {
   ProductList: '/cameras',
+  DetailedProduct: '/cameras/:cameraId',
   PromoList: '/promo',
-  SimilarProductList: '/similar',
+  SimilarProductList: '/cameras/:cameraId/similar',
   ReviewPost: '/reviews',
 } as const;
 
