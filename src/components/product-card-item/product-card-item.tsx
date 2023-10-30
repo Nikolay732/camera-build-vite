@@ -4,15 +4,14 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { setSelectedProduct, setActiveModalAddItemStatus } from '../../store/product-list-data/product-list-data-slice';
 import classNames from 'classnames';
-import { CSSProperties } from 'react';
 import { RatingItem } from '../rating-item/rating-item';
+import './product-card-item.css';
 
 type ProductCardItemProps = {
   product: ProductItem;
   isSimilarProduct?: boolean;
-  style?: CSSProperties;
 }
-export function ProductCardItem ({product, isSimilarProduct, style}: ProductCardItemProps) {
+export function ProductCardItem ({product, isSimilarProduct}: ProductCardItemProps) {
   const dispatch = useAppDispatch();
   const {id, name, price, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x } = product;
   const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;
@@ -25,7 +24,7 @@ export function ProductCardItem ({product, isSimilarProduct, style}: ProductCard
   };
 
   return (
-    <div className={classNames('product-card', {'is-active': isSimilarProduct})} style={style}>
+    <div className={classNames('product-card', {'is-active': isSimilarProduct})}>
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={sourceSrcSet}/>

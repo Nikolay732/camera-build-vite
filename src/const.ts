@@ -11,7 +11,7 @@ export const SimilarSwiperSetting = {
   SlidesPerView: 3,
   SlidesPerGroup: 3,
   SpaceBetween: 30,
-};
+} as const;
 
 export enum AppRoute {
   Catalog = '/',

@@ -73,6 +73,7 @@ export function ReviewFormModal ({isActive}: ReviewFormModalProps) {
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
+            {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
             <form method="post" onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="form-review__rate">
                 <fieldset className={classNames('rate form-review__item', {'is-invalid': errors.rate})}>
