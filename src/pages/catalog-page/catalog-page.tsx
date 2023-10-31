@@ -6,17 +6,15 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus, getProductList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-list-data/product-list-data-selectors';
+import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getProductList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-list-data/product-list-data-selectors';
 import {useEffect} from 'react';
 import { fetchProductListAction } from '../../store/product-list-data/product-list-data-thunk';
-import { PER_PAGE } from '../../const';
+import { Page } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
 import { CatalogAddItemModal } from '../../components/catalog-add-item-modal/catalog-add-item-modal';
 import { Spinner } from '../../components/spinner/spinner';
 import { NotFoundPage } from '../not-found-page/not-found-page';
 import { Helmet } from 'react-helmet-async';
-import { useSearchParams } from 'react-router-dom';
-import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
 import { getPromoProductList } from '../../store/promo-product-data/promo-product-data-selectors';
 import { fetchPromoProductListAction } from '../../store/promo-product-data/promo-product-data-thunk';
 
@@ -24,13 +22,11 @@ export function CatalogPage () {
   const dispatch = useAppDispatch();
   const productList = useAppSelector(getProductList);
   const promoList = useAppSelector(getPromoProductList);
-  const [searchParams] = useSearchParams();
-  const pageNumberURL = searchParams.get('page');
-  const currentPage = pageNumberURL ? Number(pageNumberURL) : 1;
+  const currentPage = useAppSelector(getCurrentPage);
   const totalCountProduct = productList.length;
-  const totalCountPage = Math.ceil(totalCountProduct / PER_PAGE);
-  const lastProductIndex = currentPage * PER_PAGE;
-  const firstProductIndex = lastProductIndex - PER_PAGE;
+  const totalCountPage = Math.ceil(totalCountProduct / Page.Per);
+  const lastProductIndex = currentPage * Page.Per;
+  const firstProductIndex = lastProductIndex - Page.Per;
   const currentProductList = productList.slice(firstProductIndex, lastProductIndex);
   const selectedProduct = useAppSelector(getSelectedProduct);
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
@@ -42,7 +38,6 @@ export function CatalogPage () {
     if (isMounted) {
       dispatch(fetchProductListAction());
       dispatch(fetchPromoProductListAction());
-      dispatch(setCurrentPage(currentPage));
     }
     return () => {
       isMounted = false;

@@ -1,6 +1,9 @@
-export const PER_PAGE = 9;
-
 export const AUTOPLAY_DELAY = 3000;
+
+export const Page = {
+  Per: 9,
+  MaxPagesCount: 3
+} as const;
 
 export const FormatDate = {
   Date: 'DD MMMM',

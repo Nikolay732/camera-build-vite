@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentPage } from '../../store/product-list-data/product-list-data-selectors';
 import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
 import { PaginationItem } from '../pagination-item/pagination-item';
 import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { Page } from '../../const';
 
 type PaginationProps = {
   totalCountPage: number;
@@ -10,13 +13,18 @@ type PaginationProps = {
 
 export function Pagination ({totalCountPage}: PaginationProps) {
   const dispatch = useAppDispatch();
-  const currentPage = useAppSelector(getCurrentPage);
+  const [searchParams] = useSearchParams();
+  const pageNumberURL = searchParams.get('page');
+  const pageState = useAppSelector(getCurrentPage);
+  const currentPage = pageNumberURL ? Number(pageNumberURL) : pageState;
   const pageAllNumbers = [...Array(totalCountPage).keys()];
-  const prevPage = currentPage - 1;
-  const nextPage = currentPage + 2;
-  const currentPageNumbers = pageAllNumbers.slice(prevPage, nextPage);
+  const perPageNumber = Math.ceil(currentPage / Page.MaxPagesCount);
+  const lastPageIndex = perPageNumber * Page.MaxPagesCount;
+  const firstPageIndex = lastPageIndex - Page.MaxPagesCount;
+  const currentPageNumbers = pageAllNumbers.slice(firstPageIndex, lastPageIndex);
   const isHidenClassPrevLink = currentPage === 1 || totalCountPage <= 3;
-  const isHidenClassNextLink = currentPage + 1 === totalCountPage || currentPage === totalCountPage;
+  const isHidenClassNextLink = currentPage === totalCountPage;
+
   const hanldeNextPageClick = () => {
     dispatch(setCurrentPage(currentPage + 1));
   };
@@ -24,6 +32,16 @@ export function Pagination ({totalCountPage}: PaginationProps) {
   const handlePrevPageClick = () => {
     dispatch(setCurrentPage(currentPage - 1));
   };
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      dispatch(setCurrentPage(currentPage));
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, currentPage]);
 
   return (
     <div className="pagination">
