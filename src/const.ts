@@ -65,3 +65,7 @@ export const ProductLevelValue = {
   Professional: 'Профессиональный',
 } as const;
 
+export const ProductTabURL = {
+  Description: 'description',
+  Characteristics: 'characteristics',
+} as const;

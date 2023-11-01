@@ -1,22 +1,35 @@
-import { ProductItem } from '../../types/product';
+import { ProductItem} from '../../types/product';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams} from 'react-router-dom';
+import { ProductTabURL } from '../../const';
 
 type ProductTabsProps = {
   product: ProductItem;
 }
 
 export function ProductTabs ({product}:ProductTabsProps) {
+  const [params, setParams] = useSearchParams();
+  const currentInfo = params.get('about');
   const {vendorCode, category, type, level, description} = product;
   const [activeDescription, setActiveDescription] = useState<boolean>(true);
 
   const handleDescriptionButton = () => {
     setActiveDescription(true);
+    setParams({about: ProductTabURL.Description}, {replace: true});
   };
 
   const handleCharacteristicsButton = () => {
     setActiveDescription(false);
+    setParams({about: ProductTabURL.Characteristics}, {replace: true});
   };
+
+  useEffect(() => {
+    if(!currentInfo) {
+      setParams({about: ProductTabURL.Description}, {replace: true});
+      setActiveDescription(true);
+    }
+  }, [currentInfo, setParams]);
 
   return (
     <div className="tabs product__tabs">
