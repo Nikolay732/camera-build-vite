@@ -1,4 +1,4 @@
-import { APIRoute, RATINGS } from '../../const';
+import { AppRoute, RATINGS } from '../../const';
 import { ProductItem } from '../../types/product';
 import { Link, generatePath } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
@@ -45,7 +45,7 @@ export function ProductCardItem ({product, isSimilarProduct}: ProductCardItemPro
         <button className="btn btn--purple product-card__btn" type="button" onClick={handleButtonClick}>
           Купить
         </button>
-        <Link className="btn btn--transparent" to={generatePath(APIRoute.DetailedProduct, {cameraId: id.toString()})}>
+        <Link className="btn btn--transparent" to={generatePath(AppRoute.Product, {id: id.toString()})}>
           Подробнее
         </Link>
       </div>
