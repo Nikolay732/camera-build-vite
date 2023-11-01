@@ -42,7 +42,7 @@ export function CatalogPage () {
     return () => {
       isMounted = false;
     };
-  }, [dispatch, currentPage]);
+  }, [dispatch]);
 
   if (isLoadingData) {
     return <Spinner/>;
