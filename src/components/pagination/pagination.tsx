@@ -3,7 +3,6 @@ import { getCurrentPage } from '../../store/product-list-data/product-list-data-
 import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
 import { PaginationItem } from '../pagination-item/pagination-item';
 import { Link } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
 import { Page } from '../../const';
 
 type PaginationProps = {
@@ -12,10 +11,7 @@ type PaginationProps = {
 
 export function Pagination ({totalCountPage}: PaginationProps) {
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
-  const pageNumberURL = searchParams.get('page');
-  const pageState = useAppSelector(getCurrentPage);
-  const currentPage = pageNumberURL ? Number(pageNumberURL) : pageState;
+  const currentPage = useAppSelector(getCurrentPage);
   const pageAllNumbers = [...Array(totalCountPage).keys()];
   const perPageNumber = Math.ceil(currentPage / Page.MaxPagesCount);
   const lastPageIndex = perPageNumber * Page.MaxPagesCount;
