@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCurrentPage } from '../../store/product-list-data/product-list-data-selectors';
 import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
@@ -23,7 +22,7 @@ export function Pagination ({totalCountPage}: PaginationProps) {
   const firstPageIndex = lastPageIndex - Page.MaxPagesCount;
   const currentPageNumbers = pageAllNumbers.slice(firstPageIndex, lastPageIndex);
   const isHidenClassPrevLink = currentPage === 1 || totalCountPage <= 3;
-  const isHidenClassNextLink = currentPage === totalCountPage;
+  const isHidenClassNextLink = currentPage === totalCountPage || totalCountPage <= 3;
 
   const hanldeNextPageClick = () => {
     dispatch(setCurrentPage(currentPage + 1));
@@ -33,25 +32,15 @@ export function Pagination ({totalCountPage}: PaginationProps) {
     dispatch(setCurrentPage(currentPage - 1));
   };
 
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      dispatch(setCurrentPage(currentPage));
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [dispatch, currentPage]);
-
   return (
     <div className="pagination">
       <ul className="pagination__list">
         <li className="pagination__item" style={{visibility: `${isHidenClassPrevLink ? 'hidden' : 'visible'}`}}>
-          <Link className="pagination__link pagination__link--text" to={`?page=${currentPage - 1}`} onClick={handlePrevPageClick}>Назад</Link>
+          <Link className="pagination__link pagination__link--text" to='#' onClick={handlePrevPageClick}>Назад</Link>
         </li>
         {currentPageNumbers.map((pageNumber) => <PaginationItem key={pageNumber + 1} pageNumber={pageNumber + 1}/>)}
         <li className="pagination__item" style={{visibility: `${isHidenClassNextLink ? 'hidden' : 'visible'}`}}>
-          <Link className="pagination__link pagination__link--text" to={`?page=${currentPage + 1}`} onClick={hanldeNextPageClick}>Далее</Link>
+          <Link className="pagination__link pagination__link--text" to='#' onClick={hanldeNextPageClick}>Далее</Link>
         </li>
       </ul>
     </div>

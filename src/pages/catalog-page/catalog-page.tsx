@@ -7,7 +7,7 @@ import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getProductList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-list-data/product-list-data-selectors';
-import {useEffect} from 'react';
+import {useEffect, useMemo} from 'react';
 import { fetchProductListAction } from '../../store/product-list-data/product-list-data-thunk';
 import { Page } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
@@ -17,12 +17,19 @@ import { NotFoundPage } from '../not-found-page/not-found-page';
 import { Helmet } from 'react-helmet-async';
 import { getPromoProductList } from '../../store/promo-product-data/promo-product-data-selectors';
 import { fetchPromoProductListAction } from '../../store/promo-product-data/promo-product-data-thunk';
+import { useSearchParams } from 'react-router-dom';
+import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
+import { SearchParams } from '../../types/search-params';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const productList = useAppSelector(getProductList);
   const promoList = useAppSelector(getPromoProductList);
-  const currentPage = useAppSelector(getCurrentPage);
+  const pageState = useAppSelector(getCurrentPage);
+  const pageNumberURL = searchParams.get('page');
+  const currentPage = pageNumberURL ? Number(pageNumberURL) : pageState;
   const totalCountProduct = productList.length;
   const totalCountPage = Math.ceil(totalCountProduct / Page.Per);
   const lastProductIndex = currentPage * Page.Per;
@@ -32,6 +39,13 @@ export function CatalogPage () {
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
   const isLoadingData = useAppSelector(getCatalogPageDataLoadingStatus);
   const hasError = useAppSelector(getCatalogPageErrorLoadStatus);
+
+  const currentParams = useMemo(() => {
+    const params: SearchParams = {};
+    params.page = currentPage.toString();
+    return params;
+  }, [currentPage]);
+
 
   useEffect(() => {
     let isMounted = true;
@@ -43,6 +57,26 @@ export function CatalogPage () {
       isMounted = false;
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      dispatch(setCurrentPage(currentPage));
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, currentPage]);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      setSearchParams(currentParams);
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [setSearchParams, currentParams]);
 
   if (isLoadingData) {
     return <Spinner/>;

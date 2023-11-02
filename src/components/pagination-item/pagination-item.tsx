@@ -19,7 +19,7 @@ export function PaginationItem ({pageNumber}: PaginationItemProps) {
     <li className="pagination__item">
       <Link
         className={classNames('pagination__link', {'pagination__link--active' : currentPage === pageNumber})}
-        to={`?page=${pageNumber}`}
+        to='#'
         onClick={handleLinkClick}
       >
         {pageNumber}
