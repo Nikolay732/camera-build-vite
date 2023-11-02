@@ -3,7 +3,7 @@ import { ThunkAPI } from '../../types/state';
 import { APIRoute, NameSpace } from '../../const';
 import { PostReview, Review } from '../../types/review';
 
-export const fetchReviewListAction = createAsyncThunk<Review[], number, ThunkAPI> (
+export const fetchReviewListAction = createAsyncThunk<Review[], string, ThunkAPI> (
   `${NameSpace.ReviewList}/fetchReviewList`,
   async (cameraId, {extra: api}) => {
     const {data} = await api.get<Review[]>(`${APIRoute.ProductList}/${cameraId}/reviews`);

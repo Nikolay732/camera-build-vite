@@ -49,7 +49,7 @@ describe('SimilarProductData Slice', () => {
       hasErrorSimilarProductList: false,
     };
 
-    const result = similarProductData.reducer(undefined, fetchSimilarProductListAction.fulfilled(mockSimilarProductList, '', 0));
+    const result = similarProductData.reducer(undefined, fetchSimilarProductListAction.fulfilled(mockSimilarProductList, '', ''));
 
     expect(result).toEqual(expectedState);
   });
