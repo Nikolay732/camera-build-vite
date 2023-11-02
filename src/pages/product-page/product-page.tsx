@@ -38,9 +38,9 @@ export function ProductPage () {
     let isMounted = true;
     if (isMounted) {
       if (cameraId) {
-        dispatch(fetchDetailedProductAction(Number(cameraId)));
-        dispatch(fetchSimilarProductListAction(Number(cameraId)));
-        dispatch(fetchReviewListAction(Number(cameraId)));
+        dispatch(fetchDetailedProductAction(cameraId));
+        dispatch(fetchSimilarProductListAction(cameraId));
+        dispatch(fetchReviewListAction(cameraId));
       }
     }
     return () => {

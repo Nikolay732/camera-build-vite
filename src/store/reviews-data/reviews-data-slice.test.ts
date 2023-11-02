@@ -47,7 +47,7 @@ describe('ReviewsData Slice', () => {
       reviewList: [...mockReviewList],
     };
 
-    const result = reviewsData.reducer(undefined, fetchReviewListAction.fulfilled(mockReviewList, '', 0));
+    const result = reviewsData.reducer(undefined, fetchReviewListAction.fulfilled(mockReviewList, '', ''));
 
     expect(result).toEqual(expectedState);
   });

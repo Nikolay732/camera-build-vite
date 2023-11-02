@@ -30,7 +30,7 @@ describe('Async actions', () => {
         .onGet(generatePath(APIRoute.SimilarProductList, { cameraId: mockDetailedProduct.id.toString() }))
         .reply(200, mockSimilarProductList);
 
-      await store.dispatch(fetchSimilarProductListAction(mockDetailedProduct.id));
+      await store.dispatch(fetchSimilarProductListAction(mockDetailedProduct.id.toString()));
 
       const emittedActions = store.getActions();
       const extractedActionsTypes = extraActionsTypes(emittedActions);
@@ -49,7 +49,7 @@ describe('Async actions', () => {
     it('should dispatch "fetchSimilarProductListAction.pending", "fetchSimilarProductListAction.rejected" when server response 400', async () => {
       mockAxiosAdapter.onGet(generatePath(APIRoute.SimilarProductList, { cameraId: mockDetailedProduct.id.toString() })).reply(400, []);
 
-      await store.dispatch(fetchSimilarProductListAction(mockDetailedProduct.id));
+      await store.dispatch(fetchSimilarProductListAction(mockDetailedProduct.id.toString()));
       const actions = extraActionsTypes(store.getActions());
 
       expect(actions).toEqual([fetchSimilarProductListAction.pending.type, fetchSimilarProductListAction.rejected.type]);

@@ -44,7 +44,7 @@ describe('detailedProductData Slice', () => {
       detailedProduct: mockDetaildeProduct,
     };
 
-    const result = detaildeProductData.reducer(undefined, fetchDetailedProductAction.fulfilled(mockDetaildeProduct, '', 0));
+    const result = detaildeProductData.reducer(undefined, fetchDetailedProductAction.fulfilled(mockDetaildeProduct, '', ''));
 
     expect(result).toEqual(expectedState);
   });

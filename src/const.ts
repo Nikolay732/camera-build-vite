@@ -18,7 +18,7 @@ export const SimilarSwiperSetting = {
 
 export enum AppRoute {
   Catalog = '/',
-  Product = '/cameras/:cameraId',
+  Product = '/product',
 }
 
 export const NameSpace = {
