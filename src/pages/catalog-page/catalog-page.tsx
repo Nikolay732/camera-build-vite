@@ -28,8 +28,8 @@ export function CatalogPage () {
   const productList = useAppSelector(getProductList);
   const promoList = useAppSelector(getPromoProductList);
   const pageState = useAppSelector(getCurrentPage);
-  const pageNumberURL = searchParams.get('page');
-  const currentPage = pageNumberURL ? Number(pageNumberURL) : pageState;
+  const pageNumberURL = Number(searchParams.get('page'));
+  const currentPage = pageNumberURL ? pageNumberURL : pageState;
   const totalCountProduct = productList.length;
   const totalCountPage = Math.ceil(totalCountProduct / Page.Per);
   const lastProductIndex = currentPage * Page.Per;
