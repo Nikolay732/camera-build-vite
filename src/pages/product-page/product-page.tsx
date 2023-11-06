@@ -64,7 +64,7 @@ export function ProductPage () {
       <Header/>
       <main>
         <div className="page-content">
-          <Breadcrumbs/>
+          <Breadcrumbs isProductPage/>
           <div className="page-content__section">
             <Product product={detailedProduct}/>
           </div>

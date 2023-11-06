@@ -5,9 +5,11 @@ import { getDetailedProduct } from '../../store/detailed-product-data/detailed-p
 
 type BreadcrumbsProps = {
   isCatalogPage?: boolean;
+  isProductPage?: boolean;
+  isBasketPage?: boolean;
 }
 
-export function Breadcrumbs ({isCatalogPage}: BreadcrumbsProps) {
+export function Breadcrumbs ({isCatalogPage, isProductPage, isBasketPage}: BreadcrumbsProps) {
   const detailedProduct = useAppSelector(getDetailedProduct);
   const name = detailedProduct?.name;
 
@@ -36,9 +38,17 @@ export function Breadcrumbs ({isCatalogPage}: BreadcrumbsProps) {
             }
           </li>
           {
-            !isCatalogPage &&
+            isProductPage &&
             <li className="breadcrumbs__item">
               <span className="breadcrumbs__link breadcrumbs__link--active">{name}</span>
+            </li>
+          }
+          {
+            isBasketPage &&
+            <li className="breadcrumbs__item">
+              <span className="breadcrumbs__link breadcrumbs__link--active">
+                Корзина
+              </span>
             </li>
           }
         </ul>

@@ -18,7 +18,7 @@ export function BasketPage () {
       <Header/>
       <main>
         <div className="page-content">
-          <Breadcrumbs/>
+          <Breadcrumbs isBasketPage/>
           <section className="basket">
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
