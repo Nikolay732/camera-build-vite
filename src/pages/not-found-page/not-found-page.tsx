@@ -24,7 +24,7 @@ export function NotFoundPage () {
   return (
     <div className="wrapper">
       <Helmet>
-        <title>Catalog</title>
+        <title>Not found 404</title>
       </Helmet>
       <Header/>
       <main>
