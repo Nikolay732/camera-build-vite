@@ -19,6 +19,7 @@ export const SimilarSwiperSetting = {
 export enum AppRoute {
   Catalog = '/',
   Product = '/product',
+  NotFound = '/404',
 }
 
 export const NameSpace = {

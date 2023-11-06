@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getProductList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-list-data/product-list-data-selectors';
 import {useEffect, useMemo} from 'react';
 import { fetchProductListAction } from '../../store/product-list-data/product-list-data-thunk';
-import { Page } from '../../const';
+import { AppRoute, Page } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
 import { CatalogAddItemModal } from '../../components/catalog-add-item-modal/catalog-add-item-modal';
 import { Spinner } from '../../components/spinner/spinner';
@@ -20,6 +20,7 @@ import { fetchPromoProductListAction } from '../../store/promo-product-data/prom
 import { useSearchParams } from 'react-router-dom';
 import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
 import { SearchParams } from '../../types/search-params';
+import { redirectToRoute } from '../../store/action';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
@@ -40,13 +41,6 @@ export function CatalogPage () {
   const isLoadingData = useAppSelector(getCatalogPageDataLoadingStatus);
   const hasError = useAppSelector(getCatalogPageErrorLoadStatus);
 
-  const currentParams = useMemo(() => {
-    const params: SearchParams = {};
-    params.page = currentPage.toString();
-    return params;
-  }, [currentPage]);
-
-
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
@@ -61,12 +55,32 @@ export function CatalogPage () {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      dispatch(setCurrentPage(currentPage));
+      if (currentPage <= totalCountPage && currentPage > 0) {
+        dispatch(setCurrentPage(currentPage));
+      }
     }
     return () => {
       isMounted = false;
     };
-  }, [dispatch, currentPage]);
+  }, [dispatch, totalCountPage, currentPage]);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      if (currentPage > totalCountPage || isNaN(currentPage) || currentPage === 0) {
+        dispatch(redirectToRoute(AppRoute.NotFound));
+      }
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, totalCountPage, currentPage]);
+
+  const currentParams = useMemo(() => {
+    const params: SearchParams = {};
+    params.page = currentPage.toString();
+    return params;
+  }, [currentPage]);
 
   useEffect(() => {
     let isMounted = true;
