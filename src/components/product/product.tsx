@@ -2,6 +2,7 @@ import { ProductItem } from '../../types/product';
 import { ProductTabs } from '../poduct-tabs/poduct-tabs';
 import { RATINGS } from '../../const';
 import { RatingItem } from '../rating-item/rating-item';
+import { ButtonAddToBasket } from '../button-add-to-basket/button-add-to-basket';
 
 type ProductProps = {
   product: ProductItem;
@@ -30,11 +31,7 @@ export function Product ({product}:ProductProps) {
             <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
           </div>
           <p className="product__price"><span className="visually-hidden">Цена:</span>{`${price.toLocaleString('ru')} ₽`}</p>
-          <button className="btn btn--purple" type="button">
-            <svg width="24" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-add-basket"></use>
-            </svg>Добавить в корзину
-          </button>
+          <ButtonAddToBasket product={product}/>
           <ProductTabs product={product}/>
         </div>
       </div>

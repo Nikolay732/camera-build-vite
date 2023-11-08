@@ -1,19 +1,19 @@
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
-import { BasketItemList } from '../../components/basket-item-list/basket-item-list';
-import { ProductItem } from '../../types/product';
+import { BasketItem } from '../../components/basket-item/basket-item';
 import { BasketSummary } from '../../components/basket-summary/basket-summary';
 import { Footer } from '../../components/footer/footer';
+import { useAppSelector } from '../../hooks';
+import { getBasketProductList } from '../../store/basket-product-data/basket-product-data-selectors';
 
 export function BasketPage () {
-
-  const basketProductList:ProductItem[] = [];
+  const basketProductList = useAppSelector(getBasketProductList);
 
   return (
     <div className="wrapper">
       <Helmet>
-        <title>Catalog</title>
+        <title>Basket</title>
       </Helmet>
       <Header/>
       <main>
@@ -23,7 +23,7 @@ export function BasketPage () {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
               <ul className="basket__list">
-                {basketProductList.map((item) => <BasketItemList key={item.id} product={item}/>)}
+                {basketProductList.map((item) => <BasketItem key={item.id} product={item}/>)}
               </ul>
               <BasketSummary/>
             </div>

@@ -1,14 +1,14 @@
 import { ProductItem } from '../../types/product';
-import { BasketItemProduct } from '../basket-item-product/basket-item-product';
+import { BasketProductData } from '../basket-product-data/basket-product-data';
 
-type BasketItemListProps = {
+type BasketItemProps = {
   product: ProductItem;
 }
 
-export function BasketItemList ({product}: BasketItemListProps) {
+export function BasketItem ({product}: BasketItemProps) {
   return (
     <li className="basket-item">
-      <BasketItemProduct product={product}/>
+      <BasketProductData product={product}/>
       <div className="quantity">
         <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара">
           <svg width="7" height="12" aria-hidden="true">

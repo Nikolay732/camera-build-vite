@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
 import { ProductItem } from '../../types/product';
 
-type BasketItemProductProps = {
+type BasketProductDataProps = {
   product: ProductItem;
 }
 
-export function BasketItemProduct ({product}: BasketItemProductProps) {
+export function BasketProductData ({product}: BasketProductDataProps) {
   const {name, vendorCode, type, category, level, price, previewImgWebp, previewImgWebp2x, previewImg, previewImg2x} = product;
   const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;
   const imgSrcSet = `../../${previewImg2x} 2x`;

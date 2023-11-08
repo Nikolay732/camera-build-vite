@@ -29,6 +29,8 @@ export const NameSpace = {
   DetailedProduct: 'DETAILED_PRODUCT',
   SimilarProductList: 'SIMILAR_PRODUCT_LIST',
   ReviewList: 'REVIEW_LIST',
+  BasketProductList: 'BASKET_PRODUCT_LIST',
+  Catalog: 'CATALOG',
 } as const;
 
 export const APIRoute = {
