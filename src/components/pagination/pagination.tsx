@@ -17,8 +17,8 @@ export function Pagination ({totalCountPage}: PaginationProps) {
   const lastPageIndex = perPageNumber * Page.MaxPagesCount;
   const firstPageIndex = lastPageIndex - Page.MaxPagesCount;
   const currentPageNumbers = pageAllNumbers.slice(firstPageIndex, lastPageIndex);
-  const isHidenClassPrevLink = currentPage === 1 || totalCountPage <= 3;
-  const isHidenClassNextLink = currentPage === totalCountPage || totalCountPage <= 3;
+  const isHidenClassPrevLink = totalCountPage <= 3 || currentPage <= 3;
+  const isHidenClassNextLink = currentPage >= totalCountPage - 1 || totalCountPage <= 3;
 
   const hanldeNextPageClick = () => {
     dispatch(setCurrentPage(currentPage + 1));
