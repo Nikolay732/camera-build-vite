@@ -26,6 +26,11 @@ export type PromoItem = {
   previewImgWebp2x: string;
 }
 
+export type BasketProduct = {
+  count: number;
+  product: ProductItem;
+};
+
 type ProductType = typeof ProductTypeValue[keyof typeof ProductTypeValue];
 
 type ProductCategory = typeof ProductCategoryValue[keyof typeof ProductCategoryValue];

@@ -1,6 +1,6 @@
 import { useAppDispatch } from '../../hooks';
 import { addProductToBasket } from '../../store/basket-product-data/basket-product-data-slice';
-import { setActiveModalAddItemStatus } from '../../store/product-list-data/product-list-data-slice';
+import { setActiveModalAddItemStatus, setActiveModalAddItemSuccessStatus } from '../../store/product-list-data/product-list-data-slice';
 import { ProductItem } from '../../types/product';
 import classNames from 'classnames';
 
@@ -16,6 +16,7 @@ export function ButtonAddToBasket ({product, isModal}: ButtonAddToBasketProps) {
     dispatch(addProductToBasket(product));
     if(isModal) {
       dispatch(setActiveModalAddItemStatus(false));
+      dispatch(setActiveModalAddItemSuccessStatus(true));
     }
   };
 

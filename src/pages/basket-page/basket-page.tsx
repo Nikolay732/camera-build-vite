@@ -23,7 +23,7 @@ export function BasketPage () {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
               <ul className="basket__list">
-                {basketProductList.map((item) => <BasketItem key={item.id} product={item}/>)}
+                {basketProductList.map((item) => <BasketItem key={item.product.id} basketProduct={item}/>)}
               </ul>
               <BasketSummary/>
             </div>

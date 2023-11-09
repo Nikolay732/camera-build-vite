@@ -10,6 +10,7 @@ type InitialState = {
   currentPage: number;
   selectedProduct: ProductItem | null;
   isActiveModalAddItem: boolean;
+  isActiveModalAddItemSuccess: boolean;
 };
 
 const initialState: InitialState = {
@@ -19,6 +20,7 @@ const initialState: InitialState = {
   currentPage: 1,
   selectedProduct: null,
   isActiveModalAddItem: false,
+  isActiveModalAddItemSuccess: false
 };
 
 export const productListData = createSlice ({
@@ -33,6 +35,9 @@ export const productListData = createSlice ({
     },
     setActiveModalAddItemStatus: (state, action: PayloadAction<boolean>) => {
       state.isActiveModalAddItem = action.payload;
+    },
+    setActiveModalAddItemSuccessStatus: (state, action: PayloadAction<boolean>) => {
+      state.isActiveModalAddItemSuccess = action.payload;
     },
   },
   extraReducers (builder) {
@@ -52,4 +57,4 @@ export const productListData = createSlice ({
   }
 });
 
-export const {setCurrentPage, setSelectedProduct, setActiveModalAddItemStatus} = productListData.actions;
+export const {setCurrentPage, setSelectedProduct, setActiveModalAddItemStatus, setActiveModalAddItemSuccessStatus} = productListData.actions;

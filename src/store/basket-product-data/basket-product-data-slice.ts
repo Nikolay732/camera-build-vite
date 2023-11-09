@@ -1,9 +1,9 @@
 import { NameSpace } from '../../const';
-import { ProductItem } from '../../types/product';
+import { BasketProduct, ProductItem } from '../../types/product';
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 type InitialState = {
-  basketProductList: ProductItem[];
+  basketProductList: BasketProduct[];
 };
 
 const initialState: InitialState = {
@@ -15,8 +15,11 @@ export const basketProductData = createSlice ({
   initialState,
   reducers: {
     addProductToBasket: (state, action: PayloadAction<ProductItem>) => {
-      if (!state.basketProductList.includes(action.payload)) {
-        state.basketProductList.push(action.payload);
+      if (!state.basketProductList.some((item) => item.product.id === action.payload.id)) {
+        state.basketProductList.push({count: 1, product: action.payload});
+      } else {
+        state.basketProductList = state.basketProductList.map((item) =>
+          item.product.id === action.payload.id ? {count: item.count + 1, product: item.product} : item);
       }
     },
   },

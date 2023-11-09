@@ -6,7 +6,7 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getProductList, getSelectedProduct, getStatusActiveModalAddItem} from '../../store/product-list-data/product-list-data-selectors';
+import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getProductList, getSelectedProduct, getStatusActiveModalAddItem, getStatusActiveModalAddItemSuccess} from '../../store/product-list-data/product-list-data-selectors';
 import {useEffect, useMemo} from 'react';
 import { fetchProductListAction } from '../../store/product-list-data/product-list-data-thunk';
 import { AppRoute, Page } from '../../const';
@@ -21,6 +21,7 @@ import { useSearchParams } from 'react-router-dom';
 import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
 import { SearchParams } from '../../types/search-params';
 import { redirectToRoute } from '../../store/action';
+import { CatalogAddItemSuccessModal } from '../../components/catalog-add-item-success-modal/catalog-add-item-success-modal';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
@@ -38,6 +39,7 @@ export function CatalogPage () {
   const currentProductList = productList.slice(firstProductIndex, lastProductIndex);
   const selectedProduct = useAppSelector(getSelectedProduct);
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
+  const isActiveModalAddItemSuccess = useAppSelector(getStatusActiveModalAddItemSuccess);
   const isLoadingData = useAppSelector(getCatalogPageDataLoadingStatus);
   const hasError = useAppSelector(getCatalogPageErrorLoadStatus);
 
@@ -120,7 +122,8 @@ export function CatalogPage () {
                   <ProductCardList productList={currentProductList}/>
                   {totalCountPage > 1 && <Pagination totalCountPage={totalCountPage}/>}
                 </div>
-                {selectedProduct && <CatalogAddItemModal product={selectedProduct} isActive={isActiveModalAddItem}/>}
+                {selectedProduct && isActiveModalAddItem && <CatalogAddItemModal product={selectedProduct} isActive={isActiveModalAddItem}/>}
+                {isActiveModalAddItemSuccess && <CatalogAddItemSuccessModal isActive={isActiveModalAddItemSuccess}/>}
               </div>
             </div>
           </section>

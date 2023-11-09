@@ -4,7 +4,7 @@ import { useModal } from '../../hooks/use-esc-key-down';
 import { setActiveModalAddItemStatus } from '../../store/product-list-data/product-list-data-slice';
 import { ProductItem } from '../../types/product';
 import classNames from 'classnames';
-import { BasketProductData } from '../basket-product-data/basket-product-data';
+import { BasketItemDescription } from '../basket-item-description/basket-item-description';
 import { ButtonAddToBasket } from '../button-add-to-basket/button-add-to-basket';
 
 type CatalogAddItemModalProps = {
@@ -29,7 +29,7 @@ export function CatalogAddItemModal ({product, isActive}: CatalogAddItemModalPro
           <div className="modal__content">
             <p className="title title--h4">Добавить товар в корзину</p>
             <div className="basket-item basket-item--short">
-              <BasketProductData product={product}/>
+              <BasketItemDescription product={product} isModal/>
             </div>
             <div className="modal__buttons">
               <ButtonAddToBasket product={product} isModal/>
