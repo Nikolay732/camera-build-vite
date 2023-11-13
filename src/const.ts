@@ -1,4 +1,6 @@
 export const AUTOPLAY_DELAY = 3000;
+export const MIN_LENGTH_FOR_SEARCH = 3;
+export const DROPDOWN_COUNT = 4;
 
 export const Page = {
   Per: 9,
@@ -72,3 +74,12 @@ export const ProductTabURL = {
   Description: 'description',
   Characteristics: 'characteristics',
 } as const;
+
+export const KeyCode = {
+  ArrowUp: 'ArrowUp',
+  ArrowDown: 'ArrowDown',
+  Esc: 'Escape',
+  Enter: 'Enter',
+} as const;
+
+
