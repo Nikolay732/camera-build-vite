@@ -6,10 +6,10 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getProductList, getSelectedProduct, getStatusActiveModalAddItem, getStatusActiveModalAddItemSuccess} from '../../store/product-list-data/product-list-data-selectors';
+import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getSelectedProduct, getStatusActiveModalAddItem, getStatusActiveModalAddItemSuccess} from '../../store/product-list-data/product-list-data-selectors';
 import {useEffect, useMemo} from 'react';
 import { fetchProductListAction } from '../../store/product-list-data/product-list-data-thunk';
-import { AppRoute, Page } from '../../const';
+import { AppRoute, Page, SortOrder, SortType } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
 import { CatalogAddItemModal } from '../../components/catalog-add-item-modal/catalog-add-item-modal';
 import { Spinner } from '../../components/spinner/spinner';
@@ -22,12 +22,14 @@ import { setCurrentPage } from '../../store/product-list-data/product-list-data-
 import { SearchParams } from '../../types/search-params';
 import { redirectToRoute } from '../../store/action';
 import { CatalogAddItemSuccessModal } from '../../components/catalog-add-item-success-modal/catalog-add-item-success-modal';
+import { getSortOrder, getSortType, getSortedProductList } from '../../store/catalog-process/catalog-process-selectors';
+import { setSortOrder, setSortType } from '../../store/catalog-process/catalog-process-slice';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const productList = useAppSelector(getProductList);
+  const productList = useAppSelector(getSortedProductList);
   const promoList = useAppSelector(getPromoProductList);
   const pageState = useAppSelector(getCurrentPage);
   const pageNumberURL = Number(searchParams.get('page'));
@@ -38,6 +40,12 @@ export function CatalogPage () {
   const firstProductIndex = lastProductIndex - Page.Per;
   const currentProductList = productList.slice(firstProductIndex, lastProductIndex);
   const selectedProduct = useAppSelector(getSelectedProduct);
+
+  const currentSortType = useAppSelector(getSortType);
+  const currentSortOrder = useAppSelector(getSortOrder);
+  const currentType = searchParams.get('sort');
+  const currentOrder = searchParams.get('order');
+
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
   const isActiveModalAddItemSuccess = useAppSelector(getStatusActiveModalAddItemSuccess);
   const isLoadingData = useAppSelector(getCatalogPageDataLoadingStatus);
@@ -78,11 +86,28 @@ export function CatalogPage () {
     };
   }, [dispatch, totalCountPage, currentPage]);
 
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      if (currentOrder && currentType) {
+        dispatch(setSortType(currentType as SortType));
+        dispatch(setSortOrder(currentOrder as SortOrder));
+      }
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, currentOrder, currentType]);
+
   const currentParams = useMemo(() => {
     const params: SearchParams = {};
     params.page = currentPage.toString();
+    if (currentSortType && currentSortOrder) {
+      params.sort = currentSortType;
+      params.order = currentSortOrder;
+    }
     return params;
-  }, [currentPage]);
+  }, [currentPage, currentSortType, currentSortOrder]);
 
   useEffect(() => {
     let isMounted = true;
