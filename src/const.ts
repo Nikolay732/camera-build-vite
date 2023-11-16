@@ -32,6 +32,7 @@ export const NameSpace = {
   SimilarProductList: 'SIMILAR_PRODUCT_LIST',
   ReviewList: 'REVIEW_LIST',
   BasketProductList: 'BASKET_PRODUCT_LIST',
+  Catalog: 'CATALOG',
 } as const;
 
 export const APIRoute = {
@@ -82,4 +83,12 @@ export const KeyCode = {
   Enter: 'Enter',
 } as const;
 
+export enum SortType {
+  Price = 'по цене',
+  Popular = 'по популярности'
+}
 
+export enum SortOrder {
+  Up = 'по возрастанию',
+  Down = 'по убыванию',
+}
