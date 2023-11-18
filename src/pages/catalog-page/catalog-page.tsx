@@ -1,5 +1,5 @@
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
-import { CatalogAside } from '../../components/catalog-aside/catalog-aside';
+import { CatalogFilter } from '../../components/catalog-filter/catalog-filter';
 import { CataloSort } from '../../components/catalog-sort/catalog-sort';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
@@ -22,8 +22,9 @@ import { setCurrentPage } from '../../store/product-list-data/product-list-data-
 import { SearchParams } from '../../types/search-params';
 import { redirectToRoute } from '../../store/action';
 import { CatalogAddItemSuccessModal } from '../../components/catalog-add-item-success-modal/catalog-add-item-success-modal';
-import { getSortOrder, getSortType, getSortedProductList } from '../../store/catalog-process/catalog-process-selectors';
-import { setSortOrder, setSortType } from '../../store/catalog-process/catalog-process-slice';
+import { getFilterCategory, getFilterLevel, getFilterType, getSortOrder, getSortType, getSortedProductList } from '../../store/catalog-process/catalog-process-selectors';
+import { setFilterCategory, setFilterLevel, setFilterType, setSortOrder, setSortType } from '../../store/catalog-process/catalog-process-slice';
+import { ProductCategory, ProductLevel, ProductType } from '../../types/product';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
@@ -43,8 +44,26 @@ export function CatalogPage () {
 
   const currentSortType = useAppSelector(getSortType);
   const currentSortOrder = useAppSelector(getSortOrder);
-  const currentType = searchParams.get('sort');
-  const currentOrder = searchParams.get('order');
+  const sortTypeURL = searchParams.get('sort');
+  const sortOrderURL = searchParams.get('order');
+
+  const currentFilterCategory = useAppSelector(getFilterCategory);
+  const filterCategoryURL = searchParams.get('category');
+
+  const currentFilterType = useAppSelector(getFilterType);
+  const filterTypeURL: string[] = [];
+
+  const currentFilterLevel = useAppSelector(getFilterLevel);
+  const filterLevelURL: string[] = [];
+
+  for (const [key, value] of searchParams.entries()) {
+    if (key === 'type' && !currentFilterType.includes(value as ProductType)) {
+      filterTypeURL.push(value);
+    }
+    if (key === 'level' && !currentFilterLevel.includes(value as ProductLevel)) {
+      filterLevelURL.push(value);
+    }
+  }
 
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
   const isActiveModalAddItemSuccess = useAppSelector(getStatusActiveModalAddItemSuccess);
@@ -89,25 +108,50 @@ export function CatalogPage () {
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
-      if (currentOrder && currentType) {
-        dispatch(setSortType(currentType as SortType));
-        dispatch(setSortOrder(currentOrder as SortOrder));
+      if (sortOrderURL && sortTypeURL) {
+        dispatch(setSortType(sortTypeURL as SortType));
+        dispatch(setSortOrder(sortOrderURL as SortOrder));
+      }
+      if (filterCategoryURL) {
+        dispatch(setFilterCategory(filterCategoryURL as ProductCategory));
+      }
+      if (filterTypeURL?.length) {
+        filterTypeURL.forEach((type) => {
+          dispatch(setFilterType(type as ProductType));
+        });
+      }
+      if (filterLevelURL.length) {
+        filterLevelURL.forEach((level) => {
+          dispatch(setFilterLevel(level as ProductLevel));
+        });
       }
     }
     return () => {
       isMounted = false;
     };
-  }, [dispatch, currentOrder, currentType]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   const currentParams = useMemo(() => {
     const params: SearchParams = {};
     params.page = currentPage.toString();
+
     if (currentSortType && currentSortOrder) {
       params.sort = currentSortType;
       params.order = currentSortOrder;
     }
+    if (currentFilterCategory) {
+      params.category = currentFilterCategory;
+    }
+    if (currentFilterType) {
+      params.type = currentFilterType;
+    }
+    if (currentFilterLevel) {
+      params.level = currentFilterLevel;
+    }
+
     return params;
-  }, [currentPage, currentSortType, currentSortOrder]);
+  }, [currentPage, currentSortType, currentSortOrder, currentFilterCategory, currentFilterType, currentFilterLevel]);
 
   useEffect(() => {
     let isMounted = true;
@@ -141,7 +185,9 @@ export function CatalogPage () {
             <div className="container">
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
               <div className="page-content__columns">
-                <CatalogAside/>
+                <div className="catalog__aside">
+                  <CatalogFilter/>
+                </div>
                 <div className="catalog__content">
                   <CataloSort/>
                   <ProductCardList productList={currentProductList}/>

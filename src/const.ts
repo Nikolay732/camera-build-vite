@@ -55,7 +55,7 @@ export const ReviewRatingValue = {
 
 export const ProductTypeValue = {
   Collection: 'Коллекционная',
-  Instant: 'Моментальная',
+  Snapshot: 'Моментальная',
   Digital: 'Цифровая',
   Film: 'Плёночная',
 } as const;
@@ -67,7 +67,7 @@ export const ProductCategoryValue = {
 
 export const ProductLevelValue = {
   Zero: 'Нулевой',
-  Amateur: 'Любительский',
+  'non-professional': 'Любительский',
   Professional: 'Профессиональный',
 } as const;
 
@@ -92,3 +92,4 @@ export enum SortOrder {
   Up = 'по возрастанию',
   Down = 'по убыванию',
 }
+

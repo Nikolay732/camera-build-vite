@@ -31,8 +31,8 @@ export type BasketProduct = {
   product: ProductItem;
 };
 
-type ProductType = typeof ProductTypeValue[keyof typeof ProductTypeValue];
+export type ProductType = typeof ProductTypeValue[keyof typeof ProductTypeValue];
 
-type ProductCategory = typeof ProductCategoryValue[keyof typeof ProductCategoryValue];
+export type ProductCategory = typeof ProductCategoryValue[keyof typeof ProductCategoryValue];
 
-type ProductLevel = typeof ProductLevelValue[keyof typeof ProductLevelValue];
+export type ProductLevel = typeof ProductLevelValue[keyof typeof ProductLevelValue];

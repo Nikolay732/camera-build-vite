@@ -3,4 +3,7 @@ export type SearchParams = {
   about?: string;
   sort?: string;
   order?: string;
+  category?: string;
+  type?: string[];
+  level?: string[];
 };
