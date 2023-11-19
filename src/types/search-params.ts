@@ -6,4 +6,6 @@ export type SearchParams = {
   category?: string;
   type?: string[];
   level?: string[];
+  price_gte?: string;
+  price_lte?: string;
 };

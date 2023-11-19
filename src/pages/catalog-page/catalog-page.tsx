@@ -22,15 +22,15 @@ import { setCurrentPage } from '../../store/product-list-data/product-list-data-
 import { SearchParams } from '../../types/search-params';
 import { redirectToRoute } from '../../store/action';
 import { CatalogAddItemSuccessModal } from '../../components/catalog-add-item-success-modal/catalog-add-item-success-modal';
-import { getFilterCategory, getFilterLevel, getFilterType, getSortOrder, getSortType, getSortedProductList } from '../../store/catalog-process/catalog-process-selectors';
-import { setFilterCategory, setFilterLevel, setFilterType, setSortOrder, setSortType } from '../../store/catalog-process/catalog-process-slice';
+import { getFilterCategory, getFilterLevel, getFilterMaxPrice, getFilterMinPrice, getFilterType, getFilteredProductList, getSortOrder, getSortType} from '../../store/catalog-process/catalog-process-selectors';
+import { setFilterCategory, setFilterLevel, setFilterType, setMaxPrice, setMinPrice, setSortOrder, setSortType } from '../../store/catalog-process/catalog-process-slice';
 import { ProductCategory, ProductLevel, ProductType } from '../../types/product';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const productList = useAppSelector(getSortedProductList);
+  const productList = useAppSelector(getFilteredProductList);
   const promoList = useAppSelector(getPromoProductList);
   const pageState = useAppSelector(getCurrentPage);
   const pageNumberURL = Number(searchParams.get('page'));
@@ -64,6 +64,11 @@ export function CatalogPage () {
       filterLevelURL.push(value);
     }
   }
+
+  const currentFilterMinPrice = useAppSelector(getFilterMinPrice);
+  const currentFilterMaxPrice = useAppSelector(getFilterMaxPrice);
+  const filterMinPriceURL = searchParams.get('price_gte');
+  const filterMaxPriceURL = searchParams.get('price_lte');
 
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
   const isActiveModalAddItemSuccess = useAppSelector(getStatusActiveModalAddItemSuccess);
@@ -125,6 +130,12 @@ export function CatalogPage () {
           dispatch(setFilterLevel(level as ProductLevel));
         });
       }
+      if (filterMinPriceURL) {
+        dispatch(setMinPrice(Number(filterMinPriceURL)));
+      }
+      if (filterMaxPriceURL) {
+        dispatch(setMaxPrice(Number(filterMaxPriceURL)));
+      }
     }
     return () => {
       isMounted = false;
@@ -149,9 +160,14 @@ export function CatalogPage () {
     if (currentFilterLevel) {
       params.level = currentFilterLevel;
     }
-
+    if (currentFilterMinPrice) {
+      params['price_gte'] = currentFilterMinPrice.toString();
+    }
+    if (currentFilterMaxPrice) {
+      params['price_lte'] = currentFilterMaxPrice.toString();
+    }
     return params;
-  }, [currentPage, currentSortType, currentSortOrder, currentFilterCategory, currentFilterType, currentFilterLevel]);
+  }, [currentPage, currentSortType, currentSortOrder, currentFilterCategory, currentFilterType, currentFilterLevel, currentFilterMinPrice, currentFilterMaxPrice]);
 
   useEffect(() => {
     let isMounted = true;

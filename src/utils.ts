@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Review } from './types/review';
 import 'dayjs/locale/ru';
 import { SortOrder, SortType } from './const';
-import { ProductItem } from './types/product';
+import { ProductCategory, ProductItem, ProductLevel, ProductType } from './types/product';
 
 export const getFormatDate = (date: string, format: string) => dayjs(date).locale('ru').format(format);
 
@@ -27,3 +27,66 @@ export const sortProductList = (productList: ProductItem[], sortType: SortType |
   const sortedProductListByOrder = sortOrder ? sortOrderMap[sortOrder](sortedProductListByType) : [...productList];
   return sortedProductListByOrder;
 };
+
+export const filterProductByCategory = (productList: ProductItem[], category: ProductCategory | null) => {
+  if (!category) {
+    return productList;
+  }
+  const filteredProductList = [...productList].filter((product) => product.category === category);
+  return filteredProductList;
+};
+
+export const filterProductByType = (productList: ProductItem[], types: ProductType[]) => {
+  if (!types.length) {
+    return productList;
+  }
+  const filteredProductList = [...productList].filter((product) => types.includes(product.type));
+  return filteredProductList;
+};
+
+export const filterProductByLevel = (productList: ProductItem[], levels: ProductLevel[]) => {
+  if (!levels.length) {
+    return productList;
+  }
+  const filteredProductList = [...productList].filter((product) => levels.includes(product.level));
+  return filteredProductList;
+};
+
+export const filterProductByPrice = (productList: ProductItem[], minPrice: number, maxPrice: number) => {
+  if (!minPrice && !maxPrice) {
+    return productList;
+  }
+  if (!maxPrice) {
+    maxPrice = Infinity;
+  }
+  const filteredProductList = productList.filter((product) => product.price >= minPrice && product.price <= maxPrice);
+  return filteredProductList;
+};
+
+export const filterProductList = (
+  productList: ProductItem[],
+  category: ProductCategory | null,
+  types: ProductType[],
+  levels: ProductLevel[],
+  minPrice: number,
+  maxPrice: number,
+) => {
+  const filteredProductListByCategory = filterProductByCategory(productList, category);
+  const filteredProductListByType = filterProductByType(filteredProductListByCategory, types);
+  const filteredProductListByLevel = filterProductByLevel(filteredProductListByType, levels);
+  const filteredProductListByPrice = filterProductByPrice(filteredProductListByLevel, minPrice, maxPrice);
+  return filteredProductListByPrice;
+};
+
+export const getPrice = (productList: ProductItem[], type: 'min' | 'max') => {
+  if (!productList.length) {
+    return '';
+  }
+  const sortedProductList = [...productList].sort((a, b) => a.price - b.price);
+  if (type === 'max' && sortedProductList.length) {
+    return sortedProductList[sortProductList.length - 1].price.toString();
+  } else {
+    return sortedProductList[0].price.toString();
+  }
+};
+

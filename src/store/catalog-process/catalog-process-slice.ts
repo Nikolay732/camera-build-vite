@@ -8,6 +8,9 @@ type InitialState = {
   category: ProductCategory | null;
   type: ProductType[];
   level: ProductLevel[];
+  minPrice: number;
+  maxPrice: number;
+  isReset: boolean;
 };
 
 const initialState: InitialState = {
@@ -16,6 +19,9 @@ const initialState: InitialState = {
   category: null,
   type: [],
   level: [],
+  minPrice: 0,
+  maxPrice: 0,
+  isReset: false,
 };
 
 export const catalogProcess = createSlice ({
@@ -51,8 +57,14 @@ export const catalogProcess = createSlice ({
         state.level = state.level.filter((level) => level !== action.payload);
       }
     },
+    setMinPrice: (state, action: PayloadAction<number>) => {
+      state.minPrice = action.payload;
+    },
+    setMaxPrice: (state, action: PayloadAction<number>) => {
+      state.maxPrice = action.payload;
+    },
   },
   extraReducers: {}
 });
 
-export const {setSortOrder, setSortType, setFilterCategory, setFilterType, setFilterLevel} = catalogProcess.actions;
+export const {setSortOrder, setSortType, setFilterCategory, setFilterType, setFilterLevel, setMinPrice, setMaxPrice} = catalogProcess.actions;
