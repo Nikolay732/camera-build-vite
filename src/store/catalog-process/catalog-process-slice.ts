@@ -80,6 +80,7 @@ export const catalogProcess = createSlice ({
       state.minPrice = 0;
       state.maxPrice = 0;
       state.isReset = true;
+      state.currentPage = 1;
     },
     setResetStatus:(state, action: PayloadAction<boolean>) => {
       state.isReset = action.payload;
