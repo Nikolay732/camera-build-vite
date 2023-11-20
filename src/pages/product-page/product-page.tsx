@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getSelectedProduct, getStatusActiveModalAddItem } from '../../store/product-list-data/product-list-data-selectors';
 import { useEffect } from 'react';
 import { Product } from '../../components/product/product';
 import { Helmet } from 'react-helmet-async';
@@ -21,6 +20,7 @@ import { getSimilarProductList } from '../../store/similar-product-data/similar-
 import { fetchDetailedProductAction } from '../../store/detailed-product-data/detailed-product-data-thunk';
 import { fetchSimilarProductListAction } from '../../store/similar-product-data/similar-product-data-thunk';
 import { fetchReviewListAction } from '../../store/reviews-data/reviews-data-thunk';
+import { getSelectedProduct, getStatusActiveModalAddItem } from '../../store/catalog-process/catalog-process-selectors';
 
 export function ProductPage () {
   const dispatch = useAppDispatch();

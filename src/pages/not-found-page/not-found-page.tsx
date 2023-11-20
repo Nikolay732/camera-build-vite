@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
 import { Helmet } from 'react-helmet-async';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
 import './not-found-page.css';
+import { setCurrentPage } from '../../store/catalog-process/catalog-process-slice';
 
 export function NotFoundPage () {
   const dispatch = useAppDispatch();

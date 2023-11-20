@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCurrentPage } from '../../store/product-list-data/product-list-data-selectors';
-import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
 import { PaginationItem } from '../pagination-item/pagination-item';
 import { Link } from 'react-router-dom';
 import { Page } from '../../const';
+import { getCurrentPage } from '../../store/catalog-process/catalog-process-selectors';
+import { setCurrentPage } from '../../store/catalog-process/catalog-process-slice';
 
 type PaginationProps = {
   totalCountPage: number;

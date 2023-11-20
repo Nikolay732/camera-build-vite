@@ -1,11 +1,11 @@
 import ReactFocusLock from 'react-focus-lock';
 import { useAppDispatch } from '../../hooks';
 import { useModal } from '../../hooks/use-esc-key-down';
-import { setActiveModalAddItemStatus } from '../../store/product-list-data/product-list-data-slice';
 import { ProductItem } from '../../types/product';
 import classNames from 'classnames';
 import { BasketItemDescription } from '../basket-item-description/basket-item-description';
 import { ButtonAddToBasket } from '../button-add-to-basket/button-add-to-basket';
+import { setActiveModalAddItemStatus } from '../../store/catalog-process/catalog-process-slice';
 
 type CatalogAddItemModalProps = {
   product: ProductItem;

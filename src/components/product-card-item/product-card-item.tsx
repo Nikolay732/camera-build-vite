@@ -2,10 +2,10 @@ import { AppRoute, RATINGS } from '../../const';
 import { ProductItem } from '../../types/product';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { setSelectedProduct, setActiveModalAddItemStatus } from '../../store/product-list-data/product-list-data-slice';
 import classNames from 'classnames';
 import { RatingItem } from '../rating-item/rating-item';
 import './product-card-item.css';
+import { setActiveModalAddItemStatus, setSelectedProduct } from '../../store/catalog-process/catalog-process-slice';
 
 type ProductCardItemProps = {
   product: ProductItem;

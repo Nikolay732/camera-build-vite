@@ -1,6 +1,6 @@
 import { useAppDispatch } from '../../hooks';
 import { addProductToBasket } from '../../store/basket-product-data/basket-product-data-slice';
-import { setActiveModalAddItemStatus, setActiveModalAddItemSuccessStatus } from '../../store/product-list-data/product-list-data-slice';
+import { setActiveModalAddItemStatus, setActiveModalAddItemSuccessStatus } from '../../store/catalog-process/catalog-process-slice';
 import { ProductItem } from '../../types/product';
 import classNames from 'classnames';
 

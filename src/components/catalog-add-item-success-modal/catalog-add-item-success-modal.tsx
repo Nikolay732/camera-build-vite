@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import { useAppDispatch } from '../../hooks';
-import { setActiveModalAddItemSuccessStatus } from '../../store/product-list-data/product-list-data-slice';
 import { useModal } from '../../hooks/use-esc-key-down';
 import ReactFocusLock from 'react-focus-lock';
 import { Link } from 'react-router-dom';
 import { redirectToRoute } from '../../store/action';
 import { AppRoute } from '../../const';
+import { setActiveModalAddItemSuccessStatus } from '../../store/catalog-process/catalog-process-slice';
 
 type CatalogAddItemSuccessModalProps = {
   isActive: boolean;

@@ -1,45 +1,24 @@
 import { NameSpace } from '../../const';
 import { ProductItem } from '../../types/product';
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchProductListAction } from './product-list-data-thunk';
 
 type InitialState = {
   productList: ProductItem[];
   isProductListLoading: boolean;
   hasErrorProductList: boolean;
-  currentPage: number;
-  selectedProduct: ProductItem | null;
-  isActiveModalAddItem: boolean;
-  isActiveModalAddItemSuccess: boolean;
 };
 
 const initialState: InitialState = {
   productList: [],
   isProductListLoading: false,
   hasErrorProductList: false,
-  currentPage: 1,
-  selectedProduct: null,
-  isActiveModalAddItem: false,
-  isActiveModalAddItemSuccess: false
 };
 
 export const productListData = createSlice ({
   name: NameSpace.ProductList,
   initialState,
-  reducers: {
-    setCurrentPage: (state, action: PayloadAction<number>) => {
-      state.currentPage = action.payload;
-    },
-    setSelectedProduct: (state, action: PayloadAction<ProductItem>) => {
-      state.selectedProduct = action.payload;
-    },
-    setActiveModalAddItemStatus: (state, action: PayloadAction<boolean>) => {
-      state.isActiveModalAddItem = action.payload;
-    },
-    setActiveModalAddItemSuccessStatus: (state, action: PayloadAction<boolean>) => {
-      state.isActiveModalAddItemSuccess = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers (builder) {
     builder
       .addCase(fetchProductListAction.fulfilled, (state, action) => {
@@ -56,5 +35,3 @@ export const productListData = createSlice ({
       });
   }
 });
-
-export const {setCurrentPage, setSelectedProduct, setActiveModalAddItemStatus, setActiveModalAddItemSuccessStatus} = productListData.actions;

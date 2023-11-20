@@ -6,7 +6,7 @@ import { Header } from '../../components/header/header';
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus, getCurrentPage, getSelectedProduct, getStatusActiveModalAddItem, getStatusActiveModalAddItemSuccess} from '../../store/product-list-data/product-list-data-selectors';
+import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus } from '../../store/product-list-data/product-list-data-selectors';
 import {useEffect, useMemo} from 'react';
 import { fetchProductListAction } from '../../store/product-list-data/product-list-data-thunk';
 import { AppRoute, Page, SortOrder, SortType } from '../../const';
@@ -18,12 +18,11 @@ import { Helmet } from 'react-helmet-async';
 import { getPromoProductList } from '../../store/promo-product-data/promo-product-data-selectors';
 import { fetchPromoProductListAction } from '../../store/promo-product-data/promo-product-data-thunk';
 import { useSearchParams } from 'react-router-dom';
-import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
 import { SearchParams } from '../../types/search-params';
 import { redirectToRoute } from '../../store/action';
 import { CatalogAddItemSuccessModal } from '../../components/catalog-add-item-success-modal/catalog-add-item-success-modal';
-import { getFilterCategory, getFilterLevel, getFilterMaxPrice, getFilterMinPrice, getFilterType, getFilteredProductList, getSortOrder, getSortType} from '../../store/catalog-process/catalog-process-selectors';
-import { setFilterCategory, setFilterLevel, setFilterType, setMaxPrice, setMinPrice, setSortOrder, setSortType } from '../../store/catalog-process/catalog-process-slice';
+import { getCurrentPage, getFilterCategory, getFilterLevel, getFilterMaxPrice, getFilterMinPrice, getFilterType, getFilteredProductList, getSelectedProduct, getSortOrder, getSortType, getStatusActiveModalAddItem, getStatusActiveModalAddItemSuccess} from '../../store/catalog-process/catalog-process-selectors';
+import { setCurrentPage, setFilterCategory, setFilterLevel, setFilterType, setMaxPrice, setMinPrice, setSortOrder, setSortType } from '../../store/catalog-process/catalog-process-slice';
 import { ProductCategory, ProductLevel, ProductType } from '../../types/product';
 
 export function CatalogPage () {

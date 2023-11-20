@@ -6,10 +6,6 @@ import { getErrorStatusPromoProductList, getStatusPromoProductListLoading } from
 export const getProductList = (state: State) => state[NameSpace.ProductList].productList;
 export const getStatusProductListLoading = (state: State) => state[NameSpace.ProductList].isProductListLoading;
 export const getErrorStatusProductList = (state: State) => state[NameSpace.ProductList].hasErrorProductList;
-export const getCurrentPage = (state: State) => state[NameSpace.ProductList].currentPage;
-export const getSelectedProduct = (state: State) => state[NameSpace.ProductList].selectedProduct;
-export const getStatusActiveModalAddItem = (state: State) => state[NameSpace.ProductList].isActiveModalAddItem;
-export const getStatusActiveModalAddItemSuccess = (state: State) => state[NameSpace.ProductList].isActiveModalAddItemSuccess;
 
 export const getCatalogPageDataLoadingStatus = createSelector([getStatusProductListLoading, getStatusPromoProductListLoading],
   (isProductListLoading, isPromoListLoading) => isProductListLoading || isPromoListLoading);

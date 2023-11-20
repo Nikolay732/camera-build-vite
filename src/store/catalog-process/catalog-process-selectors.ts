@@ -16,6 +16,11 @@ export const getFilterMaxPrice = (state: State) => state[NameSpace.Catalog].maxP
 
 export const getFilterResetStatus = (state: State) => state[NameSpace.Catalog].isReset;
 
+export const getCurrentPage = (state: State) => state[NameSpace.Catalog].currentPage;
+export const getSelectedProduct = (state: State) => state[NameSpace.Catalog].selectedProduct;
+export const getStatusActiveModalAddItem = (state: State) => state[NameSpace.Catalog].isActiveModalAddItem;
+export const getStatusActiveModalAddItemSuccess = (state: State) => state[NameSpace.Catalog].isActiveModalAddItemSuccess;
+
 export const getSortedProductList = createSelector(
   [getProductList, getSortType, getSortOrder],
   (productList, sortType, sortOrder) => sortProductList(productList, sortType, sortOrder)

@@ -1,6 +1,6 @@
 import { NameSpace, SortOrder, SortType } from '../../const';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { ProductCategory, ProductLevel, ProductType } from '../../types/product';
+import { ProductCategory, ProductItem, ProductLevel, ProductType } from '../../types/product';
 
 type InitialState = {
   sortType: SortType | null;
@@ -11,6 +11,10 @@ type InitialState = {
   minPrice: number;
   maxPrice: number;
   isReset: boolean;
+  currentPage: number;
+  selectedProduct: ProductItem | null;
+  isActiveModalAddItem: boolean;
+  isActiveModalAddItemSuccess: boolean;
 };
 
 const initialState: InitialState = {
@@ -22,6 +26,10 @@ const initialState: InitialState = {
   minPrice: 0,
   maxPrice: 0,
   isReset: false,
+  currentPage: 1,
+  selectedProduct: null,
+  isActiveModalAddItem: false,
+  isActiveModalAddItemSuccess: false
 };
 
 export const catalogProcess = createSlice ({
@@ -75,9 +83,35 @@ export const catalogProcess = createSlice ({
     },
     setResetStatus:(state, action: PayloadAction<boolean>) => {
       state.isReset = action.payload;
-    }
+    },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
+    setSelectedProduct: (state, action: PayloadAction<ProductItem>) => {
+      state.selectedProduct = action.payload;
+    },
+    setActiveModalAddItemStatus: (state, action: PayloadAction<boolean>) => {
+      state.isActiveModalAddItem = action.payload;
+    },
+    setActiveModalAddItemSuccessStatus: (state, action: PayloadAction<boolean>) => {
+      state.isActiveModalAddItemSuccess = action.payload;
+    },
   },
   extraReducers: {}
 });
 
-export const {setSortOrder, setSortType, setFilterCategory, setFilterType, setFilterLevel, setMinPrice, setMaxPrice, resetFilters, setResetStatus} = catalogProcess.actions;
+export const {
+  setSortOrder,
+  setSortType,
+  setFilterCategory,
+  setFilterType,
+  setFilterLevel,
+  setMinPrice,
+  setMaxPrice,
+  resetFilters,
+  setResetStatus,
+  setCurrentPage,
+  setSelectedProduct,
+  setActiveModalAddItemStatus,
+  setActiveModalAddItemSuccessStatus
+} = catalogProcess.actions;

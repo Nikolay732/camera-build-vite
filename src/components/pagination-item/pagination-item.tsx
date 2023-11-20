@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCurrentPage } from '../../store/product-list-data/product-list-data-slice';
-import { getCurrentPage } from '../../store/product-list-data/product-list-data-selectors';
+import { getCurrentPage } from '../../store/catalog-process/catalog-process-selectors';
+import { setCurrentPage } from '../../store/catalog-process/catalog-process-slice';
 
 type PaginationItemProps = {
   pageNumber: number;
