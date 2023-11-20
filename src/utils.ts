@@ -78,15 +78,18 @@ export const filterProductList = (
   return filteredProductListByPrice;
 };
 
-export const getPrice = (productList: ProductItem[], type: 'min' | 'max') => {
+export const getMinPrice = (productList: ProductItem[]) => {
   if (!productList.length) {
-    return '';
+    return 0;
   }
   const sortedProductList = [...productList].sort((a, b) => a.price - b.price);
-  if (type === 'max' && sortedProductList.length) {
-    return sortedProductList[sortProductList.length - 1].price.toString();
-  } else {
-    return sortedProductList[0].price.toString();
-  }
+  return sortedProductList[0].price;
 };
 
+export const getMaxPrice = (productList: ProductItem[]) => {
+  if (!productList.length) {
+    return 0;
+  }
+  const sortedProductList = [...productList].sort((a, b) => b.price - a.price);
+  return sortedProductList[0].price;
+};

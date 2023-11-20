@@ -1,32 +1,39 @@
-import { ChangeEvent, useState, KeyboardEvent } from 'react';
+import { ChangeEvent, useState, KeyboardEvent, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFilterMaxPrice, getFilterMinPrice, getFilteredProductList } from '../../store/catalog-process/catalog-process-selectors';
+import { getFilterMaxPrice, getFilterMinPrice, getFilterResetStatus, getFilteredProductList } from '../../store/catalog-process/catalog-process-selectors';
 import { getProductList } from '../../store/product-list-data/product-list-data-selectors';
-import { getPrice } from '../../utils';
+import { getMaxPrice, getMinPrice} from '../../utils';
 import { setMaxPrice, setMinPrice } from '../../store/catalog-process/catalog-process-slice';
 import { KeyCode } from '../../const';
 
 export function FilterPrice () {
   const dispatch = useAppDispatch();
-
+  const isResetFilters = useAppSelector(getFilterResetStatus);
   const productList = useAppSelector(getProductList);
   const filteredProductList = useAppSelector(getFilteredProductList);
   const currentMinPrice = useAppSelector(getFilterMinPrice);
   const currentMaxPrice = useAppSelector(getFilterMaxPrice);
 
-  const minPrice = getPrice(filteredProductList, 'min');
-  const maxPrice = getPrice(filteredProductList, 'max');
+  const minPrice = getMinPrice(filteredProductList);
+  const maxPrice = getMaxPrice(filteredProductList);
 
-  const minPriceAll = getPrice(productList, 'min');
-  const maxPriceAll = getPrice(productList, 'max');
+  const minPriceAll = getMinPrice(productList);
+  const maxPriceAll = getMaxPrice(productList);
 
   const [minPriceValue, setMinPriceValue] = useState(0 || currentMinPrice);
   const [maxPriceValue, setMaxPriceValue] = useState(0 || currentMaxPrice);
 
+  useEffect(() => {
+    if (isResetFilters) {
+      setMinPriceValue(0);
+      setMaxPriceValue(0);
+    }
+  }, [isResetFilters]);
+
   const handleInputMinPriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const price = Number(evt.target.value.replaceAll('-', ''));
     if (evt.target.value === '') {
-      setMinPriceValue(Number(minPriceAll));
+      setMinPriceValue(minPriceAll);
       dispatch(setMinPrice(0));
     }
     setMinPriceValue(price);
@@ -35,7 +42,7 @@ export function FilterPrice () {
   const handleInputMaxPriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const price = Number(evt.target.value.replaceAll('-', ''));
     if (evt.target.value === '') {
-      setMaxPriceValue(Number(maxPriceAll));
+      setMaxPriceValue(maxPriceAll);
       dispatch(setMaxPrice(0));
     }
     setMaxPriceValue(price);
@@ -47,14 +54,14 @@ export function FilterPrice () {
       dispatch(setMinPrice(0));
       return;
     }
-    if (minPriceValue < Number(minPrice)) {
-      setMinPriceValue(Number(minPrice));
-      dispatch(setMinPrice(Number(minPrice)));
+    if (minPriceValue < minPrice) {
+      setMinPriceValue(minPrice);
+      dispatch(setMinPrice(minPrice));
       return;
     }
-    if (minPriceValue > Number(maxPrice)) {
-      setMinPriceValue(Number(maxPrice));
-      dispatch(setMinPrice(Number(maxPrice)));
+    if (minPriceValue > maxPrice) {
+      setMinPriceValue(maxPrice);
+      dispatch(setMinPrice(maxPrice));
       return;
     }
     dispatch(setMinPrice(minPriceValue));
@@ -66,9 +73,9 @@ export function FilterPrice () {
       dispatch(setMaxPrice(0));
       return;
     }
-    if (maxPriceValue > Number(maxPrice)) {
-      setMaxPriceValue(Number(maxPrice));
-      dispatch(setMaxPrice(Number(maxPrice)));
+    if (maxPriceValue > maxPrice) {
+      setMaxPriceValue(maxPrice);
+      dispatch(setMaxPrice(maxPrice));
       return;
     }
     if (maxPriceValue < minPriceValue) {

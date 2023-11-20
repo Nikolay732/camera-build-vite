@@ -63,8 +63,21 @@ export const catalogProcess = createSlice ({
     setMaxPrice: (state, action: PayloadAction<number>) => {
       state.maxPrice = action.payload;
     },
+    resetFilters: (state) => {
+      state.sortType = null;
+      state.sortOrder = null;
+      state.category = null;
+      state.type = [];
+      state.level = [];
+      state.minPrice = 0;
+      state.maxPrice = 0;
+      state.isReset = true;
+    },
+    setResetStatus:(state, action: PayloadAction<boolean>) => {
+      state.isReset = action.payload;
+    }
   },
   extraReducers: {}
 });
 
-export const {setSortOrder, setSortType, setFilterCategory, setFilterType, setFilterLevel, setMinPrice, setMaxPrice} = catalogProcess.actions;
+export const {setSortOrder, setSortType, setFilterCategory, setFilterType, setFilterLevel, setMinPrice, setMaxPrice, resetFilters, setResetStatus} = catalogProcess.actions;

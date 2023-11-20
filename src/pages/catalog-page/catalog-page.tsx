@@ -120,7 +120,7 @@ export function CatalogPage () {
       if (filterCategoryURL) {
         dispatch(setFilterCategory(filterCategoryURL as ProductCategory));
       }
-      if (filterTypeURL?.length) {
+      if (filterTypeURL.length) {
         filterTypeURL.forEach((type) => {
           dispatch(setFilterType(type as ProductType));
         });
