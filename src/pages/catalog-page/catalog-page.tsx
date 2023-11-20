@@ -206,7 +206,11 @@ export function CatalogPage () {
                 </div>
                 <div className="catalog__content">
                   <CataloSort/>
-                  <ProductCardList productList={currentProductList}/>
+                  {
+                    productList.length > 0
+                      ? <ProductCardList productList={currentProductList}/>
+                      : <div style={{paddingTop: '30px'}}>По вашему запросу ничего не найдено</div>
+                  }
                   {totalCountPage > 1 && <Pagination totalCountPage={totalCountPage}/>}
                 </div>
                 {selectedProduct && isActiveModalAddItem && <CatalogAddItemModal product={selectedProduct} isActive={isActiveModalAddItem}/>}
