@@ -12,7 +12,6 @@ import { UpButton } from '../../components/up-button/up-button';
 import { Footer } from '../../components/footer/footer';
 import { ReviewFormModal } from '../../components/review-form-modal/review-form-modal';
 import { getStatusActiveModalReview, getStatusPostReviewSucces} from '../../store/reviews-data/reviews-data-selectors';
-import { NotFoundPage } from '../not-found-page/not-found-page';
 import { Spinner } from '../../components/spinner/spinner';
 import { ReviewSuccessModal } from '../../components/review-success-modal/review-success-modal';
 import { getDetailedProduct, getProductPageDataLoadStatus, getProductPageErrorLoadStatus } from '../../store/detailed-product-data/detailed-product-data-selectors';
@@ -21,6 +20,7 @@ import { fetchDetailedProductAction } from '../../store/detailed-product-data/de
 import { fetchSimilarProductListAction } from '../../store/similar-product-data/similar-product-data-thunk';
 import { fetchReviewListAction } from '../../store/reviews-data/reviews-data-thunk';
 import { getSelectedProduct, getStatusActiveModalAddItem } from '../../store/catalog-process/catalog-process-selectors';
+import { ErrorPage } from '../error-page/error-page';
 
 export function ProductPage () {
   const dispatch = useAppDispatch();
@@ -53,7 +53,7 @@ export function ProductPage () {
   }
 
   if (hasError || !detailedProduct) {
-    return <NotFoundPage/>;
+    return <ErrorPage/>;
   }
 
   return (

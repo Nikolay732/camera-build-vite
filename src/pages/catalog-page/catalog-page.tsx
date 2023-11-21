@@ -13,7 +13,6 @@ import { AppRoute, Page, SortOrder, SortType } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
 import { CatalogAddItemModal } from '../../components/catalog-add-item-modal/catalog-add-item-modal';
 import { Spinner } from '../../components/spinner/spinner';
-import { NotFoundPage } from '../not-found-page/not-found-page';
 import { Helmet } from 'react-helmet-async';
 import { getPromoProductList } from '../../store/promo-product-data/promo-product-data-selectors';
 import { fetchPromoProductListAction } from '../../store/promo-product-data/promo-product-data-thunk';
@@ -24,6 +23,7 @@ import { CatalogAddItemSuccessModal } from '../../components/catalog-add-item-su
 import { getCurrentPage, getFilterCategory, getFilterLevel, getFilterMaxPrice, getFilterMinPrice, getFilterType, getFilteredProductList, getSelectedProduct, getSortOrder, getSortType, getStatusActiveModalAddItem, getStatusActiveModalAddItemSuccess} from '../../store/catalog-process/catalog-process-selectors';
 import { setCurrentPage, setFilterCategory, setFilterLevel, setFilterType, setMaxPrice, setMinPrice, setSortOrder, setSortType } from '../../store/catalog-process/catalog-process-slice';
 import { ProductCategory, ProductLevel, ProductType } from '../../types/product';
+import { ErrorPage } from '../error-page/error-page';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
@@ -183,7 +183,7 @@ export function CatalogPage () {
   }
 
   if (hasError) {
-    return <NotFoundPage/>;
+    return <ErrorPage/>;
   }
 
   return (
