@@ -26,7 +26,7 @@ export function BannerSwiper ({promoList}: BannerSwiperProps) {
       modules={[Autoplay, Pagination]}
     >
       {promoList.map((promoProduct) => (
-        <SwiperSlide key={promoProduct.id}>
+        <SwiperSlide key={promoProduct.id} data-testid='swiper-promo'>
           <Banner promoProduct={promoProduct}/>
         </SwiperSlide>)
       )}

@@ -62,9 +62,6 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     productList: [],
     isProductListLoading: false,
     hasErrorProductList: false,
-    currentPage: 1,
-    selectedProduct: null,
-    isActiveModalAddItem: false,
   },
   PROMO_PRODUCT_LIST: {
     promoProductList: [],
@@ -88,6 +85,23 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     isActiveModalReview: false,
     isPostReviewSuccess: false,
     currentRating: 0,
+  },
+  BASKET_PRODUCT_LIST: {
+    basketProductList: []
+  },
+  CATALOG: {
+    sortType: null,
+    sortOrder: null,
+    category: null,
+    type: [],
+    level: [],
+    minPrice: 0,
+    maxPrice: 0,
+    isReset: false,
+    currentPage: 1,
+    selectedProduct: null,
+    isActiveModalAddItem: false,
+    isActiveModalAddItemSuccess: false
   },
   ...(initialState ?? {})
 });

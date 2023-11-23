@@ -18,7 +18,7 @@ export function Breadcrumbs ({isCatalogPage, isProductPage, isBasketPage}: Bread
       <div className="container">
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">
-            <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Главная
+            <Link className="breadcrumbs__link" to={AppRoute.Catalog} data-testid='catalog-page'>Главная
               <svg width="5" height="8" aria-hidden="true">
                 <use xlinkHref="#icon-arrow-mini"></use>
               </svg>

@@ -32,7 +32,7 @@ export function NotFoundPage () {
           <section className="catalog">
             <div className="container not-found">
               <h1 className="title title--h2">404 Not Found</h1>
-              <Link className='btn' to={AppRoute.Catalog}>Вернуться на главную страницу</Link>
+              <Link className='btn' to={AppRoute.Catalog} data-testid='back-home'>Вернуться на главную страницу</Link>
             </div>
           </section>
         </div>

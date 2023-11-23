@@ -8,9 +8,6 @@ describe('productListData Slice', () => {
     productList: [],
     isProductListLoading: false,
     hasErrorProductList: false,
-    currentPage: 1,
-    selectedProduct: null,
-    isActiveModalAddItem: false,
   };
 
   it('should return initial state with empty action', () => {

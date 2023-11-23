@@ -25,6 +25,7 @@ export function ButtonAddToBasket ({product, isModal}: ButtonAddToBasketProps) {
       className={classNames('btn', 'btn--purple', {'modal__btn modal__btn--fit-width': isModal})}
       type="button"
       onClick={handleButtonAddToBasketClick}
+      data-testid={'btn-add-basket'}
     >
       <svg width={24} height={16} aria-hidden="true">
         <use xlinkHref="#icon-add-basket"></use>
