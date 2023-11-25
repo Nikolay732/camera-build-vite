@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
+import { NameSpace, Page } from '../../const';
 import { State } from '../../types/state';
 import { getProductList } from '../product-list-data/product-list-data-selectors';
 import { filterProductList, sortProductList } from '../../utils';
@@ -31,3 +31,16 @@ export const getFilteredProductList = createSelector(
   (productList, category, type, level, minPrice, maxPrice) =>
     filterProductList(productList, category, type, level, minPrice, maxPrice)
 );
+
+export const getTotalCountPage = createSelector([getFilteredProductList], (productList) => {
+  const totalCountProduct = productList.length;
+  const totalCountPage = Math.ceil(totalCountProduct / Page.Per);
+  return totalCountPage;
+});
+
+export const getCurrentProductList = createSelector([getFilteredProductList, getCurrentPage], (productList, currentPage) => {
+  const lastProductIndex = currentPage * Page.Per;
+  const firstProductIndex = lastProductIndex - Page.Per;
+  const currentProductList = productList.slice(firstProductIndex, lastProductIndex);
+  return currentProductList;
+});

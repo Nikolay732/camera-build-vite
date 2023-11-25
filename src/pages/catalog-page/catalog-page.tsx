@@ -7,67 +7,27 @@ import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCatalogPageDataLoadingStatus, getCatalogPageErrorLoadStatus } from '../../store/product-list-data/product-list-data-selectors';
-import {useEffect, useMemo} from 'react';
+import {useEffect } from 'react';
 import { fetchProductListAction } from '../../store/product-list-data/product-list-data-thunk';
-import { AppRoute, Page, SortOrder, SortType } from '../../const';
 import { BannerSwiper } from '../../components/banner-swiper/banner-swiper';
 import { CatalogAddItemModal } from '../../components/catalog-add-item-modal/catalog-add-item-modal';
 import { Spinner } from '../../components/spinner/spinner';
 import { Helmet } from 'react-helmet-async';
 import { getPromoProductList } from '../../store/promo-product-data/promo-product-data-selectors';
 import { fetchPromoProductListAction } from '../../store/promo-product-data/promo-product-data-thunk';
-import { useSearchParams } from 'react-router-dom';
-import { SearchParams } from '../../types/search-params';
-import { redirectToRoute } from '../../store/action';
 import { CatalogAddItemSuccessModal } from '../../components/catalog-add-item-success-modal/catalog-add-item-success-modal';
-import { getCurrentPage, getFilterCategory, getFilterLevel, getFilterMaxPrice, getFilterMinPrice, getFilterType, getFilteredProductList, getSelectedProduct, getSortOrder, getSortType, getStatusActiveModalAddItem, getStatusActiveModalAddItemSuccess} from '../../store/catalog-process/catalog-process-selectors';
-import { setCurrentPage, setFilterCategory, setFilterLevel, setFilterType, setMaxPrice, setMinPrice, setSortOrder, setSortType } from '../../store/catalog-process/catalog-process-slice';
-import { ProductCategory, ProductLevel, ProductType } from '../../types/product';
+import { getCurrentProductList, getFilteredProductList, getSelectedProduct, getStatusActiveModalAddItem, getStatusActiveModalAddItemSuccess, getTotalCountPage} from '../../store/catalog-process/catalog-process-selectors';
 import { ErrorPage } from '../error-page/error-page';
+import { useCurrentParamsCatalogPage } from '../../hooks/use-current-params-catalog-page';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
-
+  useCurrentParamsCatalogPage();
   const productList = useAppSelector(getFilteredProductList);
   const promoList = useAppSelector(getPromoProductList);
-  const pageState = useAppSelector(getCurrentPage);
-  const pageNumberURL = Number(searchParams.get('page'));
-  const currentPage = pageNumberURL ? pageNumberURL : pageState;
-  const totalCountProduct = productList.length;
-  const totalCountPage = Math.ceil(totalCountProduct / Page.Per);
-  const lastProductIndex = currentPage * Page.Per;
-  const firstProductIndex = lastProductIndex - Page.Per;
-  const currentProductList = productList.slice(firstProductIndex, lastProductIndex);
+  const totalCountPage = useAppSelector(getTotalCountPage);
+  const currentProductList = useAppSelector(getCurrentProductList);
   const selectedProduct = useAppSelector(getSelectedProduct);
-
-  const currentSortType = useAppSelector(getSortType);
-  const currentSortOrder = useAppSelector(getSortOrder);
-  const sortTypeURL = searchParams.get('sort');
-  const sortOrderURL = searchParams.get('order');
-
-  const currentFilterCategory = useAppSelector(getFilterCategory);
-  const filterCategoryURL = searchParams.get('category');
-
-  const currentFilterType = useAppSelector(getFilterType);
-  const filterTypeURL: string[] = [];
-
-  const currentFilterLevel = useAppSelector(getFilterLevel);
-  const filterLevelURL: string[] = [];
-
-  for (const [key, value] of searchParams.entries()) {
-    if (key === 'type' && !currentFilterType.includes(value as ProductType)) {
-      filterTypeURL.push(value);
-    }
-    if (key === 'level' && !currentFilterLevel.includes(value as ProductLevel)) {
-      filterLevelURL.push(value);
-    }
-  }
-
-  const currentFilterMinPrice = useAppSelector(getFilterMinPrice);
-  const currentFilterMaxPrice = useAppSelector(getFilterMaxPrice);
-  const filterMinPriceURL = searchParams.get('price_gte');
-  const filterMaxPriceURL = searchParams.get('price_lte');
 
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
   const isActiveModalAddItemSuccess = useAppSelector(getStatusActiveModalAddItemSuccess);
@@ -84,99 +44,6 @@ export function CatalogPage () {
       isMounted = false;
     };
   }, [dispatch]);
-
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      if (currentPage <= totalCountPage && currentPage > 0) {
-        dispatch(setCurrentPage(currentPage));
-      }
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [dispatch, totalCountPage, currentPage]);
-
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      if (currentPage > totalCountPage || isNaN(currentPage) || currentPage === 0) {
-        dispatch(redirectToRoute(AppRoute.NotFound));
-      }
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [dispatch, totalCountPage, currentPage]);
-
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      if (sortOrderURL && sortTypeURL) {
-        dispatch(setSortType(sortTypeURL as SortType));
-        dispatch(setSortOrder(sortOrderURL as SortOrder));
-      }
-      if (filterCategoryURL) {
-        dispatch(setFilterCategory(filterCategoryURL as ProductCategory));
-      }
-      if (filterTypeURL.length) {
-        filterTypeURL.forEach((type) => {
-          dispatch(setFilterType(type as ProductType));
-        });
-      }
-      if (filterLevelURL.length) {
-        filterLevelURL.forEach((level) => {
-          dispatch(setFilterLevel(level as ProductLevel));
-        });
-      }
-      if (filterMinPriceURL) {
-        dispatch(setMinPrice(Number(filterMinPriceURL)));
-      }
-      if (filterMaxPriceURL) {
-        dispatch(setMaxPrice(Number(filterMaxPriceURL)));
-      }
-    }
-    return () => {
-      isMounted = false;
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
-
-  const currentParams = useMemo(() => {
-    const params: SearchParams = {};
-    params.page = currentPage.toString();
-
-    if (currentSortType && currentSortOrder) {
-      params.sort = currentSortType;
-      params.order = currentSortOrder;
-    }
-    if (currentFilterCategory) {
-      params.category = currentFilterCategory;
-    }
-    if (currentFilterType) {
-      params.type = currentFilterType;
-    }
-    if (currentFilterLevel) {
-      params.level = currentFilterLevel;
-    }
-    if (currentFilterMinPrice) {
-      params['price_gte'] = currentFilterMinPrice.toString();
-    }
-    if (currentFilterMaxPrice) {
-      params['price_lte'] = currentFilterMaxPrice.toString();
-    }
-    return params;
-  }, [currentPage, currentSortType, currentSortOrder, currentFilterCategory, currentFilterType, currentFilterLevel, currentFilterMinPrice, currentFilterMaxPrice]);
-
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      setSearchParams(currentParams);
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [setSearchParams, currentParams]);
 
   if (isLoadingData) {
     return <Spinner/>;
