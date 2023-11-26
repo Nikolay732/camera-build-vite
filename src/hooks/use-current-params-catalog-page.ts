@@ -97,7 +97,7 @@ export function useCurrentParamsCatalogPage () {
     if (pageNumberURL) {
       params.page = pageNumberURL.toString();
     }
-    if (!pageNumberURL) {
+    if (currentPage || !pageNumberURL) {
       params.page = currentPage.toString();
     }
     if (currentSortType && currentSortOrder) {
