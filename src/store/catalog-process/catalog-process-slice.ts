@@ -50,6 +50,7 @@ export const catalogProcess = createSlice ({
     },
     setFilterCategory: (state, action: PayloadAction<ProductCategory>) => {
       state.category = action.payload;
+      state.currentPage = 1;
     },
     setFilterType: (state, action: PayloadAction<ProductType>) => {
       if (!state.type.includes(action.payload)) {
@@ -57,6 +58,7 @@ export const catalogProcess = createSlice ({
       } else {
         state.type = state.type.filter((type) => type !== action.payload);
       }
+      state.currentPage = 1;
     },
     setFilterLevel: (state, action: PayloadAction<ProductLevel>) => {
       if (!state.level.includes(action.payload)) {
@@ -64,12 +66,15 @@ export const catalogProcess = createSlice ({
       } else {
         state.level = state.level.filter((level) => level !== action.payload);
       }
+      state.currentPage = 1;
     },
     setMinPrice: (state, action: PayloadAction<number>) => {
       state.minPrice = action.payload;
+      state.currentPage = 1;
     },
     setMaxPrice: (state, action: PayloadAction<number>) => {
       state.maxPrice = action.payload;
+      state.currentPage = 1;
     },
     resetFilters: (state) => {
       state.sortType = null;
