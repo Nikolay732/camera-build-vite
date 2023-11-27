@@ -27,6 +27,7 @@ function SearchForm () {
 
   const handleResetInput = () => {
     setSearchValue('');
+    inputRef.current?.focus();
   };
 
   const handleSearchInput = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +39,7 @@ function SearchForm () {
   const escKey = useKeyPress({targetKey:KeyCode.Esc});
   const isUpArrowPressed = searchValue && searchProductList.length && arrowUp;
   const isDownArrowPressed = searchValue && searchProductList.length && arrowDown;
-  const isEscPressed = searchValue && searchProductList.length && escKey;
+  const isEscPressed = searchValue && escKey;
 
   useEffect(() => {
     if (searchProductList.length && isUpArrowPressed) {
@@ -55,7 +56,7 @@ function SearchForm () {
   }, [isUpArrowPressed, isDownArrowPressed, searchProductList.length]);
 
   useEffect (() => {
-    if (searchProductList.length && isEscPressed) {
+    if (isEscPressed) {
       handleResetInput();
     }
   }, [isEscPressed, searchProductList]);
@@ -67,7 +68,7 @@ function SearchForm () {
 
   return (
     <div
-      className={classNames('form-search', {'list-opened': searchValue.length >= MIN_LENGTH_FOR_SEARCH && searchProductList.length})}
+      className={classNames('form-search', {'list-opened': searchValue.length >= MIN_LENGTH_FOR_SEARCH})}
       ref={formRef}
       tabIndex={-1}
     >
