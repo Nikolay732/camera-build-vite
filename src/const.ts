@@ -54,15 +54,15 @@ export const ReviewRatingValue = {
 } as const;
 
 export const ProductTypeValue = {
-  Collection: 'Коллекционная',
-  Snapshot: 'Моментальная',
   Digital: 'Цифровая',
   Film: 'Плёночная',
+  Snapshot: 'Моментальная',
+  Collection: 'Коллекционная',
 } as const;
 
 export const ProductCategoryValue = {
-  VideoCamera: 'Видеокамера',
   PhotoCamera: 'Фотоаппарат',
+  VideoCamera: 'Видеокамера',
 } as const;
 
 export const ProductLevelValue = {
