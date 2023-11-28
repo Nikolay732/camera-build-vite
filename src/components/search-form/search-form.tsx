@@ -15,7 +15,10 @@ function SearchForm () {
   const [currentIndex, setCurrentIndex] = useState(-1);
 
   const searchProductList = useMemo(() =>
-    productList.filter((product) => product.name.toLowerCase().includes(searchValue.toLowerCase())),
+    productList.filter((product) =>
+      product.name.toLowerCase()
+        .includes(searchValue.toLowerCase())
+        && searchValue.length >= MIN_LENGTH_FOR_SEARCH),
   [productList, searchValue]
   );
 
@@ -68,7 +71,7 @@ function SearchForm () {
 
   return (
     <div
-      className={classNames('form-search', {'list-opened': searchValue.length >= MIN_LENGTH_FOR_SEARCH})}
+      className={classNames('form-search', {'list-opened': searchValue.length})}
       ref={formRef}
       tabIndex={-1}
     >
@@ -88,7 +91,10 @@ function SearchForm () {
             />
           </label>
           <ul
-            className={classNames('form-search__select-list', {'scroller' : searchProductList.length > DROPDOWN_COUNT})}
+            className={classNames(
+              'form-search__select-list',
+              {'hidden': !searchProductList.length},
+              {'scroller' : searchProductList.length > DROPDOWN_COUNT})}
           >
             {searchProductList.map((product, index) => {
               const isCurrent = index === currentIndex;
