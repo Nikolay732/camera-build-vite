@@ -19,8 +19,9 @@ import { getSimilarProductList } from '../../store/similar-product-data/similar-
 import { fetchDetailedProductAction } from '../../store/detailed-product-data/detailed-product-data-thunk';
 import { fetchSimilarProductListAction } from '../../store/similar-product-data/similar-product-data-thunk';
 import { fetchReviewListAction } from '../../store/reviews-data/reviews-data-thunk';
-import { getSelectedProduct, getStatusActiveModalAddItem } from '../../store/catalog-process/catalog-process-selectors';
+import { getSelectedProduct, getStatusActiveModalAddItem, getStatusActiveModalAddItemSuccess } from '../../store/catalog-process/catalog-process-selectors';
 import { ErrorPage } from '../error-page/error-page';
+import { CatalogAddItemSuccessModal } from '../../components/catalog-add-item-success-modal/catalog-add-item-success-modal';
 
 export function ProductPage () {
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ export function ProductPage () {
   const similarProductList = useAppSelector(getSimilarProductList);
   const selectedProduct = useAppSelector(getSelectedProduct);
   const isActiveModalAddItem = useAppSelector(getStatusActiveModalAddItem);
+  const isActiveModalAddItemSuccess = useAppSelector(getStatusActiveModalAddItemSuccess);
   const isActiveModalReview = useAppSelector(getStatusActiveModalReview);
   const isPostReviewSuccess = useAppSelector(getStatusPostReviewSucces);
   const isLoadingData = useAppSelector(getProductPageDataLoadStatus);
@@ -74,13 +76,14 @@ export function ProductPage () {
               <ProductSimilar similarProductList={similarProductList}/>
             </div>
           }
-          {selectedProduct && <CatalogAddItemModal product={selectedProduct} isActive={isActiveModalAddItem}/>}
           <div className="page-content__section">
             <Reviews/>
           </div>
         </div>
         {isActiveModalReview && <ReviewFormModal isActive={isActiveModalReview}/>}
         {isPostReviewSuccess && <ReviewSuccessModal isActive={isPostReviewSuccess}/>}
+        {selectedProduct && isActiveModalAddItem && <CatalogAddItemModal product={selectedProduct} isActive={isActiveModalAddItem}/>}
+        {isActiveModalAddItemSuccess && <CatalogAddItemSuccessModal isActive={isActiveModalAddItemSuccess}/>}
       </main>
       <UpButton/>
       <Footer/>

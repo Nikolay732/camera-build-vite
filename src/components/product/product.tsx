@@ -2,17 +2,24 @@ import { ProductItem } from '../../types/product';
 import { ProductTabs } from '../poduct-tabs/poduct-tabs';
 import { RATINGS } from '../../const';
 import { RatingItem } from '../rating-item/rating-item';
-import { ButtonAddToBasket } from '../button-add-to-basket/button-add-to-basket';
+import { setActiveModalAddItemStatus, setSelectedProduct } from '../../store/catalog-process/catalog-process-slice';
+import { useAppDispatch } from '../../hooks';
 
 type ProductProps = {
   product: ProductItem;
 }
 
 export function Product ({product}:ProductProps) {
+  const dispatch = useAppDispatch();
   const {name, price, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x} = product;
   const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;
   const imgSrcSet = `../../${previewImg2x} 2x`;
   const imgPreview = `../../${previewImg}`;
+
+  const handleButtonClick = () => {
+    dispatch(setSelectedProduct(product));
+    dispatch(setActiveModalAddItemStatus(true));
+  };
 
   return (
     <section className="product">
@@ -31,7 +38,16 @@ export function Product ({product}:ProductProps) {
             <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
           </div>
           <p className="product__price"><span className="visually-hidden">Цена:</span>{`${price.toLocaleString('ru')} ₽`}</p>
-          <ButtonAddToBasket product={product}/>
+          <button
+            className='btn btn--purple'
+            type="button"
+            onClick={handleButtonClick}
+          >
+            <svg width={24} height={16} aria-hidden="true">
+              <use xlinkHref="#icon-add-basket"></use>
+            </svg>
+            Добавить в корзину
+          </button>
           <ProductTabs product={product}/>
         </div>
       </div>

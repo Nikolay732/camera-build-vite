@@ -4,8 +4,8 @@ import { useModal } from '../../hooks/use-esc-key-down';
 import { ProductItem } from '../../types/product';
 import classNames from 'classnames';
 import { BasketItemDescription } from '../basket-item-description/basket-item-description';
-import { ButtonAddToBasket } from '../button-add-to-basket/button-add-to-basket';
-import { setActiveModalAddItemStatus } from '../../store/catalog-process/catalog-process-slice';
+import { setActiveModalAddItemStatus, setActiveModalAddItemSuccessStatus } from '../../store/catalog-process/catalog-process-slice';
+import { addProductToBasket } from '../../store/basket-product-data/basket-product-data-slice';
 
 type CatalogAddItemModalProps = {
   product: ProductItem;
@@ -17,6 +17,12 @@ export function CatalogAddItemModal ({product, isActive}: CatalogAddItemModalPro
 
   const hanldeButtonCloseClick = () => {
     dispatch(setActiveModalAddItemStatus(false));
+  };
+
+  const handleButtonAddToBasketClick = () => {
+    dispatch(addProductToBasket(product));
+    dispatch(setActiveModalAddItemStatus(false));
+    dispatch(setActiveModalAddItemSuccessStatus(true));
   };
 
   useModal(hanldeButtonCloseClick, isActive);
@@ -32,7 +38,16 @@ export function CatalogAddItemModal ({product, isActive}: CatalogAddItemModalPro
               <BasketItemDescription product={product} isModal/>
             </div>
             <div className="modal__buttons">
-              <ButtonAddToBasket product={product} isModal/>
+              <button
+                className='btn btn--purple modal__btn modal__btn--fit-width'
+                type="button"
+                onClick={handleButtonAddToBasketClick}
+              >
+                <svg width={24} height={16} aria-hidden="true">
+                  <use xlinkHref="#icon-add-basket"></use>
+                </svg>
+                Добавить в корзину
+              </button>
             </div>
             <button
               className="cross-btn"
