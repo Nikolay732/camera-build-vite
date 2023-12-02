@@ -93,3 +93,7 @@ export enum SortOrder {
   Down = 'по убыванию',
 }
 
+export const CountProductBasket = {
+  MIN: 1,
+  MAX: 99
+} as const;

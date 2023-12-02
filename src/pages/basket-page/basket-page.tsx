@@ -5,10 +5,14 @@ import { BasketItem } from '../../components/basket-item/basket-item';
 import { BasketSummary } from '../../components/basket-summary/basket-summary';
 import { Footer } from '../../components/footer/footer';
 import { useAppSelector } from '../../hooks';
-import { getBasketProductList } from '../../store/basket-product-data/basket-product-data-selectors';
+import { getBasketProductList, getDelededProduct, getStatusModalRemoveItem } from '../../store/basket-product-data/basket-product-data-selectors';
+import { BasketRemoveItemModal } from '../../components/basket-remove-item-modal/basket-remove-item-modal';
+import { BasketEmpty } from '../../components/basket-empty/basket-empty';
 
 export function BasketPage () {
   const basketProductList = useAppSelector(getBasketProductList);
+  const delededProduct = useAppSelector(getDelededProduct);
+  const isActiveModalRemoveItem = useAppSelector(getStatusModalRemoveItem);
 
   return (
     <div className="wrapper">
@@ -22,13 +26,19 @@ export function BasketPage () {
           <section className="basket">
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
-              <ul className="basket__list">
-                {basketProductList.map((item) => <BasketItem key={item.product.id} basketProduct={item}/>)}
-              </ul>
+              {basketProductList.length > 0
+                ?
+                <ul className="basket__list">
+                  {basketProductList.map((item) => <BasketItem key={item.product.id} basketProduct={item}/>)}
+                </ul>
+                :
+                <BasketEmpty/>}
               <BasketSummary/>
             </div>
           </section>
         </div>
+        {delededProduct && isActiveModalRemoveItem &&
+          <BasketRemoveItemModal product={delededProduct} isActive={isActiveModalRemoveItem}/>}
       </main>
       <Footer/>
     </div>

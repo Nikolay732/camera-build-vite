@@ -35,7 +35,7 @@ export function CatalogAddItemModal ({product, isActive}: CatalogAddItemModalPro
           <div className="modal__content">
             <p className="title title--h4">Добавить товар в корзину</p>
             <div className="basket-item basket-item--short">
-              <BasketItemDescription product={product} isModal/>
+              <BasketItemDescription product={product} isModalAddItem/>
             </div>
             <div className="modal__buttons">
               <button

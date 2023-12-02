@@ -3,10 +3,11 @@ import { ProductItem } from '../../types/product';
 
 type BasketItemDescriptionProps = {
   product: ProductItem;
-  isModal?: boolean;
+  isModalAddItem?: boolean;
+  isBasketItem?: boolean;
 }
 
-export function BasketItemDescription ({product, isModal}: BasketItemDescriptionProps) {
+export function BasketItemDescription ({product, isModalAddItem, isBasketItem}: BasketItemDescriptionProps) {
   const {name, vendorCode, type, category, level, price, previewImgWebp, previewImgWebp2x, previewImg, previewImg2x} = product;
   const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;
   const imgSrcSet = `../../${previewImg2x} 2x`;
@@ -30,7 +31,7 @@ export function BasketItemDescription ({product, isModal}: BasketItemDescription
           <li className="basket-item__list-item">{`${level} уровень`}</li>
         </ul>
         {
-          isModal &&
+          isModalAddItem &&
           <p className="basket-item__price">
             <span className="visually-hidden">
               Цена:
@@ -40,7 +41,7 @@ export function BasketItemDescription ({product, isModal}: BasketItemDescription
         }
       </div>
       {
-        !isModal &&
+        isBasketItem &&
         <p className="basket-item__price">
           <span className="visually-hidden">
             Цена:
