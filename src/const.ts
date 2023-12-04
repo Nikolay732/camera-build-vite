@@ -97,3 +97,9 @@ export const CountProductBasket = {
   MIN: 1,
   MAX: 99
 } as const;
+
+export const NameLocaleStorage = {
+  Basket: 'basket',
+  Promo: 'promo',
+  Discount: 'discount',
+} as const;

@@ -1,6 +1,9 @@
-import { NameSpace } from '../../const';
+import { NameLocaleStorage, NameSpace } from '../../const';
 import { BasketProduct, ProductItem } from '../../types/product';
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import { getBasketProductListFromLS } from '../../utils';
+
+const {productList} = getBasketProductListFromLS();
 
 type InitialState = {
   basketProductList: BasketProduct[];
@@ -9,7 +12,7 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  basketProductList: [],
+  basketProductList: productList,
   isActiveModalRemoveItem: false,
   deletedProduct: null,
 };
@@ -25,32 +28,32 @@ export const basketProductData = createSlice ({
         state.basketProductList = state.basketProductList.map((item) =>
           item.product.id === action.payload.id ? {count: item.count + 1, product: item.product} : item);
       }
-      localStorage.setItem('basket', JSON.stringify(state.basketProductList));
+      localStorage.setItem(NameLocaleStorage.Basket, JSON.stringify(state.basketProductList));
     },
     setPrevCountItem: (state, action: PayloadAction<number>) => {
       state.basketProductList = state.basketProductList.map((item) =>
         item.product.id === action.payload ? {count: item.count - 1, product: item.product} : item);
-      localStorage.setItem('basket', JSON.stringify(state.basketProductList));
+      localStorage.setItem(NameLocaleStorage.Basket, JSON.stringify(state.basketProductList));
     },
     setNextCountItem: (state, action: PayloadAction<number>) => {
       state.basketProductList = state.basketProductList.map((item) =>
         item.product.id === action.payload ? {count: item.count + 1, product: item.product} : item);
-      localStorage.setItem('basket', JSON.stringify(state.basketProductList));
+      localStorage.setItem(NameLocaleStorage.Basket, JSON.stringify(state.basketProductList));
     },
     setCountItem: (state, action: PayloadAction<{id: number; count: number}>) => {
       state.basketProductList = state.basketProductList.map((item) =>
         item.product.id === action.payload.id ? {count: item.count, product: item.product} : item);
-      localStorage.setItem('basket', JSON.stringify(state.basketProductList));
+      localStorage.setItem(NameLocaleStorage.Basket, JSON.stringify(state.basketProductList));
     },
     deleteItem: (state, action: PayloadAction<number>) => {
       state.basketProductList = state.basketProductList.filter((item) => item.product.id !== action.payload);
-      localStorage.setItem('basket', JSON.stringify(state.basketProductList));
+      localStorage.setItem(NameLocaleStorage.Basket, JSON.stringify(state.basketProductList));
     },
     resetBasket: (state) => {
       state.basketProductList = [];
       state.deletedProduct = null;
       state.isActiveModalRemoveItem = false;
-      localStorage.removeItem('basket');
+      localStorage.removeItem(NameLocaleStorage.Basket);
     },
     setStatusModalRemoveItem: (state, action: PayloadAction<boolean>) => {
       state.isActiveModalRemoveItem = action.payload;

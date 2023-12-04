@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import { Review } from './types/review';
 import 'dayjs/locale/ru';
-import { SortOrder, SortType } from './const';
-import { ProductCategory, ProductItem, ProductLevel, ProductType } from './types/product';
+import { NameLocaleStorage, SortOrder, SortType } from './const';
+import { BasketProduct, ProductCategory, ProductItem, ProductLevel, ProductType } from './types/product';
 
 export const getFormatDate = (date: string, format: string) => dayjs(date).locale('ru').format(format);
 
@@ -92,4 +92,13 @@ export const getMaxPrice = (productList: ProductItem[]) => {
   }
   const sortedProductList = [...productList].sort((a, b) => b.price - a.price);
   return sortedProductList[0].price;
+};
+
+export const getBasketProductListFromLS = () => {
+  const data = localStorage.getItem(NameLocaleStorage.Basket);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const productList = data ? JSON.parse(data) : [];
+  return {
+    productList: productList as BasketProduct[]
+  };
 };
