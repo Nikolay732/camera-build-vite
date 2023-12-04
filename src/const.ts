@@ -41,7 +41,16 @@ export const APIRoute = {
   PromoList: '/promo',
   SimilarProductList: '/cameras/:cameraId/similar',
   ReviewPost: '/reviews',
+  Coupon: '/coupons',
+  Order: '/orders',
 } as const;
+
+export enum Status {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error',
+}
 
 export const RATINGS = [1, 2, 3, 4, 5] as const;
 
@@ -100,6 +109,12 @@ export const CountProductBasket = {
 
 export const NameLocaleStorage = {
   Basket: 'basket',
-  Promo: 'promo',
+  PromoCode: 'promo code',
   Discount: 'discount',
+} as const;
+
+export const CouponValue = {
+  'camera-333': 'camera-333',
+  'camera-444': 'camera-444',
+  'camera-555': 'camera-555',
 } as const;

@@ -1,4 +1,11 @@
+import { useAppSelector } from '../../hooks';
+import { getBasketProductList } from '../../store/basket-product-data/basket-product-data-selectors';
+import { calculateTotalPrice } from '../../utils';
+
 export function BasketSummary () {
+  const basketProductList = useAppSelector(getBasketProductList);
+  const totalPrice = calculateTotalPrice(basketProductList);
+
   return (
     <div className="basket__summary">
       <div className="basket__promo">
@@ -20,7 +27,7 @@ export function BasketSummary () {
       <div className="basket__summary-order">
         <p className="basket__summary-item">
           <span className="basket__summary-text">Всего:</span>
-          <span className="basket__summary-value">111 390 ₽</span>
+          <span className="basket__summary-value">{`${totalPrice.toLocaleString('ru')} ₽`}</span>
         </p>
         <p className="basket__summary-item">
           <span className="basket__summary-text">Скидка:</span>

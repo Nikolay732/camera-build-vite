@@ -3,6 +3,7 @@ import { Review } from './types/review';
 import 'dayjs/locale/ru';
 import { NameLocaleStorage, SortOrder, SortType } from './const';
 import { BasketProduct, ProductCategory, ProductItem, ProductLevel, ProductType } from './types/product';
+import { CouponType } from './types/coupon';
 
 export const getFormatDate = (date: string, format: string) => dayjs(date).locale('ru').format(format);
 
@@ -102,3 +103,24 @@ export const getBasketProductListFromLS = () => {
     productList: productList as BasketProduct[]
   };
 };
+
+export const getPromoCodeLS = () => {
+  const data = localStorage.getItem(NameLocaleStorage.PromoCode);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const promoCode = data ? JSON.parse(data) : null;
+  return {
+    promoCode: promoCode as CouponType
+  };
+};
+
+export const getDicsountLS = () => {
+  const data = localStorage.getItem(NameLocaleStorage.Discount);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const discount = data ? JSON.parse(data) : 0;
+  return {
+    discount: discount as number
+  };
+};
+
+export const calculateTotalPrice = (productList: BasketProduct[]) =>
+  productList.reduce((sum, item) => item.product.price * item.count + sum, 0);
