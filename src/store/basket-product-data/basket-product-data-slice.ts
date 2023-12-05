@@ -13,6 +13,7 @@ const {discount} = getDicsountLS();
 type InitialState = {
   basketProductList: BasketProduct[];
   isActiveModalRemoveItem: boolean;
+  isActiveModalSuccess: boolean;
   deletedProduct: ProductItem | null;
   discount: number;
   promoCode: CouponType | null;
@@ -24,6 +25,7 @@ type InitialState = {
 const initialState: InitialState = {
   basketProductList: productList,
   isActiveModalRemoveItem: false,
+  isActiveModalSuccess: false,
   deletedProduct: null,
   discount: discount,
   promoCode: promoCode,
@@ -64,6 +66,9 @@ export const basketProductData = createSlice ({
       state.basketProductList = state.basketProductList.filter((item) => item.product.id !== action.payload);
       localStorage.setItem(NameLocaleStorage.Basket, JSON.stringify(state.basketProductList));
     },
+    setPromoCode: (state, action: PayloadAction<CouponType>) => {
+      state.promoCode = action.payload;
+    },
     resetBasket: (state) => {
       state.basketProductList = [];
       state.deletedProduct = null;
@@ -76,6 +81,9 @@ export const basketProductData = createSlice ({
     },
     setStatusModalRemoveItem: (state, action: PayloadAction<boolean>) => {
       state.isActiveModalRemoveItem = action.payload;
+    },
+    setStatusModalSuccess: (state, action: PayloadAction<boolean>) => {
+      state. isActiveModalSuccess = action.payload;
     },
     setDeletedProduct: (state, action: PayloadAction<ProductItem>) => {
       state.deletedProduct = action.payload;
@@ -121,7 +129,9 @@ export const {
   setNextCountItem,
   setCountItem,
   deleteItem,
+  setPromoCode,
   resetBasket,
   setStatusModalRemoveItem,
+  setStatusModalSuccess,
   setDeletedProduct,
 } = basketProductData.actions;

@@ -121,6 +121,3 @@ export const getDicsountLS = () => {
     discount: discount as number
   };
 };
-
-export const calculateTotalPrice = (productList: BasketProduct[]) =>
-  productList.reduce((sum, item) => item.product.price * item.count + sum, 0);
