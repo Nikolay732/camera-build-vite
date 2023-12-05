@@ -5,13 +5,13 @@ import { BasketItem } from '../../components/basket-item/basket-item';
 import { BasketSummary } from '../../components/basket-summary/basket-summary';
 import { Footer } from '../../components/footer/footer';
 import { useAppSelector } from '../../hooks';
-import { getBasketProductList, getDelededProduct, getStatusModalRemoveItem } from '../../store/basket-product-data/basket-product-data-selectors';
+import { getBasketProductList, getDeletedProduct, getStatusModalRemoveItem } from '../../store/basket-product-data/basket-product-data-selectors';
 import { BasketRemoveItemModal } from '../../components/basket-remove-item-modal/basket-remove-item-modal';
 import { BasketEmpty } from '../../components/basket-empty/basket-empty';
 
 export function BasketPage () {
   const basketProductList = useAppSelector(getBasketProductList);
-  const delededProduct = useAppSelector(getDelededProduct);
+  const deletedProduct = useAppSelector(getDeletedProduct);
   const isActiveModalRemoveItem = useAppSelector(getStatusModalRemoveItem);
 
   return (
@@ -37,8 +37,8 @@ export function BasketPage () {
             </div>
           </section>
         </div>
-        {delededProduct && isActiveModalRemoveItem &&
-          <BasketRemoveItemModal product={delededProduct} isActive={isActiveModalRemoveItem}/>}
+        {deletedProduct && isActiveModalRemoveItem &&
+          <BasketRemoveItemModal product={deletedProduct} isActive={isActiveModalRemoveItem}/>}
       </main>
       <Footer/>
     </div>
