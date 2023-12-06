@@ -48,7 +48,7 @@ export const catalogProcess = createSlice ({
         state.sortType = SortType.Price;
       }
     },
-    setFilterCategory: (state, action: PayloadAction<ProductCategory>) => {
+    setFilterCategory: (state, action: PayloadAction<ProductCategory | null>) => {
       state.category = action.payload;
       state.currentPage = 1;
     },

@@ -7,9 +7,12 @@ import { ProductCategory } from '../../types/product';
 export function FilterCategory () {
   const dispatch = useAppDispatch();
   const currentCategory = useAppSelector(getFilterCategory);
-
   const hanleCategoryInputChange = (type: ProductCategory) => {
-    dispatch(setFilterCategory(type));
+    if (currentCategory !== type) {
+      dispatch(setFilterCategory(type));
+    } else {
+      dispatch(setFilterCategory(null));
+    }
   };
 
   return (
