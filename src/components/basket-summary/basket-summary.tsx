@@ -5,7 +5,7 @@ import { Status } from '../../const';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { CouponType } from '../../types/coupon';
 import { postCouponAction, postOrderAction } from '../../store/basket-product-data/basket-product-data-thunk';
-import { resetBasket, setPromoCode, setStatusModalSuccess } from '../../store/basket-product-data/basket-product-data-slice';
+import { resetBasket, setPromoCode} from '../../store/basket-product-data/basket-product-data-slice';
 
 export function BasketSummary () {
   const dispatch = useAppDispatch();
@@ -18,7 +18,6 @@ export function BasketSummary () {
   const postOrderStatus = useAppSelector(getStatusPostOrder);
   const isError = useAppSelector(getErrorStatus);
   const isValidPromoCode = useAppSelector(getStatusValidPromoCode);
-
   const [promoText, setPromoText] = useState<CouponType | null>(promoCode);
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -38,9 +37,8 @@ export function BasketSummary () {
     dispatch(postOrderAction({camerasIds: productIds, coupon: promoCode}));
   };
 
-  useEffect (() => {
+  useEffect(() => {
     if (postOrderStatus === Status.Success) {
-      dispatch(setStatusModalSuccess(true));
       dispatch(resetBasket());
     }
   }, [dispatch, postOrderStatus]);

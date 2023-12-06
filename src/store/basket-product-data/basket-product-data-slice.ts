@@ -4,7 +4,6 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import { getBasketProductListFromLS, getDicsountLS, getPromoCodeLS } from '../../utils';
 import { CouponType } from '../../types/coupon';
 import { postCouponAction, postOrderAction } from './basket-product-data-thunk';
-import { toast } from 'react-toastify';
 
 const {productList} = getBasketProductListFromLS();
 const {promoCode} = getPromoCodeLS();
@@ -64,6 +63,7 @@ export const basketProductData = createSlice ({
     },
     deleteItem: (state, action: PayloadAction<number>) => {
       state.basketProductList = state.basketProductList.filter((item) => item.product.id !== action.payload);
+      state.deletedProduct = null;
       localStorage.setItem(NameLocaleStorage.Basket, JSON.stringify(state.basketProductList));
     },
     setPromoCode: (state, action: PayloadAction<CouponType>) => {
@@ -71,10 +71,10 @@ export const basketProductData = createSlice ({
     },
     resetBasket: (state) => {
       state.basketProductList = [];
-      state.deletedProduct = null;
-      state.isActiveModalRemoveItem = false;
       state.discount = 0;
       state.promoCode = null;
+      state.isPromoCodeValid = false;
+      state.status = Status.Idle;
       localStorage.removeItem(NameLocaleStorage.Basket);
       localStorage.removeItem(NameLocaleStorage.Discount);
       localStorage.removeItem(NameLocaleStorage.PromoCode);
@@ -111,14 +111,14 @@ export const basketProductData = createSlice ({
       })
       .addCase(postOrderAction.fulfilled, (state) => {
         state.status = Status.Success;
-        toast.warn('Ваш заказ успешно отправлен!');
+        state.isActiveModalSuccess = true;
       })
       .addCase(postOrderAction.pending, (state) => {
         state.status = Status.Loading;
       })
       .addCase(postOrderAction.rejected, (state) => {
         state.status = Status.Error;
-        toast.warn('Произошла ошибка отправки заказа. Попробуйте позже');
+        state.isActiveModalSuccess = true;
       });
   }
 });
