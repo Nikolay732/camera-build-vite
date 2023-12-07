@@ -63,10 +63,10 @@ export function BasketItem ({basketProduct}: BasketItemProps) {
             <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
-        <label className="visually-hidden" htmlFor="counter1"></label>
+        <label className="visually-hidden" htmlFor={`counter${product.id.toString()}`}></label>
         <input
           type="number"
-          id="counter1"
+          id={`counter${product.id.toString()}`}
           min="1"
           max="99"
           aria-label="количество товара"
