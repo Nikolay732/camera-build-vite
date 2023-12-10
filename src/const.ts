@@ -41,6 +41,7 @@ export const APIRoute = {
   PromoList: '/promo',
   SimilarProductList: '/cameras/:cameraId/similar',
   ReviewPost: '/reviews',
+  ReviewList: '/cameras/:cameraId/reviews',
   Coupon: '/coupons',
   Order: '/orders',
 } as const;
