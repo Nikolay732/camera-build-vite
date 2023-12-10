@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { ProductCategoryValue, ProductLevelValue, ProductTypeValue } from '../const';
+import { ProductCategoryValue, ProductLevelValue, ProductTypeValue, Status } from '../const';
 import { ProductItem, PromoItem } from '../types/product';
 import { faker } from '@faker-js/faker';
 import { PostReview, Review } from '../types/review';
@@ -87,7 +87,15 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     currentRating: 0,
   },
   BASKET_PRODUCT_LIST: {
-    basketProductList: []
+    basketProductList: [],
+    isActiveModalRemoveItem: false,
+    isActiveModalSuccess: false,
+    deletedProduct: null,
+    discount: 0,
+    promoCode: null,
+    isPromoCodeValid: false,
+    status: Status.Idle,
+    hasError: false,
   },
   CATALOG: {
     sortType: null,
