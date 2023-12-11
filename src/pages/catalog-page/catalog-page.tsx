@@ -19,6 +19,7 @@ import { CatalogAddItemSuccessModal } from '../../components/catalog-add-item-su
 import { getCurrentProductList, getFilteredProductList, getSelectedProduct, getStatusActiveModalAddItem, getStatusActiveModalAddItemSuccess, getTotalCountPage} from '../../store/catalog-process/catalog-process-selectors';
 import { ErrorPage } from '../error-page/error-page';
 import { useCurrentParamsCatalogPage } from '../../hooks/use-current-params-catalog-page';
+import './catalog-page.css';
 
 export function CatalogPage () {
   const dispatch = useAppDispatch();
@@ -75,7 +76,7 @@ export function CatalogPage () {
                   {
                     productList.length > 0
                       ? <ProductCardList productList={currentProductList}/>
-                      : <div style={{paddingTop: '30px'}}>По вашему запросу ничего не найдено</div>
+                      : <div className='catalog__empty'>По вашему запросу ничего не найдено</div>
                   }
                   {totalCountPage > 1 && <Pagination totalCountPage={totalCountPage}/>}
                 </div>
