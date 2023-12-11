@@ -1,5 +1,5 @@
 import { CouponValue, Status } from '../../const';
-import { CouponType } from '../../types/coupon';
+import { Coupon } from '../../types/coupon';
 import { BasketProduct, ProductItem } from '../../types/product';
 import { basketProductData } from './basket-product-data-slice';
 import { postCouponAction, postOrderAction } from './basket-product-data-thunk';
@@ -11,7 +11,7 @@ describe('BasketProductData Slice', () => {
     isActiveModalSuccess: boolean;
     deletedProduct: ProductItem | null;
     discount: number;
-    promoCode: CouponType | null;
+    promoCode: Coupon | null;
     isPromoCodeValid: boolean;
     status: Status;
     hasError: boolean;

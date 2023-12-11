@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getBasketProductList, getCamerasIds, getBonus, getPayable, getTotalPrice, getStatusPostOrder, getErrorStatus, getStatusValidPromoCode, getPromoCode } from '../../store/basket-product-data/basket-product-data-selectors';
 import { Status } from '../../const';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { CouponType } from '../../types/coupon';
+import { Coupon } from '../../types/coupon';
 import { postCouponAction, postOrderAction } from '../../store/basket-product-data/basket-product-data-thunk';
 import { resetBasket, setPromoCode} from '../../store/basket-product-data/basket-product-data-slice';
 
@@ -18,11 +18,11 @@ export function BasketSummary () {
   const postOrderStatus = useAppSelector(getStatusPostOrder);
   const isError = useAppSelector(getErrorStatus);
   const isValidPromoCode = useAppSelector(getStatusValidPromoCode);
-  const [promoText, setPromoText] = useState<CouponType | null>(promoCode);
+  const [promoText, setPromoText] = useState<Coupon | null>(promoCode);
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const {value} = evt.target;
-    setPromoText(value as CouponType);
+    setPromoText(value as Coupon);
   };
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {

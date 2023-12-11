@@ -3,7 +3,7 @@ import { Review } from './types/review';
 import 'dayjs/locale/ru';
 import { NameLocaleStorage, SortOrder, SortType } from './const';
 import { BasketProduct, ProductCategory, ProductItem, ProductLevel, ProductType } from './types/product';
-import { CouponType } from './types/coupon';
+import { Coupon } from './types/coupon';
 
 export const getFormatDate = (date: string, format: string) => dayjs(date).locale('ru').format(format);
 
@@ -109,7 +109,7 @@ export const getPromoCodeLS = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const promoCode = data ? JSON.parse(data) : null;
   return {
-    promoCode: promoCode as CouponType
+    promoCode: promoCode as Coupon
   };
 };
 

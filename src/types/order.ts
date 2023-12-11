@@ -1,6 +1,6 @@
-import { CouponType } from './coupon';
+import { Coupon } from './coupon';
 
 export type Order = {
   camerasIds: number[];
-  coupon: CouponType | null;
+  coupon: Coupon | null;
 };

@@ -2,7 +2,7 @@ import { NameLocaleStorage, NameSpace, Status } from '../../const';
 import { BasketProduct, ProductItem } from '../../types/product';
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import { getBasketProductListFromLS, getDicsountLS, getPromoCodeLS } from '../../utils';
-import { CouponType } from '../../types/coupon';
+import { Coupon } from '../../types/coupon';
 import { postCouponAction, postOrderAction } from './basket-product-data-thunk';
 
 const {productList} = getBasketProductListFromLS();
@@ -15,7 +15,7 @@ type InitialState = {
   isActiveModalSuccess: boolean;
   deletedProduct: ProductItem | null;
   discount: number;
-  promoCode: CouponType | null;
+  promoCode: Coupon | null;
   isPromoCodeValid: boolean;
   status: Status;
   hasError: boolean;
@@ -66,7 +66,7 @@ export const basketProductData = createSlice ({
       state.deletedProduct = null;
       localStorage.setItem(NameLocaleStorage.Basket, JSON.stringify(state.basketProductList));
     },
-    setPromoCode: (state, action: PayloadAction<CouponType>) => {
+    setPromoCode: (state, action: PayloadAction<Coupon>) => {
       state.promoCode = action.payload;
     },
     resetBasket: (state) => {
