@@ -34,7 +34,7 @@ export function BasketSummary () {
   };
 
   const handleButtonClick = () => {
-    dispatch(postOrderAction({camerasIds: productIds, coupon: promoCode}));
+    dispatch(postOrderAction({camerasIds: productIds, coupon: isValidPromoCode ? promoCode : null}));
   };
 
   useEffect(() => {
