@@ -28,3 +28,6 @@ export const getBonus = createSelector([getDicsount, getTotalPrice], (discount, 
 
 export const getPayable = createSelector([getTotalPrice, getBonus], (totalPrice, bonus) =>
   Math.round(totalPrice - bonus));
+
+export const getCountProductInBasket = createSelector([getBasketProductList], (productList) =>
+  productList.reduce((sum, item) => item.count + sum, 0));

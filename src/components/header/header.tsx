@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { MemoSearchForm } from '../search-form/search-form';
 import { useAppSelector } from '../../hooks';
-import { getBasketProductList } from '../../store/basket-product-data/basket-product-data-selectors';
+import { getCountProductInBasket } from '../../store/basket-product-data/basket-product-data-selectors';
 
 export function Header () {
-  const countProductItBasket = useAppSelector(getBasketProductList).length;
+  const countProductInBasket = useAppSelector(getCountProductInBasket);
 
   return (
     <header className="header" id="header">
@@ -33,7 +33,7 @@ export function Header () {
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg>
-          {!!countProductItBasket && <span className="header__basket-count">{countProductItBasket}</span>}
+          {!!countProductInBasket && <span className="header__basket-count">{countProductInBasket}</span>}
         </Link>
       </div>
     </header>
