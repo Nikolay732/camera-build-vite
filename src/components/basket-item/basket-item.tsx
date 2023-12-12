@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useRef } from 'react';
+import { ChangeEvent, KeyboardEvent, useRef} from 'react';
 import { CountProductBasket, KeyCode } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { setCountItem, setDeletedProduct, setNextCountItem, setPrevCountItem, setStatusModalRemoveItem } from '../../store/basket-product-data/basket-product-data-slice';
@@ -13,6 +13,7 @@ export function BasketItem ({basketProduct}: BasketItemProps) {
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLInputElement | null>(null);
   const {count, product} = basketProduct;
+
   const handleButtonPrevClick = () => {
     dispatch(setPrevCountItem(product.id));
   };

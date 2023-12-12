@@ -58,7 +58,7 @@ export const basketProductData = createSlice ({
     },
     setCountItem: (state, action: PayloadAction<{id: number; count: number}>) => {
       state.basketProductList = state.basketProductList.map((item) =>
-        item.product.id === action.payload.id ? {count: item.count, product: item.product} : item);
+        item.product.id === action.payload.id ? {count: action.payload.count, product: item.product} : item);
       localStorage.setItem(NameLocaleStorage.Basket, JSON.stringify(state.basketProductList));
     },
     deleteItem: (state, action: PayloadAction<number>) => {
