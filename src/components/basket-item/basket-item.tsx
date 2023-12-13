@@ -24,11 +24,12 @@ export function BasketItem ({basketProduct}: BasketItemProps) {
 
   const hanldeInputValueChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const {value} = evt.target;
+
     if (Number(value) > CountProductBasket.MAX) {
       dispatch(setCountItem({id: product.id, count: CountProductBasket.MAX}));
-    } else {
-      dispatch(setCountItem({id: product.id, count: Math.ceil(Number(value))}));
+      return;
     }
+    dispatch(setCountItem({id: product.id, count: Math.ceil(Number(value))}));
   };
 
   const hanldeInputValueBlur = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +75,7 @@ export function BasketItem ({basketProduct}: BasketItemProps) {
           ref={ref}
           onChange={hanldeInputValueChange}
           onBlur={hanldeInputValueBlur}
-          value={count}
+          value={count || ''}
           onKeyDown={hanldeEnterClick}
         />
         <button
