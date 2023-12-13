@@ -86,12 +86,18 @@ export function FilterPrice () {
     dispatch(setMaxPrice(maxPriceValue));
   };
 
-  const handleInputMinPriceBlur = () => {
+  const handleInputMinPriceBlur = (evt: ChangeEvent<HTMLInputElement>) => {
     checkMinPrice();
+    if (minPriceValue !== 0) {
+      evt.target.value = minPriceValue.toString();
+    }
   };
 
-  const handleInputMaxPriceBlur = () => {
+  const handleInputMaxPriceBlur = (evt: ChangeEvent<HTMLInputElement>) => {
     checkMaxPrice();
+    if (maxPriceValue !== 0) {
+      evt.target.value = maxPriceValue.toString();
+    }
   };
 
   const handleInputMinPriceKeyDown = (evt: KeyboardEvent<HTMLInputElement>) => {
