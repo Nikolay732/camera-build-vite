@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useRef} from 'react';
+import { ChangeEvent, KeyboardEvent, useRef } from 'react';
 import { CountProductBasket, KeyCode } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { setCountItem, setDeletedProduct, setNextCountItem, setPrevCountItem, setStatusModalRemoveItem } from '../../store/basket-product-data/basket-product-data-slice';
@@ -34,9 +34,12 @@ export function BasketItem ({basketProduct}: BasketItemProps) {
 
   const hanldeInputValueBlur = (evt: ChangeEvent<HTMLInputElement>) => {
     const {value} = evt.target;
+    const validValue = Number(value);
+
     if (Number(value) < CountProductBasket.MIN) {
       dispatch(setCountItem({id: product.id, count: CountProductBasket.MIN}));
     }
+    evt.target.value = validValue.toString();
   };
 
   const hanldeEnterClick = (evt: KeyboardEvent<HTMLInputElement>) => {
